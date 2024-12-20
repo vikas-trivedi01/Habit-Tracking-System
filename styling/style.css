@@ -61,7 +61,17 @@ ul {
   margin-left: 16%;
 }
 
-/* qoutes section  */
+#intro{
+  width: 95%;
+  background-color: darkturquoise;
+  margin-left: 3%;
+  margin-top: 2%;
+  padding: 12px;
+  border-radius: var(--border-raidus);
+
+
+}
+/* quotes section  */
 
 #quotes-selection {
   width: 95% !important;
@@ -70,41 +80,48 @@ ul {
   padding: 12px;
   margin: 3%;
 }
-#qoutes-ul {
+#quotes-ul {
   display: flex;
   align-content: center;
   justify-content: space-around;
   padding: 7px;
+  flex-direction: row;
 }
 
 .quote-suggesion {
   color: var(--btn-color);
   padding: 15px;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  font-size: x-large;
 }
 
 .quote-suggesion:hover {
-  background-color: #e3e4c7 !important;
+  background-color: #83f2f4;
   border-radius: var(--border-raidus);
   transition: var(--smooth-trans);
   transform: scale(1.1);
+  color: #0e0c0c;
 }
 
 input[type="checkbox"] {
   -webkit-appearance: none;
   appearance: none;
-  width: 1.5em;
-  height: 1.5em;
+  width: 1.9em;
+  height: 1.9em;
   border: 2px solid #0e0c0c;
   border-radius: var(--border-raidus);
   position: relative;
   cursor: pointer;
+  background-color: rgb(243, 244, 246);
 }
 
 input[type="checkbox"]::before {
   content: "";
   width: 0.65em;
   height: 0.65em;
-  background: #0ae511;
+  background: #07fc0f;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -117,11 +134,16 @@ input[type="checkbox"]:checked::before {
 }
 
 
-#quotes-display{
+#quotes-section{
     width: 95% !important;
     border-radius: var(--border-raidus);
-    background-color: rgb(156, 191, 243) !important;
+    background-color: rgb(243, 156, 171) !important;
     padding: 12px;
     margin: 3%;
     display: none;
+}
+
+#quotes-title{
+  text-align: center;
+  font-size: x-large;
 }
