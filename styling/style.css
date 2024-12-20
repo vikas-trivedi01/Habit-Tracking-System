@@ -12,16 +12,17 @@ body {
 }
 
 :root {
-  --btn-color: cornflowerblue;
+  --btn-color: rgb(159, 100, 237);
   --border-raidus: 10px;
   --primary-color: rgb(242, 241, 243);
   --secondary-color: #373d42;
+  --smooth-trans: 0.5s ease-in;
 }
 
 body {
   background-color: #b6fcf1;
   line-height: 1.6;
-  color: #b3bec9;
+  color: #2e0505;
   padding: 20px;
 }
 
@@ -52,5 +53,65 @@ ul {
 .nav-item:hover {
   background-color: #13fe7d;
   border-radius: var(--border-raidus);
-  transition: 0.5s ease-in;
+  transition: var(--smooth-trans);
+}
+
+#slogan {
+  color: cadetblue;
+  margin-left: 16%;
+}
+
+/* qoutes section  */
+
+#quotes {
+  width: 95% !important;
+  border-radius: var(--border-raidus);
+  background-color: rgb(244, 185, 245);
+  padding: 12px;
+  margin: 3%;
+}
+#qoutes-ul {
+  display: flex;
+  align-content: center;
+  justify-content: space-around;
+  padding: 7px;
+}
+
+.quote-suggesion {
+  color: var(--btn-color);
+  padding: 15px;
+}
+
+.quote-suggesion:hover {
+  background-color: #e3e4c7 !important;
+  border-radius: var(--border-raidus);
+  transition: var(--smooth-trans);
+  transform: scale(1.1);
+}
+
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1.5em;
+  height: 1.5em;
+  border: 2px solid #0e0c0c;
+  border-radius: var(--border-raidus);
+  position: relative;
+  cursor: pointer;
+}
+
+input[type="checkbox"]::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  background: #0ae511;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+input[type="checkbox"]:checked::before {
+  transform: translate(-50%, -50%) scale(1);
 }
