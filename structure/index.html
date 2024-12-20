@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Habit Tracking System</title>
     <link rel="stylesheet" href="../styling/style.css" />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <!-- Navbar  -->
@@ -43,30 +48,77 @@
       </p>
     </div>
 
+    <!-- quotes section based on user choice -->
     <div id="quotes-selection">
       <p>What's your mood today?</p>
       <br />
       <hr />
       <ul id="quotes-ul">
         <li class="quote-suggesion">
-          <input type="checkbox" id="feelingGood-suggestion" />
+          <input type="checkbox" id="feelingGood-suggestion" name="check" />
           <p>Good 😎</p>
         </li>
         <li class="quote-suggesion">
-          <input type="checkbox" id="feelingUnmotivated-suggestion" />
+          <input
+            type="checkbox"
+            id="feelingUnmotivated-suggestion"
+            name="check"
+          />
           <p>Unmotivated 😒</p>
         </li>
         <li class="quote-suggesion">
-          <input type="checkbox" id="feelingBad-suggesion" />
+          <input type="checkbox" id="feelingBad-suggesion" name="check" />
           <p>Bad 😣</p>
         </li>
       </ul>
     </div>
 
+    <!-- show quotes  -->
     <div id="quotes-section">
       <p id="quotes-title">Quotes for you to make you unbeatable !</p>
+      <br />
+      <hr />
+      <br />
       <div id="quotes"></div>
     </div>
+
+    <!-- footer  -->
+    <footer id="footer">
+      <div id="foot-line">
+        <p id="foot-para">
+          "Powered by Passion & Motivation" | Habit Tracking System | "Inspiring
+          Many People"
+        </p>
+      </div>
+      <div id="socials">
+        <p id="follow">Follow Us:</p>
+        <ul id="foot-ul">
+          <li>
+            <span>Visit our LinkedIn account</span>&nbsp;&nbsp;
+            <a href="#">
+              <i class="fa-brands fa-linkedin fa-2xl icons"></i>
+            </a>
+          </li>
+          <li>
+            <span>Visit our Facebook account</span>&nbsp;&nbsp;
+            <a href="#">
+              <i class="fa-brands fa-facebook fa-2xl icons"></i>
+            </a>
+          </li>
+          <li>
+            <span>Visit our Twitter account</span>&nbsp;&nbsp;
+            <a href="#">
+              <i class="fa-brands fa-square-twitter fa-2xl icons"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div id="copy">
+        &nbsp;&nbsp;2024 Copyright&nbsp;&nbsp;&nbsp;
+        <i class="me-3 fa-regular fa-copyright fa-xl"></i> &nbsp;&nbsp;All
+        Rights Reserved
+      </div>
+    </footer>
 
     <script src="../functionalities/quotes.js"></script>
   </body>
