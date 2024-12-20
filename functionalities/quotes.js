@@ -17,38 +17,37 @@ const quotes = {
 
 }
 
+const checkboxes = Array.from(document.querySelectorAll("#quotes-ul input[type='checkbox']"));
 
- 
+function displayQuotes() {
 
-  const checkboxes = Array.from(document.querySelectorAll("#quotes-ul input[type='checkbox']"));
+  //Get div to display quotes
+  const quotesContainer = document.getElementById("quotes");
+  quotesContainer.innerHTML = "";
 
-  function displayQuotes() {
-    const quotesContainer = document.getElementById("quotes");
-    quotesContainer.innerHTML = "";
-  checkboxes.forEach(checkbox =>{
-  //   const currentCheckbox = checkboxes.indexOf(checkbox);
-  //   const previousCheckbox =  checkboxes.indexOf(checkboxes[checkbox-1])
-  //   const nextCheckbox =  checkboxes.indexOf(checkboxes[checkbox+1])
-    if(checkbox.checked){
-      const mood = checkbox.id.replace('-suggestion','Quotes');
+  checkboxes.forEach(checkbox => {
 
-      if(quotes[mood]){
-        quotes[mood].forEach(quote =>{
+    if (checkbox.checked) {
+      const mood = checkbox.id.replace('-suggestion', 'Quotes');
+
+      if (quotes[mood]) {
+        quotes[mood].forEach(quote => {
           const p = document.createElement("p");
           p.textContent = quote;
           quotesContainer.appendChild(p);
         });
       }
     }
-   });
-   if (!quotesContainer.innerHTML) {
+  });
+  if (!quotesContainer.innerHTML) {
     quotesContainer.innerHTML = "<p>Please select a mood.</p>";
   }
-   const quotesSection = document.getElementById("quotes-section");
 
-   //Get div to display quotes
-   quotesSection.style.display = "block";
-  }
-  checkboxes.forEach(checkbox =>{
-    checkbox.addEventListener("change",displayQuotes);
-  })
+  const quotesSection = document.getElementById("quotes-section");
+  quotesSection.style.display = "block";
+}
+checkboxes.forEach(checkbox => {
+  checkbox.addEventListener("change", displayQuotes);
+})
+
+
