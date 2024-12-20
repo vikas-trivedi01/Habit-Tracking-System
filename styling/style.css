@@ -12,10 +12,10 @@ body {
 }
 
 :root {
-  --btn-color: rgb(159, 100, 237);
+  --btn-color: rgb(254, 16, 186);
   --border-raidus: 10px;
   --primary-color: rgb(242, 241, 243);
-  --secondary-color: #373d42;
+  --secondary-color: #2e618b;
   --smooth-trans: 0.5s ease-in;
 }
 
@@ -63,10 +63,10 @@ ul {
 
 /* qoutes section  */
 
-#quotes {
+#quotes-selection {
   width: 95% !important;
   border-radius: var(--border-raidus);
-  background-color: rgb(244, 185, 245);
+  background-color: rgb(156, 191, 243);
   padding: 12px;
   margin: 3%;
 }
@@ -114,4 +114,14 @@ input[type="checkbox"]::before {
 
 input[type="checkbox"]:checked::before {
   transform: translate(-50%, -50%) scale(1);
+}
+
+
+#quotes-display{
+    width: 95% !important;
+    border-radius: var(--border-raidus);
+    background-color: rgb(156, 191, 243) !important;
+    padding: 12px;
+    margin: 3%;
+    display: none;
 }
