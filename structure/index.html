@@ -28,30 +28,46 @@
       height="25"
       direction="right"
       id="slogan"
-      >
+    >
       "Track Your Habits, Transform Your Life"
     </marquee>
 
-    <div id="quotes-selection">  
-        <p>What's your mood today?</p><br><hr>
-        <ul id="qoutes-ul">
+    <div id="intro">
+      <p>Welcome to Habit Tracker!</p>
+      <p>
+        Achieving your goals starts with building strong habits. Our app helps
+        you stay consistent, track your progress, and reach your potential.
+        Whether you're forming new habits or breaking old ones, we provide a
+        clear and motivating way to monitor your daily achievements. Start your
+        journey toward a better you — one habit at a time!
+      </p>
+    </div>
+
+    <div id="quotes-selection">
+      <p>What's your mood today?</p>
+      <br />
+      <hr />
+      <ul id="quotes-ul">
         <li class="quote-suggesion">
-            <input type="checkbox" id="good-suggestion"> Good 😎
+          <input type="checkbox" id="feelingGood-suggestion" />
+          <p>Good 😎</p>
         </li>
         <li class="quote-suggesion">
-            <input type="checkbox" id="unmotivated-suggestion"> Unmotivated 😒
+          <input type="checkbox" id="feelingUnmotivated-suggestion" />
+          <p>Unmotivated 😒</p>
         </li>
         <li class="quote-suggesion">
-            <input type="checkbox" id="bad-suggesion"> Bad 😣
+          <input type="checkbox" id="feelingBad-suggesion" />
+          <p>Bad 😣</p>
         </li>
       </ul>
     </div>
 
-    <div id="quotes-display">
-        fjke
+    <div id="quotes-section">
+      <p id="quotes-title">Quotes for you to make you unbeatable !</p>
+      <div id="quotes"></div>
     </div>
-    
-    
+
     <script src="../functionalities/quotes.js"></script>
   </body>
 </html>
