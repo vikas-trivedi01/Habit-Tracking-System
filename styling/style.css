@@ -234,7 +234,6 @@ input[type="checkbox"]:checked::before {
   gap: 1rem;
   padding: 25px;
   width: 225%;
-  color: black;
   display: flex;
 }
 
@@ -242,16 +241,16 @@ input[type="checkbox"]:checked::before {
   margin-top: 2rem;
 }
 .habit-item {
-  background-color: #fe7a71;
-  padding: 20px 20px;
+  background-color: #97eaf0;
+  padding: 10px;
   margin-bottom: 10px;
   border-radius: 3px;
   border: 1px solid #ddd;
-  color: #dddde5;
+  color: #090f07;
   width: 100%;
 }
 .completed {
-  background-color: #439e8c !important;
+  background-color: #0a85f0 !important;
   text-decoration: line-through;
 }
 .add {
@@ -260,7 +259,7 @@ input[type="checkbox"]:checked::before {
   margin-top: 20px;
 }
 .habit-form button {
-  background-color: #eceff1;
+  background-color: #84eafa;
   color: rgb(20, 20, 17);
   padding: 5px 20px;
   border: none;
@@ -279,47 +278,30 @@ input[type="checkbox"]:checked::before {
   opacity: 0.8;
 }
 .habit-form input[type="text"],
-.habit-form input[type="date"] {
+.habit-form input[type="date"], 
+.habit-form input[type="number"]{
   width: 100%;
   padding: 0.5rem;
   margin-bottom: 50px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border: 3px solid #19171a;
+  border-radius: 5px;
   box-sizing: border-box;
   font-size: 1rem;
 }
 
-.buttons {
-  display: flex;
-  width: 200px;
-  justify-content: center;
-  gap: 10px;
-  padding: 12px;
-  flex-wrap: wrap;
-}
-.btn {
-  background-color: #0e1e0e;
-  color: rgb(217, 218, 208);
-  padding: 5px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-}
+
 .hide {
   display: none;
 }
-.show {
-  display: block;
-}
-#mark_completed:hover {
-  background-color: rgb(140, 240, 25);
+
+#mark-completed:hover {
+  background-color: rgb(10, 242, 60);
   border-radius: var(--border-radius);
-  color: rgb(18, 14, 14);
+  color: rgb(20, 1, 1);
   transition: 0.7s;
 }
 #delete:hover {
-  background-color: #e7311d;
+  background-color: #f30909;
   border-radius: var(--border-radius);
   color: rgb(18, 14, 14);
   transition: 0.7s;
@@ -331,22 +313,45 @@ input[type="checkbox"]:checked::before {
   transition: 0.7s;
 }
 
-.habit_info {
+.habit-card {
   padding: 25px;
   border-radius: var(--border-radius);
-  background: rgb(169, 90, 181);
-  background: linear-gradient(
-    30deg,
-    rgb(244, 131, 154) 46%,
-    rgba(37, 197, 192, 1) 92%
-  );
+ background: linear-gradient(12deg, #fe89b0, #66A6FF);
+
 }
-#message{
-  font-size:x-large;
-  background-color: rgb(128, 240, 133);
-  border-radius: var(--border-radius);
-  color:black;
-  width: 35%;
-  padding: 17px 38px;
-  margin-left: 33%;
+#icons{
+  display: flex;
+  /* background-color: #d7e48f; */
+  padding: 6px;
+  margin: 14px 4px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.habit-icons{
+  font-size: larger !important;
+  width: 90px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 12px;
+  /* background-color: #f2fdf2; */
+  color: rgb(217, 218, 208);
+  text-align: center;
+  
+}
+#mark-completed{
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 12px;
+  font-size: large !important;
+  width: 100%;
+  background-color: #ffffff;
+  color: rgb(5, 6, 5);
+  text-align: center;
+  
+}
+.w-full{
+  width: 95%;
 }
