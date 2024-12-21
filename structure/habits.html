@@ -44,9 +44,33 @@
     </div>
     <div id="random-quote">
         <h4>Qoute of The Day For You</h4>
-        
     </div>
+    <hr><br>
+    <!-- Habits CRUD Operations Structure -->
+    <p id="habit-header">Make New Habits Instantly</p>
+    <form class="habit-form" id="habit-form">
+      <input
+        type="text"
+        id="description"
+        placeholder="habit Description"
+        required
+      />
 
+      <input type="date" id="due-date" required />
+
+      <button type="submit">Add habit</button>
+
+    </form>
+
+    <center><h2 style="display: block">Your Habits</h2></center>
+      <br />
+
+      <div id="message" class="hide"></div>
+      <div id="habit-list"></div> 
+
+
+
+      
     <!-- footer  -->
     <!-- <footer id="footer">
       <div id="foot-line">
@@ -86,5 +110,6 @@
     </footer> -->
 
     <script src="../functionalities/randomQuotes.js"></script>
+    <script src="../functionalities/habitsCRUD.js"></script>
   </body>
 </html>
