@@ -59,13 +59,8 @@
         type="text"
         id="description"
         placeholder="Habit Description"
-        required
       />
       
-      <div style="display: flex; justify-content: space-between;">
-      <input type="date" id="start-date" min="2025-01-01" max="2025-12-31" value="2025-01-01" required />
-      <span class="validity"></span>
-    </div>
       <input
         type="number"
         id="goal-days"
@@ -73,11 +68,15 @@
         required
       />
 
-
-      <button type="submit">Add habit</button>
-
-    </form>
-
+      <div id="habit-dates">
+        <input type="date" id="start-date" min="2025-01-01" max="2025-12-31" value="2025-01-01" required />
+        <span class="validity"></span>
+      </div>
+    <input type="text" id="end-date" placeholder="Habit End Date "/>
+    
+  </form>
+  
+  <button type="submit" id="add-habit">Add habit</button>
     <br><br>
     <center><h2 style="display: block">Your Habits</h2></center>
     <hr>

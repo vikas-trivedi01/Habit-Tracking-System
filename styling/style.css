@@ -225,6 +225,7 @@ input[type="checkbox"]:checked::before {
   background-color: #8cbdf1;
   border: 4px double rgb(156, 191, 243);
   border-radius: var(--border-radius);
+  height: 90%;
   padding: 3%;
 }
 #habit-header,
@@ -237,6 +238,10 @@ input[type="checkbox"]:checked::before {
   margin-top: 32px;
 }
 
+#habit-header{
+  margin-bottom: 32px;
+
+}
 #habit-list {
   gap: 1rem;
   padding: 2px;
@@ -262,29 +267,29 @@ input[type="checkbox"]:checked::before {
   background-color: #0af0c2 !important;
   text-decoration: line-through;
 }
-.add {
+/* .add {
   display: flex;
   justify-content: center;
   margin-top: 20px;
-}
-.habit-form button {
-  background-color: #84eafa;
+} */
+/* .add:hover {
+  opacity: 0.8;
+} */
+#add-habit{
+  background-color: #09f96d;
   color: rgb(20, 20, 17);
-  padding: 5px 20px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   transition: background 0.9s ease;
-  font-size: 20px;
-  width: 35%;
-  margin-left: 30%;
+  font-size: x-large;
+  width: 45%;
+height:10% !important;
+  margin: 4% 26%;
 }
-.habit-form button:hover {
+#add-habit:hover {
   background: #090909;
   color: rgb(235, 225, 225);
-}
-.add:hover {
-  opacity: 0.8;
 }
 .habit-form input[type="text"],
 .habit-form input[type="number"] {
@@ -310,6 +315,10 @@ input[type="checkbox"]:checked::before {
   width: 10%;
   text-align: center;
 }
+#habit-dates{
+  display: flex;
+  justify-content: space-around;
+}
 input[type="date"]:invalid + span::after {
   content: " ✖";
   font-size: x-large;
@@ -319,7 +328,11 @@ input[type="date"]:valid + span::after {
   content: " ✓";
   font-size: x-large;
 }
-
+#habit-form-foot{
+  /* display: flex;
+  justify-content: space-around; */
+background-color: #f30909;
+}
 
 .hide {
   display: none;
