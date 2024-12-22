@@ -1,5 +1,15 @@
 let habits = [];
 
+document.getElementById("start-date").addEventListener("change", () => {
+    const habitStartDate = document.getElementById("start-date").value;
+    const habitGoalDays = parseInt(document.getElementById("goal-days").value);
+    const endingDateField = document.getElementById("end-date");
+
+    let endingDate = new Date(habitStartDate);
+    endingDate.setDate(endingDate.getDate() + habitGoalDays);
+    endingDateField.value = `${endingDate.getMonth() + 1}/${endingDate.getDate()}/${endingDate.getFullYear()}`;
+
+})
 //on submission of form call the addHabit to add the habit
 document.getElementById("habit-form").addEventListener("submit", addHabit);
 
@@ -9,7 +19,7 @@ function addHabit(e) {
     const habitName = document.getElementById("name").value.trim();
     const habitStartDate = document.getElementById("start-date").value;
     const habitDescription = document.getElementById("description").value.trim();
-    const habitGoalDays = document.getElementById("goal-days").value;
+    const habitGoalDays = parseInt(document.getElementById("goal-days").value);
 
     if (!habitName && !habitStartDate) {
         alert("Please enter name and starting date of habit.");
@@ -20,8 +30,12 @@ function addHabit(e) {
         habitName: habitName,
         habitStartDate: habitStartDate,
         habitDescription: habitDescription,
-        isCompleted: false
+        isCompleted: false,
+        habitGoalDays: habitGoalDays
     });
+
+
+
     //empty the fields
     document.getElementById("name").value = "";
     document.getElementById("start-date").value = "";
@@ -140,7 +154,10 @@ function displayHabits() {
 function updateHabitUI(habitIndex) {
     const habitItem = document.getElementById(`habit-item-${habitIndex}`);
 
-    const completedDaysElem = document.getElementById(`completed-days-${habitIndex}`)
+    const completedDaysElem = document.getElementById(`completed-days-${habitIndex}`);
+
+    // const habitIcons = document.getElementsByClassName("habit-icons");
+    const btn = document.querySelectorAll(`#habit-item-${habitIndex} .habit-icons`)
     const habit = habits[habitIndex];
 
     if (completedDaysElem) {
@@ -158,7 +175,17 @@ function updateHabitUI(habitIndex) {
         if (markCompleteButton) {
             markCompleteButton.classList.add("hide");
         }
+        // <span  id="edit" class="${habit.isCompleted ? 'hide' : 'habit-icons'} " onclick="editHabit(${habitIndex})"><i class="fa-regular fa-pen-to-square"></i></span>
+        //<span class=" ${habit.isCompleted ? 'habit-icons w-full' : 'habit-icons'} " id="delete"  onclick="deleteHabit(${habitIndex})"><i class="fa-solid fa-trash-can"></i></span>
 
+        btn.forEach(icon => {
+            if (icon.id === "edit") {
+                icon.classList.add("hide");
+            }
+            else if (icon.id === "delete") {
+                icon.classList.add("w-full");
+            }
+        })
     } else {
         habitItem.classList.remove("completed");
     }
@@ -180,22 +207,39 @@ function completeHabit(habitIndex) {
 }
 
 function editHabit(habitIndex) {
+
     //provide editing options
-    const newDescription = prompt(
-        "Enter new habit description",
-        habits[habitIndex].description
+    const updatedHabitName = prompt(
+        "Update habit name",
+        habits[habitIndex].habitName
     );
-    const newDate = prompt(
-        "Enter new habit due date",
-        habits[habitIndex].due_date
+    const updatedHabitDate = prompt(
+        "Update habit start date",
+        habits[habitIndex].habitStartDate
+    );
+    const updatedHabitDescription = prompt(
+        "Update habit description",
+        habits[habitIndex].habitDescription
     );
 
-    if (newDescription && newDate) {
-        habits[habitIndex].description = newDescription;
-        habits[habitIndex].due_date = newDate;
+    const updatedHabitGoalDays = prompt(
+        "Update habit goal days",
+        habits[habitIndex].habitGoalDays
+    );
+
+    // Check if all inputs are valid
+    if (updatedHabitName && updatedHabitDate && updatedHabitDescription && updatedHabitGoalDays) {
+        habits[habitIndex].habitName = updatedHabitName;
+        habits[habitIndex].habitStartDate = updatedHabitDate;
+        habits[habitIndex].habitDescription = updatedHabitDescription;
+        habits[habitIndex].habitGoalDays = updatedHabitGoalDays;
+
         displayHabits();
         saveHabitsDebounced();
+    } else {
+        console.log("One or more updates were not provided.");
     }
+
 }
 
 
