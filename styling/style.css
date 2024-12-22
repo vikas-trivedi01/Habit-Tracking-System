@@ -117,7 +117,10 @@ input[type="checkbox"] {
   cursor: pointer;
   background-color: rgb(243, 244, 246);
 }
+input[type="checkbox"]:checked{
 
+  background-color: #090a02;
+}
 input[type="checkbox"]::before {
   content: "";
   width: 0.95em;
@@ -361,6 +364,8 @@ input[type="checkbox"]:checked::before {
 #habit-completing-list {
   border: 3px solid #f30909;
   padding: 14px;
+  overflow-y: auto;
+  height: 70%;
 }
 .habit-title {
   text-align: center;
@@ -389,3 +394,14 @@ input[type="checkbox"]:checked::before {
   padding: 7px;
   margin-bottom: 3%;
 }
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2989f7;
+  border-radius: var(--border-radius);
+}
+
