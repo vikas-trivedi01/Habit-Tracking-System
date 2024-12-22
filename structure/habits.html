@@ -47,29 +47,44 @@
     </div>
     <hr><br>
     <!-- Habits CRUD Operations Structure -->
-    <p id="habit-header">Make New Habits Instantly</p>
+    <p id="habit-header">Add New Habits Instantly</p>
     <form class="habit-form" id="habit-form">
       <input
         type="text"
-        id="description"
-        placeholder="habit Description"
+        id="name"
+        placeholder="Habit Name"
         required
       />
-
-      <input type="date" id="due-date" required />
+      <input
+        type="text"
+        id="description"
+        placeholder="Habit Description"
+        required
+      />
+      
+      <input type="date" id="start-date" required />
+      <input
+        type="number"
+        id="goal-days"
+        placeholder="Habit Goal Days"
+        required
+      />
 
       <button type="submit">Add habit</button>
 
     </form>
 
+    <br><br>
     <center><h2 style="display: block">Your Habits</h2></center>
-      <br />
+    <hr>
+    <br>
+    <br />
 
-      <div id="message" class="hide"></div>
       <div id="habit-list"></div> 
 
-
-
+      <p id="complete-intro">Your Daily Habits Trackings</p>
+      <div id="habit-completing-list"></div> 
+      
       
     <!-- footer  -->
     <!-- <footer id="footer">
@@ -109,7 +124,7 @@
       </div>
     </footer> -->
 
-    <script src="../functionalities/randomQuotes.js"></script>
+    <!-- <script src="../functionalities/randomQuotes.js"></script> -->
     <script src="../functionalities/habitsCRUD.js"></script>
   </body>
 </html>
