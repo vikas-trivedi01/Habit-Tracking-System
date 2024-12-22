@@ -47,6 +47,8 @@ function displayHabits() {
 
     habits.forEach((habit, habitIndex) => {
         //create necessary elements
+        habit.completedDays = habit.completedDays || [];
+        habit.completedDaysCount = habit.completedDaysCount || 0;
         const habit_elem = document.createElement("div");
         const habit_complete = document.createElement("div");
         const habit_card = document.createElement("div");
@@ -55,13 +57,14 @@ function displayHabits() {
 
 
         habit_elem.className = habit.isCompleted ? "habit-item completed" : "habit-item";
+
         habit_elem.innerHTML = `
             <div id="habit-info">
             <p>Habit: ${habit.habitName}</p>
             <p>Start Date: ${habit.habitStartDate}</p>
             <p>Description: ${habit.habitDescription}</p>
             <p>Goal Days: ${habit.habitGoalDays}</p>
-            <p id="${habitIndex}">Completed Days: ${habit.completedDays}</p>
+            <p id="completed-days-${habitIndex}">Completed Days: ${habit.completedDaysCount}</p>
             </div>
             <div id="icons">
             <span  id="edit" class="${habit.isCompleted ? 'hide' : 'habit-icons'} " onclick="editHabit(${habitIndex})"><i class="fa-regular fa-pen-to-square"></i></span>
@@ -73,6 +76,7 @@ function displayHabits() {
             <button id="mark-completed" class="${habit.isCompleted ? 'hide' : ''} " onclick="completeHabit(${habitIndex})">Mark Complete</button>
             `;
 
+        habit_elem.id = `habit-item-${habitIndex}`;
         habit_card.className = "habit-card";
         habit_card.appendChild(habit_elem);
         habit_card.appendChild(habit_complete);
@@ -82,8 +86,12 @@ function displayHabits() {
 
         const habitNameElem = document.createElement("p");
         habitNameElem.textContent = `Habit Name : ${habit.habitName}`;
-        habitNameElem.className = 'habit-title'
+        habitNameElem.className = 'habit-title';
+
         for (let day = 1; day <= habit.habitGoalDays; day++) {
+            if (habit.completedDays.includes(day)) {
+                checkbox.checked = true;
+            }
             const container = document.createElement("div");
 
             container.innerHTML += `<p>Day ${day}:</p>`;
@@ -96,10 +104,8 @@ function displayHabits() {
             container.appendChild(checkbox);
             habit_compliting_container.appendChild(container);//h_c_c is container for content of one habit
             habit_container.appendChild(habitNameElem);
-            
+
             checkbox.addEventListener('click', (e) => {
-                habit.completedDays =  habit.completedDays || [];
-                habit.completedDaysCount = habit.completedDaysCount || 0;
                 const habitIndex = parseInt(e.target.getAttribute("data-habit-index"), 10);
                 const selectedHabit = habits[habitIndex];
                 const isChecked = e.target.checked;
@@ -117,40 +123,49 @@ function displayHabits() {
 
                 updateHabitUI(habitIndex);
             });
-            
+
         }
         habit.hasOwnProperty('compltedDays') ? delete habit.compltedDays : '';
 
         habit_compliting_container.className = 'habit-checkboxes-container';
-        
+
         habit_container.appendChild(habit_compliting_container);
         habit_container.className = 'habit-container';
-      
+
         habitCompletingList.appendChild(habit_container);
     });
 
+    saveHabits();
 }
 function updateHabitUI(habitIndex) {
-    const habitCard = document.getElementById(`habit-container-${habitIndex}`).childNodes;
-    // const habititem = habitCard.document.querySelector(".habit-item").childNodes;
-    const cardArr = Array.from(habitCard);
-const cardInfo = cardArr[0].children[0];
-const cardElemArr = Array.from(cardInfo.children).filter(elem=>parseInt(elem.id)==habitIndex)
-console.log(cardInfo.children[4].innerText.replace('undefined',`${habits[habitIndex].completedDaysCount}`)) //= cardElemArr[0].innerText.replace('undefined',`${habits[habitIndex].completedDaysCount}`)
+    const habitItem = document.getElementById(`habit-item-${habitIndex}`);
 
-    if (!habitCard) return;
+    const completedDaysElem = document.getElementById(`completed-days-${habitIndex}`)
     const habit = habits[habitIndex];
-    if (habit.isCompleted) {
-        habitCard.classList.add("completed");
+
+    if (completedDaysElem) {
+        completedDaysElem.textContent = `Completed Days: ${habit.completedDaysCount}`;
+    }
+    if (!habitItem) return;
+
+    const allChecked = habit.completedDaysCount === parseInt(habit.habitGoalDays, 10);
+
+    habit.isCompleted = allChecked;
+    if (allChecked) {
+        habitItem.classList.add("completed");
         const markCompleteButton = document.querySelector(`#habit-container-${habitIndex} #mark-completed`);
 
         if (markCompleteButton) {
             markCompleteButton.classList.add("hide");
         }
+
     } else {
-        // habitCard.classList.remove("completed");
+        habitItem.classList.remove("completed");
     }
+
 }
+
+
 function deleteHabit(habitIndex) {
     habits.splice(habitIndex, 1);//remove habit from index
     displayHabits();
