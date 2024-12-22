@@ -72,12 +72,12 @@
         <input type="date" id="start-date" min="2025-01-01" max="2025-12-31" value="2025-01-01" required />
         <span class="validity"></span>
       </div>
-    <input type="text" id="end-date" placeholder="Habit End Date "/>
+    <input type="text" id="end-date" placeholder="Habit End Date" disabled />
     
+    <button type="submit" id="add-habit">Add habit</button>
   </form>
-  
-  <button type="submit" id="add-habit">Add habit</button>
-    <br><br>
+  <br><br><hr>
+    <div id="habits-section">
     <center><h2 style="display: block">Your Habits</h2></center>
     <hr>
     <br>
@@ -87,7 +87,7 @@
 
       <p id="complete-intro">Your Daily Habits Trackings</p>
       <div id="habit-completing-list"></div> 
-      
+    </div>
       
     <!-- footer  -->
     <footer id="footer">
