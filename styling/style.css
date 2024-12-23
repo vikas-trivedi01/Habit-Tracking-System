@@ -437,10 +437,12 @@ color: #f30920;
 
 .habit-title {
   text-align: center;
-  border: 3px solid #f5f5f5;
+  /* border: 3px solid #f5f5f5; */
   width: 40%;
   margin: 1% 35%;
   font-weight: 700;
+  font-size: larger;
+  color: rgb(247, 239, 243);
   border-radius: var(--border-radius);
 }
 /* .habit-checkboxes{
@@ -457,7 +459,7 @@ color: #f30920;
   margin-right: 20px;
 }
 .habit-container {
-  background-color: #0af0c2;
+  background-color: #85c9f9;
   border-radius: var(--border-radius);
   padding: 20px;
   margin-bottom: 3%;
@@ -477,8 +479,9 @@ color: #f30920;
   margin: 5% 1%;
   border: 6px double #6c1fe8;
   padding: 2%;
-  background: linear-gradient(10deg, #FF9A9E, #8efbc1);
+  background: linear-gradient(120deg, #0cf8dcf3, #ae61e6c3); 
 }
+
 .habit-extra-details{
   display: flex;
   border-top: 3px dashed #0b0808;
@@ -487,7 +490,7 @@ color: #f30920;
   margin-top: 20px;
   padding: 10px;
   background-color: #ecf6ec;
-  ;
+  
 }
 .habit-extra-details p{
   background-color: #a4ede2;
@@ -542,3 +545,11 @@ color: #f30920;
   justify-content: space-between;
 
 } */
+
+.streak-highlight{
+  background-color: #09f3d0 !important;
+  margin-right: 12px;
+  text-align: center;
+  border-radius: var(--border-radius);
+  padding: 2px;
+}
