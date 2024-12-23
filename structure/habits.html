@@ -37,30 +37,47 @@
       "Track Your Habits, Transform Your Life"
     </marquee>
 
-    
     <!-- intro  -->
     <div id="intro">
-      <p>"Welcome to your Habit Tracker! Small daily actions lead to massive transformations. Start building your best self today."</p>
+      <h2 style="padding: 12px">Transform Your Habits into Achievements</h2>
+      <p style="padding: 8px">
+        "Welcome to your Habit Tracker! Small daily actions lead to massive
+        transformations. Start building your best self today."
+      </p>
+      <hr style="border: 3px solid rgb(0, 60, 255)" />
+
+      <p style="padding: 25px; text-align: justify">
+        Our Habit Tracker is designed to empower you on your journey toward
+        self-improvement. With seamless Add, Edit, Delete, and View
+        functionalities, tracking habits becomes effortless. Visualize your
+        progress and build consistency through interactive features that promote
+        accountability. Whether you're focusing on health, productivity, or
+        personal growth, this tool adapts to your goals, keeping you motivated
+        every day. Start cultivating positive habits and watch small actions
+        lead to big transformations!
+      </p>
     </div>
     <div id="random-quote">
-        <h4>Qoute of The Day For You</h4>
+      <h4>Qoute of The Day For You</h4>
     </div>
-    <hr><br>
-    <!-- Habits CRUD Operations Structure -->
+    <hr />
+    <br />
+
+    <!-- Habits Creation and Viewing Structure -->
     <p id="habit-header">Add New Habits Instantly</p>
     <form class="habit-form" id="habit-form">
-      <input
-        type="text"
-        id="name"
-        placeholder="Habit Name"
-        required
+      <input 
+        type="text" 
+        id="name" 
+        placeholder="Habit Name" 
+        required 
       />
-      <input
-        type="text"
-        id="description"
-        placeholder="Habit Description"
+      <input 
+        type="text" 
+        id="description" 
+        placeholder="Habit Description" 
       />
-      
+
       <input
         type="number"
         id="goal-days"
@@ -69,26 +86,39 @@
       />
 
       <div id="habit-dates">
-        <input type="date" id="start-date" min="2025-01-01" max="2026-12-31" value="2025-01-01" required />
+        <input
+          type="date"
+          id="start-date"
+          min="2025-01-01"
+          max="2026-12-31"
+          value="2025-01-01"
+          required
+        />
         <span class="validity"></span>
       </div>
-    <input type="text" id="end-date" placeholder="Habit End Date" disabled />
-    
-    <button type="submit" id="add-habit">Add habit</button>
-  </form>
-  <br><br><hr>
-    <div id="habits-section">
-    <center><h2 style="display: block">Your Habits</h2></center>
-    <hr>
-    <br>
-    <br />
+      <input 
+        type="text" 
+        id="end-date" 
+        placeholder="Habit End Date" 
+        disabled 
+      />
 
-      <div id="habit-list"></div> 
+      <button type="submit" id="add-habit">Add habit</button>
+    </form>
+    <br><br>
+    <hr>
+    <div id="habits-section">
+      <center><h2 style="display: block">Your Habits</h2></center>
+      <hr>
+      <br>
+      <br>
+
+      <div id="habit-list"></div>
 
       <p id="complete-intro">Your Daily Habits Trackings</p>
-      <div id="habit-completing-list"></div> 
+      <div id="habit-completing-list"></div>
     </div>
-      
+
     <!-- footer  -->
     <footer id="footer">
       <div id="foot-line">
@@ -125,7 +155,7 @@
         <i class="me-3 fa-regular fa-copyright fa-xl"></i> &nbsp;&nbsp;All
         Rights Reserved
       </div>
-    </footer> 
+    </footer>
 
     <!-- <script src="../functionalities/randomQuotes.js"></script> -->
     <script src="../functionalities/habitsCRUD.js"></script>
