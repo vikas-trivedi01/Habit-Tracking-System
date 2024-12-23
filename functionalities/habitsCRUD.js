@@ -164,25 +164,35 @@ function displayHabits() {
         habit_showdetails.className = "habit-expand";
         habit_showdetails.setAttribute("expanded", "false");
         habit_showdetails.classList.add('habit-expand-color');
+        habit_extra_details.classList.add("hide")
 
         habit_showdetails.addEventListener("click", () => {
 
             let isExpanded = habit_showdetails.getAttribute("expanded") == "true";
-            habit_showdetails.classList.remove(`${habit_showdetails.className.includes("habit-expand-color") ? "habit-expand-color" : "habit-expanded-color"}`);
-            habit_showdetails.innerHTML = isExpanded ? '<i class="fa-solid fa-circle-arrow-up"></i>' : '<i class="fa-solid fa-circle-arrow-down"></i>';
-            habit_showdetails.classList.add(`${isExpanded ? 'habit-expanded-color' : 'habit-expand-color'}`);
-            habit_showdetails.setAttribute("expanded", !isExpanded);
 
+            habit_showdetails.classList.remove(!isExpanded ? "habit-expand-color" : "habit-expanded-color");
+            habit_showdetails.innerHTML = isExpanded ? '<i class="fa-solid fa-circle-arrow-down"></i>' : '<i class="fa-solid fa-circle-arrow-up"></i>';
+            
+            habit_extra_details.classList.remove(isExpanded ? "show" : "hide");
+            habit_extra_details.classList.add(isExpanded ? "hide" : "show");
+
+
+            habit_showdetails.classList.add(!isExpanded ? 'habit-expanded-color' : 'habit-expand-color');
+            
+            habit_showdetails.setAttribute("expanded", !isExpanded);
+           
         })
 
         let completedPara = document.createElement("div");
         let completedParaDiv = document.createElement("div");
         let completedParaTitle = document.createElement("p");
+
         habit.completedDays.forEach(num => {
             let p = document.createElement("p");
             p.innerText = num;
             completedPara.appendChild(p);
         })
+
         completedParaTitle.innerText = "Days When Habit Was Completed";
         completedParaDiv.appendChild(completedParaTitle);
         completedParaDiv.appendChild(completedPara);
@@ -194,7 +204,7 @@ function displayHabits() {
             <p>Start Date: ${habit.habitStartDate}</p>
             <p>Days Remaining to Complete: ${habit.habitGoalDays - habit.completedDaysCount}</p>
             <p id="completed-days-${habitIndex}">Completed Days: ${habit.completedDaysCount}</p>
-            </div><br><br>
+            </div><br>
         `;
 
         habit_extra_details.appendChild(completedParaDiv);
