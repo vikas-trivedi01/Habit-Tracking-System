@@ -97,7 +97,7 @@ function displayHabits() {
         habit_elem.className = habit.isCompleted ? "habit-item completed" : "habit-item";
 
         habit_elem.innerHTML = `
-            <div id="habit-info">
+            <div id="habit-info-${habitIndex}">
             <p>Habit: ${habit.habitName}</p>
             <p>Start Date: ${habit.habitStartDate}</p>
             <p>Description: ${habit.habitDescription}</p>
@@ -105,8 +105,8 @@ function displayHabits() {
             <p id="completed-days-${habitIndex}">Completed Days: ${habit.completedDaysCount}</p>
             </div>
             <div id="icons">
-            <span  id="edit" class="${habit.isCompleted ? 'hide' : 'habit-icons'} " onclick="editHabit(${habitIndex})"><i class="fa-regular fa-pen-to-square"></i></span>
-            <span class=" ${habit.isCompleted ? 'habit-icons w-full' : 'habit-icons'} " id="delete"  onclick="deleteHabit(${habitIndex})"><i class="fa-solid fa-trash-can"></i></span>
+            <span  id="edit" class="${habit.isCompleted ? 'hide' : 'habit-icons'} " onclick="editHabit(${habitIndex}) "><i class="fa-regular fa-pen-to-square"></i></span>
+            <span class=" ${habit.isCompleted ? 'habit-icons w-full' : 'habit-icons'} " id="delete"  onclick="deleteHabit(${habitIndex})" onmouseenter="cardShrink(${habitIndex})" onmouseleave="cardGrow(${habitIndex})"><i class="fa-solid fa-trash-can"></i></span>
             </div>
             `;
 
@@ -126,8 +126,14 @@ function displayHabits() {
         habitNameElem.textContent = `Habit Name : ${habit.habitName}`;
         habitNameElem.className = 'habit-title';
 
+
+        let week_checkboxes = null;
+        let week_checkboxesTitle = null;
         for (let day = 1; day <= habit.habitGoalDays; day++) {
             const checkbox = document.createElement("input");
+            const dayNum = document.createElement("p");
+
+            dayNum.innerText = `Day ${day}`;
             checkbox.type = "checkbox";
             checkbox.className = "habit-checkboxes";
             checkbox.setAttribute("data-day", day);
@@ -136,14 +142,23 @@ function displayHabits() {
             if (habit.completedDays.includes(day)) {
                 checkbox.checked = true;
             }
-            const container = document.createElement("div");
 
-            container.innerHTML += `<p>Day ${day}:</p>`;
+            if (day % 7 == 1) {
+                week_checkboxes = document.createElement("div");
+                week_checkboxesTitle = document.createElement("h4");
+                week_checkboxesTitle.innerText = `Week No ${habit_compliting_container.children.length}`;
+                week_checkboxes.appendChild(week_checkboxesTitle);
+                week_checkboxes.classList.add("week-checkboxes");
+                habit_compliting_container.appendChild(week_checkboxes);
+            }
 
-            container.appendChild(checkbox);
-            habit_compliting_container.appendChild(container);//h_c_c is container for content of one habit
+            const habit_day = document.createElement("div");
+            habit_day.appendChild(dayNum);
+            habit_day.appendChild(checkbox);
+            week_checkboxes.appendChild(habit_day);
 
-            checkbox.addEventListener('click', (e) => {
+
+        checkbox.addEventListener('click', (e) => {
                 const isChecked = e.target.checked;
                 const checkboxIndex = parseInt(e.target.getAttribute("data-day"), 10);
 
@@ -157,7 +172,12 @@ function displayHabits() {
                 }
                 habit.isCompleted = habit.completedDaysCount == parseInt(habit.habitGoalDays, 10);
                 handleCheckboxChange(habitIndex);
+
+                //without below two lines if we uncheck a checked box it will not reflect data instantly we need a reload for it
+                saveHabits(); //save habits instantly without debouncing in-order to reflect checkbox's effect habit's data on UI
+                window.location.reload();//reload to see effect when checkbox checked
             });
+
 
         }
         habit_showdetails.innerHTML = '<i class="fa-solid fa-circle-arrow-down"></i>';
@@ -172,15 +192,15 @@ function displayHabits() {
 
             habit_showdetails.classList.remove(!isExpanded ? "habit-expand-color" : "habit-expanded-color");
             habit_showdetails.innerHTML = isExpanded ? '<i class="fa-solid fa-circle-arrow-down"></i>' : '<i class="fa-solid fa-circle-arrow-up"></i>';
-            
+
             habit_extra_details.classList.remove(isExpanded ? "show" : "hide");
             habit_extra_details.classList.add(isExpanded ? "hide" : "show");
 
 
             habit_showdetails.classList.add(!isExpanded ? 'habit-expanded-color' : 'habit-expand-color');
-            
+
             habit_showdetails.setAttribute("expanded", !isExpanded);
-           
+
         })
 
         let completedPara = document.createElement("div");
@@ -193,17 +213,19 @@ function displayHabits() {
             completedPara.appendChild(p);
         })
 
-        completedParaTitle.innerText = "Days When Habit Was Completed";
+        completedParaTitle.innerText = `${habit.completedDays.length ? "Days When Habit Was Completed" : "Habit was not completed on any day"}`;
+        // completedParaTitle.innerText =`${habit.completedDays.length? "Days When Habit Was Completed":"Habit was not completed on any day"}`;
         completedParaDiv.appendChild(completedParaTitle);
         completedParaDiv.appendChild(completedPara);
-        completedParaDiv.classList.add("completed-para-div")
-        completedPara.classList.add("completed-para")
+        completedParaDiv.classList.add("completed-para-div");
+        completedPara.classList.add("completed-para");
+
         habit_extra_details.innerHTML = `
             <div class="habit-extra-details">
-            <p>Habit Description: ${habit.habitDescription}</p>
-            <p>Start Date: ${habit.habitStartDate}</p>
-            <p>Days Remaining to Complete: ${habit.habitGoalDays - habit.completedDaysCount}</p>
-            <p id="completed-days-${habitIndex}">Completed Days: ${habit.completedDaysCount}</p>
+            <p>Habit Description<br> ${habit.habitDescription}</p>
+            <p>Start Date<br> ${habit.habitStartDate}</p>
+            <p style=${habit.isCompleted ? 'display:none' : ''}>Days Remaining to Complete<br> ${habit.habitGoalDays - habit.completedDaysCount}</p>
+            <p id="completed-days-${habitIndex}">${habit.isCompleted ? 'Habit Already Completed!' : `Completed Days<br> ${habit.completedDaysCount}`}</p>
             </div><br>
         `;
 
@@ -222,18 +244,15 @@ function displayHabits() {
 
         habitCompletingList.appendChild(habit_container);
     });
-
-    saveHabits();
+    saveHabitsDebounced();
 }
 function handleCheckboxChange(habitIndex) {
     const habit = habits[habitIndex];
     const allChecked = habit.completedDaysCount === parseInt(habit.habitGoalDays, 10);
 
     if (allChecked) {
-        console.log('before1')
         completeHabit(habitIndex);
     } else if (habit.isCompleted) {
-        console.log('before2')
         habit.isCompleted = false; // Unmark the habit as completed
         updateHabitUI(habitIndex); // Just update the UI
         saveHabitsDebounced();
@@ -246,7 +265,6 @@ function updateHabitUI(habitIndex) {
     const habitItem = document.getElementById(`habit-item-${habitIndex}`);
     const completedDaysElem = document.getElementById(`completed-days-${habitIndex}`);
     const markCompleteButton = document.querySelector(`#habit-container-${habitIndex} #mark-completed`);
-    // const allChecked = habit.completedDaysCount === parseInt(habit.habitGoalDays, 10);
     const editButton = document.querySelector(`#habit-item-${habitIndex} #edit`);
     const deleteButton = document.querySelector(`#habit-item-${habitIndex} #delete`);
 
@@ -254,13 +272,24 @@ function updateHabitUI(habitIndex) {
 
     completedDaysElem.textContent = `Completed Days: ${habit.completedDaysCount}`;
     habitItem.classList.toggle("completed", habit.isCompleted)
-    // console.log('ertr')
+
     if (markCompleteButton) markCompleteButton.classList.toggle("hide", habit.isCompleted);
     if (editButton) editButton.classList.toggle("hide", habit.isCompleted);
     if (deleteButton) deleteButton.classList.toggle("w-full", habit.isCompleted);
 }
 
+function cardShrink(habitIndex) {
 
+    const card = document.getElementById(`habit-info-${habitIndex}`);
+    card.classList.add("minimize");
+}
+function cardGrow(habitIndex) {
+
+    const card = document.getElementById(`habit-info-${habitIndex}`);
+    card.classList.add("maximize");
+    setTimeout(() => window.location.reload(), 1000)
+
+}
 function deleteHabit(habitIndex) {
     habits.splice(habitIndex, 1);//remove habit from index
     displayHabits();
