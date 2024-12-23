@@ -4,13 +4,13 @@ document.getElementById("start-date").addEventListener("change", () => {
     const habitStartDate = document.getElementById("start-date").value;
     const habitGoalDays = parseInt(document.getElementById("goal-days").value);
     const endingDateField = document.getElementById("end-date");
-    
+
     const endingDate = new Date(habitStartDate);
     endingDate.setDate(endingDate.getDate() + habitGoalDays);
 
     const formattedDate = `${(endingDate.getMonth() + 1).toString().padStart(2, '0')} /` +
-    ` ${endingDate.getDate().toString().padStart(2, '0')} /` +
-    ` ${endingDate.getFullYear()}
+        ` ${endingDate.getDate().toString().padStart(2, '0')} /` +
+        ` ${endingDate.getFullYear()}
     `;
 
     // Assign the formatted date to the input field
@@ -27,7 +27,7 @@ function addHabit(e) {
     const habitDescription = document.getElementById("description").value.trim();
     const habitGoalDays = parseInt(document.getElementById("goal-days").value);
     const habitEndDate = document.getElementById("end-date").value;
-    
+
     if (!habitName && !habitStartDate) {
         alert("Please enter name and starting date of habit.");
         return;
@@ -39,17 +39,17 @@ function addHabit(e) {
         habitDescription: habitDescription,
         isCompleted: false,
         habitGoalDays: habitGoalDays,
-        habitEndDate:habitEndDate
+        habitEndDate: habitEndDate
     });
 
-    
+
 
     //empty the fields
     document.getElementById("name").value = "";
     document.getElementById("start-date").value = "";
     document.getElementById("description").value = "";
     document.getElementById("goal-days").value = "";
-    
+
     //display and save tasks to localstorage
     displayHabits();
     saveHabitsDebounced();
@@ -61,7 +61,7 @@ function completeHabit(habitIndex) {
         habit.isCompleted = true; // Mark as completed
     }
     alert(`Congratulations! You have completed the habit: ${habit.habitName}`);
-    
+
     // Update UI and save changes
     updateHabitUI(habitIndex);
     saveHabitsDebounced();
@@ -69,12 +69,12 @@ function completeHabit(habitIndex) {
 
 
 function displayHabits() {
-    
+
     const habitList = document.getElementById("habit-list");
     const habitCompletingList = document.getElementById("habit-completing-list");
     habitList.innerHTML = "";
     habitCompletingList.innerHTML = "";
-    
+
     if (habits.length === 0) {
         habitList.innerText = "No Habits to Display";
     }
@@ -142,7 +142,7 @@ function displayHabits() {
 
             container.appendChild(checkbox);
             habit_compliting_container.appendChild(container);//h_c_c is container for content of one habit
-            
+
             checkbox.addEventListener('click', (e) => {
                 const isChecked = e.target.checked;
                 const checkboxIndex = parseInt(e.target.getAttribute("data-day"), 10);
@@ -162,37 +162,47 @@ function displayHabits() {
         }
         habit_showdetails.innerHTML = '<i class="fa-solid fa-circle-arrow-down"></i>';
         habit_showdetails.className = "habit-expand";
-        habit_showdetails.setAttribute("expanded","false");
+        habit_showdetails.setAttribute("expanded", "false");
         habit_showdetails.classList.add('habit-expand-color');
 
-        habit_showdetails.addEventListener("click",()=>{
+        habit_showdetails.addEventListener("click", () => {
 
             let isExpanded = habit_showdetails.getAttribute("expanded") == "true";
-            habit_showdetails.classList.remove(`${habit_showdetails.className.includes("habit-expand-color")?"habit-expand-color":"habit-expanded-color"}`);
-            habit_showdetails.innerHTML = isExpanded? '<i class="fa-solid fa-circle-arrow-up"></i>':'<i class="fa-solid fa-circle-arrow-down"></i>';
-            habit_showdetails.classList.add(`${isExpanded? 'habit-expanded-color':'habit-expand-color'}`);
-            habit_showdetails.setAttribute("expanded",!isExpanded);
+            habit_showdetails.classList.remove(`${habit_showdetails.className.includes("habit-expand-color") ? "habit-expand-color" : "habit-expanded-color"}`);
+            habit_showdetails.innerHTML = isExpanded ? '<i class="fa-solid fa-circle-arrow-up"></i>' : '<i class="fa-solid fa-circle-arrow-down"></i>';
+            habit_showdetails.classList.add(`${isExpanded ? 'habit-expanded-color' : 'habit-expand-color'}`);
+            habit_showdetails.setAttribute("expanded", !isExpanded);
 
         })
 
-    //     habit_extra_details.innerHTML = `
-    //         <div class="habit-extra-details">
-    //         <p>Habit Description: ${habit.habitDescription}</p>
-    //         <p>Start Date: ${habit.habitStartDate}</p>
-    //         <p>Days Remaining to Complete: ${habit.habitGoalDays - habit.completedDaysCount}</p>
-    //         <p>Completed Days: ${habit.completedDays.forEach(elem=>{
-    //            console.log(elem)
-    // })}</p>
-    //         <p id="completed-days-${habitIndex}">Completed Days: ${habit.completedDaysCount}</p>
-    //         </div>
-    //     `;
-       
+        let completedPara = document.createElement("div");
+        let completedParaDiv = document.createElement("div");
+        let completedParaTitle = document.createElement("p");
+        habit.completedDays.forEach(num => {
+            let p = document.createElement("p");
+            p.innerText = num;
+            completedPara.appendChild(p);
+        })
+        completedParaTitle.innerText = "Days When Habit Was Completed";
+        completedParaDiv.appendChild(completedParaTitle);
+        completedParaDiv.appendChild(completedPara);
+        completedParaDiv.classList.add("completed-para-div")
+        completedPara.classList.add("completed-para")
+        habit_extra_details.innerHTML = `
+            <div class="habit-extra-details">
+            <p>Habit Description: ${habit.habitDescription}</p>
+            <p>Start Date: ${habit.habitStartDate}</p>
+            <p>Days Remaining to Complete: ${habit.habitGoalDays - habit.completedDaysCount}</p>
+            <p id="completed-days-${habitIndex}">Completed Days: ${habit.completedDaysCount}</p>
+            </div><br><br>
+        `;
 
+        habit_extra_details.appendChild(completedParaDiv);
         habit.hasOwnProperty('compltedDays') ? delete habit.compltedDays : '';
-        
+
         habit_compliting_container.className = 'habit-checkboxes-container';
         habit_header.className = 'habit-header';
-        
+
         habit_header.appendChild(habitNameElem);
         habit_header.appendChild(habit_showdetails);
         habit_container.appendChild(habit_header);
@@ -208,15 +218,15 @@ function displayHabits() {
 function handleCheckboxChange(habitIndex) {
     const habit = habits[habitIndex];
     const allChecked = habit.completedDaysCount === parseInt(habit.habitGoalDays, 10);
-    
-    if (allChecked ) {
+
+    if (allChecked) {
         console.log('before1')
-        completeHabit(habitIndex); 
+        completeHabit(habitIndex);
     } else if (habit.isCompleted) {
         console.log('before2')
         habit.isCompleted = false; // Unmark the habit as completed
         updateHabitUI(habitIndex); // Just update the UI
-        saveHabitsDebounced(); 
+        saveHabitsDebounced();
     }
 
 
@@ -229,15 +239,15 @@ function updateHabitUI(habitIndex) {
     // const allChecked = habit.completedDaysCount === parseInt(habit.habitGoalDays, 10);
     const editButton = document.querySelector(`#habit-item-${habitIndex} #edit`);
     const deleteButton = document.querySelector(`#habit-item-${habitIndex} #delete`);
-   
+
     if (!habitItem || !completedDaysElem) return;
 
     completedDaysElem.textContent = `Completed Days: ${habit.completedDaysCount}`;
-    habitItem.classList.toggle("completed",habit.isCompleted)
-// console.log('ertr')
-   if(markCompleteButton) markCompleteButton.classList.toggle("hide",habit.isCompleted);
-   if(editButton) editButton.classList.toggle("hide",habit.isCompleted);
-   if(deleteButton) deleteButton.classList.toggle("w-full",habit.isCompleted);
+    habitItem.classList.toggle("completed", habit.isCompleted)
+    // console.log('ertr')
+    if (markCompleteButton) markCompleteButton.classList.toggle("hide", habit.isCompleted);
+    if (editButton) editButton.classList.toggle("hide", habit.isCompleted);
+    if (deleteButton) deleteButton.classList.toggle("w-full", habit.isCompleted);
 }
 
 
