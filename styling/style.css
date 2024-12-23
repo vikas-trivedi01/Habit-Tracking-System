@@ -486,7 +486,8 @@ color: #f30920;
   justify-content: space-evenly;
   margin-top: 20px;
   padding: 10px;
-  background-color: #f5af93;
+  background-color: #ecf6ec;
+  ;
 }
 .habit-extra-details p{
   background-color: #a4ede2;
@@ -504,7 +505,7 @@ color: #f30920;
   margin-bottom: 10px;
   padding: 10px;
   align-items: center;
-  background-color: #f5af93;
+  background-color: #ecf6ec;
 }
 .completed-para{
   display: flex;
@@ -519,5 +520,25 @@ color: #f30920;
   width: 100%;
 }
 .week-checkboxes{
-  border: 3px solid red;
+  border: 3px solid rgb(4, 10, 30);
+  display: flex; 
+   justify-content: space-between;
+  margin: 14px;
+  padding: 14px;
+  border-radius: var(--border-radius);
 }
+.week-checkboxes h4{
+  margin-right: 32px;
+}
+/* .habit-checkboxes-container{ */
+  /* display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between; */
+/*}*/
+/* .habit_container{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+} */
