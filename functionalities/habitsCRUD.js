@@ -79,11 +79,13 @@ function displayHabits() {
     }
 
 
+    let weeklyProgress = [];
     habits.forEach((habit, habitIndex) => {
-        //create necessary elements
         habit.completedDays = habit.completedDays || [];
         habit.completedDaysCount = habit.completedDaysCount || 0;
         habit.days = [];
+
+        //create necessary elements
         const habit_elem = document.createElement("div");
         const habit_complete = document.createElement("div");
         const habit_card = document.createElement("div");
@@ -148,17 +150,26 @@ function displayHabits() {
                 week_checkboxesTitle = document.createElement("h4");
                 week_checkboxesTitle.innerText = `Week No ${habit_compliting_container.children.length + 1}`;
                 week_checkboxes.appendChild(week_checkboxesTitle);
-                week_checkboxes.classList.add("week-checkboxes",`week-checkboxes-${habitIndex}`);
+                week_checkboxes.classList.add("week-checkboxes");
                 habit_compliting_container.appendChild(week_checkboxes);
             }
 
+            
             const habit_day = document.createElement("div");
             habit_day.appendChild(dayNum);
             habit_day.appendChild(checkbox);
             week_checkboxes.appendChild(habit_day);
 
+            const progressContainer = document.createElement("div");
+            const progressBar = document.createElement("span");
+            const progressIndicator = document.createElement("span");
+         progressIndicator.classList.add("progress-text");
+         progressBar.classList.add("progress-bar");
 
-            // habit.days = Array(habit.habitGoalDays).fill(false);
+            progressIndicator.innerText = `Week 0: 0% completed`;
+            progressContainer.appendChild(progressBar);
+            progressContainer.appendChild(progressIndicator);
+
             if (!Array.isArray(habit.days) || habit.days.length === 0) {
                 habit.days = Array.from({ length: habit.habitGoalDays }, (_, index) =>
                     habit.completedDays.includes(index)
@@ -169,7 +180,7 @@ function displayHabits() {
                 const isChecked = e.target.checked;
                 const checkboxDay = parseInt(e.target.getAttribute("data-day"), 10);
 
-                habits[habitIndex].days[checkboxDay ] = isChecked;
+                habits[habitIndex].days[checkboxDay] = isChecked;
 
                 if (isChecked) {
                     habit.completedDaysCount++;
@@ -180,19 +191,18 @@ function displayHabits() {
                     habit.completedDays = habit.completedDays.filter(day => day !== checkboxDay)
                 }
                 habit.isCompleted = habit.completedDaysCount == parseInt(habit.habitGoalDays, 10);
-                // updateStreakDisplay(habitIndex);
-                // updateCompletedDisplay(habitIndex);
 
                 updateStreakHighlight(e.target, isChecked);
                 updateHabitDetails(habitIndex);
+                calculateWeeklyProgress(habitIndex);
+                calculateProgressPercentages();
+                updateProgressUI();
+                updateCompletedList(habitIndex);
                 saveHabits(); //save habits instantly without debouncing in-order to reflect checkbox's effect habit's data on UI
             });
-            // updateHabitDetails(habitIndex);
-            // updateStreakDisplay(habitIndex);
-            // updateCompletedDisplay(habitIndex);
-
 
         }
+
         habit_showdetails.innerHTML = '<i class="fa-solid fa-circle-arrow-down"></i>';
         habit_showdetails.className = "habit-expand";
         habit_showdetails.setAttribute("expanded", "false");
@@ -222,22 +232,28 @@ function displayHabits() {
         let completedParaDiv = document.createElement("div");
         let completedParaTitle = document.createElement("p");
 
+        completedPara.id = `completed-para-${habitIndex}`;
+        completedParaDiv.id = `completed-para-div-${habitIndex}`;
+        completedParaTitle.id = `completed-para-title-${habitIndex}`;
+
         habit.completedDays.forEach(num => {
             let p = document.createElement("p");
             p.innerText = num;
             completedPara.appendChild(p);
         })
 
-        completedParaTitle.innerText = `${habit.completedDays.length ? "Days When Habit Was Completed" : "Habit was not completed on any day"}`;
-        // completedParaTitle.innerText =`${habit.completedDays.length? "Days When Habit Was Completed":"Habit was not completed on any day"}`;
-        completedParaDiv.appendChild(completedParaTitle);
+        completedParaTitle.innerText = `${habit.completedDays.length > 0 ? "Days When Habit Was Completed" : "Habit was not completed on any day"}`;
+        completedParaDiv.appendChild(completedParaTitle); 
         completedParaDiv.appendChild(completedPara);
+
+        updateCompletedList(habitIndex);
+
         completedParaDiv.classList.add("completed-para-div");
         completedPara.classList.add("completed-para");
 
-        // <p id="remaining-days-${habitIndex}"style=${habit.isCompleted ? 'display:none' : ''}></p>
-        // <p id="completed-days-${habitIndex}"></p>
-        // <p id="streak-days-${habitIndex}">No Streaks</p>
+        
+
+
         habit_extra_details.innerHTML = `
         <div class="habit-extra-details">
             <p>Habit Description<br> ${habit.habitDescription}</p>
@@ -246,10 +262,6 @@ function displayHabits() {
              <p id="remaining-days-${habitIndex}" style=${habit.isCompleted ? 'display:none' : ''}>
             Days Remaining to Complete: ${habit.habitGoalDays - habit.completedDaysCount}
         </p>
-        <p id="completed-days-${habitIndex}">
-            ${habit.isCompleted ? 'Habit Already Completed!' : 'Not Completed on Any Day'}
-        </p>
-        <p id="streak-days-${habitIndex}">No Streaks</p>
             </div><br>
         `;
 
@@ -267,98 +279,85 @@ function displayHabits() {
         habit_container.className = 'habit-container';
 
         habitCompletingList.appendChild(habit_container);
-        // updateCompletedDisplay(habitIndex);
-        // updateStreakDisplay(habitIndex);
-        updateHabitDetails(habitIndex);
-    
-   
-});
-saveHabitsDebounced();
-    initializeHabits();
-}
 
-function initializeHabits() {
-    habits.forEach((habit, habitIndex) => {
-        habit.days.forEach((isChecked, dayIndex) => {
-            const checkbox = document.querySelector(
-                `input[data-habit-index="${habitIndex}"][data-day="${dayIndex}"]`
-            );
-            if (checkbox) {
-                checkbox.checked = isChecked;
-                updateStreakHighlight(checkbox,isChecked);
-            }
+        updateHabitDetails(habitIndex);
+
+    });
+    saveHabitsDebounced();
+}
+function calculateWeeklyProgress(habitIndex){
+    const weeks = document.querySelectorAll(".week-checkboxes");
+console.log('ds')
+    weeklyProgress = [];
+    weeks.forEach((week,index)=>{
+        const checkboxes = week.querySelectorAll(`input[data-habit-index = "${habitIndex}"]`);
+
+        const completed = Array.from(checkboxes).filter(cb => cb.checked).length;
+
+        weeklyProgress.push({
+            week:index+1,
+            completed:completed,
+            total:checkboxes.length
         });
-
-        // updateHabitUI(habitIndex);
-        updateHabitDetails(habitIndex);
-        // updateStreakDisplay(habitIndex);
-        // updateCompletedDisplay(habitIndex);
-    });
-}
-
-
-// function calculateStreak(habitIndex) {
-//     const habit = habits[habitIndex];
-//     let streak = 0;
-
-//     const checkboxes = document.querySelectorAll(
-//         `input[data-habit-index="${habitIndex}"]`
-//     );
-// checkboxes.forEach((checkbox, dayIndex) => {
-//     const isChecked = habit.days[dayIndex + 1];
-//         if (isChecked) {
-//             streak++;
-//             if (checkbox?.parentElement) {
-//                 checkbox.parentElement.classList.add("streak-highlight");
-//             }
-//         } else {
-//             if (checkbox?.parentElement) {
-//                 checkbox.parentElement.classList.remove("streak-highlight");
-//             }
-//             streak = 0;
-//         }
-//     });
-
-//     return streak;
-//}
-function calculateStreak(habitIndex) {
-
-    const weekStreaks = Array.from(document.querySelectorAll(`.week-checkboxes-${habitIndex}`)).map(node=>{
-        return Array.from(node.children).reduce((count,child)=>{
-            return count + (child.querySelector(".streak-highlight")?1:0);
-
-},0);
     });
 
-    const totalStreak = weekStreaks.reduce((sum,streak)=>{
-       return sum + streak
-    },0);
-    return totalStreak;
 }
+function calculateProgressPercentages() {
+    weeklyProgress.forEach(week => {
+        week.percentage = ((week.completed / week.total )* 100).toFixed(2);
+    })
+}
+function updateProgressUI() {
+    const weeks = document.querySelectorAll(".week-checkboxes");
+    const progressContainer = document.createElement("div");
 
-// function updateStreakDisplay(habitIndex) {
-//     const streakElem = document.querySelector(`#streak-days-${habitIndex}`);
-//     const streakDays = calculateStreak(habitIndex);
-//     if (streakElem) {
-//         streakElem.innerHTML = `Streak<br>${streakDays}`;
-//     }
-// }
+    weeklyProgress.forEach((weekData,index)=>{
+        let progressText = weeks[index].querySelector(".progress-text");
+        let progressBar = weeks[index].querySelector(".progress-bar");
+
+        if(!progressText){
+            progressText = document.createElement("span");
+            progressText.className = "progress-text";
+            progressContainer.appendChild(progressText);
+        }
+        if(!progressBar){
+            progressBar = document.createElement("span");
+            progressBar.className = "progress-bar";
+            progressContainer.appendChild(progressBar);
+            
+        }
+        progressText.innerText = `Week : ${weekData.week} ${weekData.percentage}% Completed`;
+        progressBar.style.width  = weekData.percentage;
+        weeks[index].appendChild(progressContainer);
+    });
+}
+function updateCompletedList(habitIndex) {
+    const habit = habits[habitIndex];
+    const completedPara = document.getElementById(`completed-para-${habitIndex}`);
+    const completedParaTitle = document.getElementById(`completed-para-title-${habitIndex}`);
+    const completedParaDiv = document.getElementById(`completed-para-div-${habitIndex}`);
+
+    habit.completedDays.forEach(num => {
+        let p = document.createElement("p");
+        p.innerText = num;
+        completedPara.appendChild(p);
+    })
+
+    completedParaTitle.innerText = `${habit.completedDays.length > 0 ? "Days When Habit Was Completed" : "Habit was not completed on any day"}`;
+    completedParaDiv.appendChild(completedParaTitle); 
+    completedParaDiv.appendChild(completedPara);
+}
 function updateHabitDetails(habitIndex) {
     const habit = habits[habitIndex];
 
     const completedDaysCount = habit.completedDaysCount;
-    const streakDays = calculateStreak(habitIndex);
     const daysRemaining = habit.habitGoalDays - completedDaysCount;
 
     const compltedElem = document.querySelector(`#completed-days-${habitIndex}`);
-    const streakElem = document.querySelector(`#streak-days-${habitIndex}`);
     const remainingElem = document.querySelector(`#remaining-days-${habitIndex}`);
 
     if (compltedElem) {
         compltedElem.textContent = habit.isCompleted ? "Habit Already Completed!" : `Completed Days: ${completedDaysCount}`;
-    }
-    if (streakElem) {
-        streakElem.textContent = `Streak: ${streakDays}`;
     }
 
     if (remainingElem) {
@@ -367,43 +366,7 @@ function updateHabitDetails(habitIndex) {
             : `Days Remaining to Complete: ${daysRemaining}`;
     }
 }
-// function updateCompletedDisplay(habitIndex) {
-//     const habit = habits[habitIndex];
-//     const completedElem = document.querySelector(`#completed-days-${habitIndex}`);
 
-//     if (completedElem) {
-//         completedElem.textContent = habit.isCompleted 
-//             ? "Habit Already Completed!" 
-//             : `Completed Days: ${habit.completedDaysCount}`;
-//     }
-// }
-
-// document.querySelectorAll(".habit-checkboxes").forEach((checkbox)=>{
-//     checkbox.addEventListener("click",(e)=>{
-//         const isChecked = e.target.checked;
-//         const checkboxDay = parseInt(e.target.getAttribute("data-day"),10);
-//         const habitIndex = parseInt(e.target.getAttribute("data-habit-index"),10);
-
-//         const habit = habits[habitIndex];
-//         habit.days[checkboxDay] = isChecked;
-
-//         if(isChecked){
-//             habit.completedDaysCount++;
-//             habit.completedDays.push(checkboxDay);
-//         } else{
-//             habit.completedDaysCount--;
-//             habit.completedDays = habit.completedDays.filter(day => day!==checkboxDay);
-
-//         }
-//         habit.isCompleted = habit.completedDaysCount === habit.habitGoalDays;
-//         updateCompletedDisplay(habitIndex);
-//         updateStreakDisplay(habitIndex);
-//         updateHabitDetails(habitIndex);
-
-//         updateStreakHighlight(e.target, isChecked);
-//         saveHabits();
-//     })
-// });
 function updateStreakHighlight(checkbox, isChecked) {
     if (isChecked) {
         checkbox.parentElement.classList.add("streak-highlight");
@@ -448,7 +411,6 @@ function deleteHabit(habitIndex) {
     saveHabitsDebounced();
 }
 
-
 function editHabit(habitIndex) {
 
     //provide editing options
@@ -485,7 +447,6 @@ function editHabit(habitIndex) {
 
 }
 
-
 function saveHabits() {
     localStorage.setItem("habits", JSON.stringify(habits));//store habits to localstorage
 }
@@ -514,24 +475,5 @@ function loadHabits() {
 
 }
 
-function updateHabitState(habitIndex, dayIndex, isChecked) {
-    const habit = habits[habitIndex];
-    const streak = 0;
-
-    habit.days[dayIndex] = isChecked;
-    habit.completedDaysCount = habit.days.filter(Boolean).length;
-
-    streak = calculateStreak(habitIndex);
-    habit.isCompleted = habit.completedDaysCount === habit.habitGoalDays;
-
-    // updateCompletedDisplay(habitIndex);
-    // updateStreakDisplay(habitIndex);
-    updateHabitDetails(habitIndex);
-    updateHabitUI(habitIndex);
-
-    saveHabitsDebounced();
-}
-
 window.onload = loadHabits;
-window.addEventListener("DOMContentLoaded", initializeHabits);
 
