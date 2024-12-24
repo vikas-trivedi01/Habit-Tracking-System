@@ -159,11 +159,13 @@ function displayHabits() {
             week_checkboxes.appendChild(habit_day);
 
 
+            if(!Array.isArray(habit.days) || habit.days.length !== habit.habitGoalDays)
+                    habit.days = Array(habit.habitGoalDays).fill(false);
             checkbox.addEventListener('click', (e) => {
                 const isChecked = e.target.checked;
                 const checkboxDay = parseInt(e.target.getAttribute("data-day"), 10);
 
-                habits[habitIndex].days[checkboxDay] = isChecked;
+                habits[habitIndex].days[checkboxDay-1] = isChecked;
 
                 if (isChecked) {
                     habit.completedDaysCount++;
@@ -252,6 +254,23 @@ function displayHabits() {
     });
     saveHabitsDebounced();
 }
+function initializeHabits(){
+
+    habits.forEach((habit,habitIndex)=>{
+        habit.days.forEach((isChecked,dayIndex)=>{
+            const checkbox = document.querySelector(`input[data-habit-index="${habitIndex}"] [data-day="${dayIndex}"]`);
+            if(checkbox){
+                checkbox.checked = isChecked;
+                checkbox.parentElement.classList.toggle("streak-highlight", isChecked);
+
+            }
+        });
+        updateStreakDisplay(habitIndex);
+        updateCompletedDisplay(habitIndex);
+        // updateHabitUI(habitIndex);
+    });
+}
+
 function handleCheckboxChange(habitIndex) {
     const habit = habits[habitIndex];
     const allChecked = habit.completedDaysCount === parseInt(habit.habitGoalDays, 10);
@@ -266,68 +285,49 @@ function handleCheckboxChange(habitIndex) {
     
 }
 function calculateStreak(habitIndex) {
-    let checkboxes = [];
-Array.from(document.querySelectorAll(".week-checkboxes")).forEach(div=>{
-    Array.from(div.children).forEach(elem=>{
-        if(elem.nodeName !== "H4"){
-            Array.from(elem.children).forEach(elemInner=>{
-                if(elemInner.nodeName !== "P"){
-                    checkboxes.push(elemInner);
-                }
-            });
+    const habit = habits[habitIndex];
+    let streak = 0;
+console.log(habit.days)
+    habit.days.forEach(isChecked=>{
+
+        if(isChecked){
+            streak++;
         }
-    })
-}
-)
-console.log(checkboxes)
+        else{
+            streak = 0;
+        }
+    });
+    const checkboxes = document.querySelectorAll(`input[data-habit-index="${habitIndex}"]`);
 
-let streak;
-    checkboxes.forEach(checkbox=>{
-        const isChecked = checkbox.checked;
-        streak = isChecked? streak+1 : 0;
-
-        streak>0?checkbox.parentElement.classList.add("streak-highlight"):checkbox.parentElement.classList.remove("streak-highlight");
-    })
+    checkboxes.forEach((checkbox,dayIndex)=>{
+        if(habit.days[dayIndex]){
+            checkbox.parentElement.classList.add("streak-highlight");
+        }
+        else {
+            checkbox.parentElement.classList.remove("streak-highlight");
+        }
+          });
     return streak;
 }
-// Array.from(document.querySelectorAll(".week-checkboxes").children).forEach(()=>{
-
-//     const checkboxes = Array.from(document.querySelectorAll(".habit-checkboxes"));
-//     let streak;
-//     checkboxes.forEach(checkbox=>{
-//         const isChecked = checkbox.checked;
-//         streak = isChecked? streak+1 : 0;
-
-//         streak>0?checkbox.parentElement.classList.add("streak-highlight"):checkbox.parentElement.classList.remove("streak-highlight");
-//     })
-//     return streak;
-// })
-// }
 
 function updateStreakDisplay(habitIndex){
     const streak = calculateStreak(habitIndex);
     const streakElem = document.querySelector(`#streak-days-${habitIndex}`);
     
+    if(streakElem){
     streakElem.innerHTML = `Streak<br>${streak}`;
-    saveHabitsDebounced();
+    }
 }
 function updateCompletedDisplay(habitIndex){
     const habit = habits[habitIndex];
     const completedCount = habit.days.filter(Boolean).length;
     const compltedElem = document.querySelector(`#completed-days-${habitIndex}`);
 
+    if(compltedElem){
     compltedElem.textContent = `Completed Days: ${completedCount}`;
-    saveHabitsDebounced();
+    }
 }
-// function initializeCheckboxes(){
 
-//         habits.forEach((hbait,habitIndex)=>{
-//             hbait.days.forEach((isChecked,day)=>{
-//                 console.log(isChecked)
-//                 console.log(day)
-//             });
-//         });
-// }
 function updateHabitUI(habitIndex) {
     const habit = habits[habitIndex];
     const habitItem = document.getElementById(`habit-item-${habitIndex}`);
@@ -431,4 +431,4 @@ function loadHabits() {
 }
 
 window.onload = loadHabits;
-document.addEventListener("DOMContentLoaded", initializeCheckboxes);
+document.addEventListener("DOMContentLoaded", initializeHabits);
