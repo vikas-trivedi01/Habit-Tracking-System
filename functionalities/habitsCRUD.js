@@ -148,7 +148,7 @@ function displayHabits() {
                 week_checkboxesTitle = document.createElement("h4");
                 week_checkboxesTitle.innerText = `Week No ${habit_compliting_container.children.length + 1}`;
                 week_checkboxes.appendChild(week_checkboxesTitle);
-                week_checkboxes.classList.add("week-checkboxes");
+                week_checkboxes.classList.add("week-checkboxes",`week-checkboxes-${habitIndex}`);
                 habit_compliting_container.appendChild(week_checkboxes);
             }
 
@@ -169,7 +169,7 @@ function displayHabits() {
                 const isChecked = e.target.checked;
                 const checkboxDay = parseInt(e.target.getAttribute("data-day"), 10);
 
-                habits[habitIndex].days[checkboxDay - 1] = isChecked;
+                habits[habitIndex].days[checkboxDay ] = isChecked;
 
                 if (isChecked) {
                     habit.completedDaysCount++;
@@ -180,16 +180,16 @@ function displayHabits() {
                     habit.completedDays = habit.completedDays.filter(day => day !== checkboxDay)
                 }
                 habit.isCompleted = habit.completedDaysCount == parseInt(habit.habitGoalDays, 10);
-                updateStreakDisplay(habitIndex);
-                updateCompletedDisplay(habitIndex);
+                // updateStreakDisplay(habitIndex);
+                // updateCompletedDisplay(habitIndex);
 
                 updateStreakHighlight(e.target, isChecked);
                 updateHabitDetails(habitIndex);
                 saveHabits(); //save habits instantly without debouncing in-order to reflect checkbox's effect habit's data on UI
             });
-            updateHabitDetails(habitIndex);
-            updateStreakDisplay(habitIndex);
-            updateCompletedDisplay(habitIndex);
+            // updateHabitDetails(habitIndex);
+            // updateStreakDisplay(habitIndex);
+            // updateCompletedDisplay(habitIndex);
 
 
         }
@@ -267,11 +267,13 @@ function displayHabits() {
         habit_container.className = 'habit-container';
 
         habitCompletingList.appendChild(habit_container);
-        updateCompletedDisplay(habitIndex);
-        updateStreakDisplay(habitIndex);
-    });
-    saveHabitsDebounced();
-    initializeEvents();
+        // updateCompletedDisplay(habitIndex);
+        // updateStreakDisplay(habitIndex);
+        updateHabitDetails(habitIndex);
+    
+   
+});
+saveHabitsDebounced();
     initializeHabits();
 }
 
@@ -283,46 +285,64 @@ function initializeHabits() {
             );
             if (checkbox) {
                 checkbox.checked = isChecked;
-                checkbox.parentElement.classList.toggle("streak-highlight", isChecked);
+                updateStreakHighlight(checkbox,isChecked);
             }
         });
 
+        // updateHabitUI(habitIndex);
         updateHabitDetails(habitIndex);
-        updateStreakDisplay(habitIndex);
-        updateCompletedDisplay(habitIndex);
+        // updateStreakDisplay(habitIndex);
+        // updateCompletedDisplay(habitIndex);
     });
 }
 
 
+// function calculateStreak(habitIndex) {
+//     const habit = habits[habitIndex];
+//     let streak = 0;
+
+//     const checkboxes = document.querySelectorAll(
+//         `input[data-habit-index="${habitIndex}"]`
+//     );
+// checkboxes.forEach((checkbox, dayIndex) => {
+//     const isChecked = habit.days[dayIndex + 1];
+//         if (isChecked) {
+//             streak++;
+//             if (checkbox?.parentElement) {
+//                 checkbox.parentElement.classList.add("streak-highlight");
+//             }
+//         } else {
+//             if (checkbox?.parentElement) {
+//                 checkbox.parentElement.classList.remove("streak-highlight");
+//             }
+//             streak = 0;
+//         }
+//     });
+
+//     return streak;
+//}
 function calculateStreak(habitIndex) {
-    const habit = habits[habitIndex];
-    let streak = 1;
-    console.log(habit.days)
-    habit.days.forEach((isChecked, dayIndex) => {
-        const checkbox = document.querySelector(
-            `input[data-habit-index="${habitIndex}"][data-day="${dayIndex + 1}"]`
-        );
 
-        if (isChecked) {
-            streak++;
-            if (checkbox && checkbox.parentElement) {
-                checkbox.parentElement.classList.add("streak-highlight");
-            }
-        } else {
-            streak = 0;
-            if (checkbox && checkbox.parentElement) {
-                checkbox.parentElement.classList.remove("streak-highlight");
-            }
-        }
+    const weekStreaks = Array.from(document.querySelectorAll(`.week-checkboxes-${habitIndex}`)).map(node=>{
+        return Array.from(node.children).reduce((count,child)=>{
+            return count + (child.querySelector(".streak-highlight")?1:0);
+
+},0);
     });
 
-    return streak;
+    const totalStreak = weekStreaks.reduce((sum,streak)=>{
+       return sum + streak
+    },0);
+    return totalStreak;
 }
 
-function updateStreakDisplay(habitIndex, streak) {
-    const streakElem = document.querySelector(`#streak-days-${habitIndex}`);
-    streakElem ? streakElem.innerHTML = `Streak<br>${streak}` : '';
-}
+// function updateStreakDisplay(habitIndex) {
+//     const streakElem = document.querySelector(`#streak-days-${habitIndex}`);
+//     const streakDays = calculateStreak(habitIndex);
+//     if (streakElem) {
+//         streakElem.innerHTML = `Streak<br>${streakDays}`;
+//     }
+// }
 function updateHabitDetails(habitIndex) {
     const habit = habits[habitIndex];
 
@@ -346,14 +366,44 @@ function updateHabitDetails(habitIndex) {
             ? "No Days Remaining"
             : `Days Remaining to Complete: ${daysRemaining}`;
     }
-    saveHabits();
 }
-function updateCompletedDisplay(habitIndex) {
-    const habit = habits[habitIndex];
-    const compltedElem = document.querySelector(`#completed-days-${habitIndex}`);
+// function updateCompletedDisplay(habitIndex) {
+//     const habit = habits[habitIndex];
+//     const completedElem = document.querySelector(`#completed-days-${habitIndex}`);
 
-    compltedElem ? compltedElem.textContent = `Completed Days: ${habit.completedDaysCount}` : '';
-}
+//     if (completedElem) {
+//         completedElem.textContent = habit.isCompleted 
+//             ? "Habit Already Completed!" 
+//             : `Completed Days: ${habit.completedDaysCount}`;
+//     }
+// }
+
+// document.querySelectorAll(".habit-checkboxes").forEach((checkbox)=>{
+//     checkbox.addEventListener("click",(e)=>{
+//         const isChecked = e.target.checked;
+//         const checkboxDay = parseInt(e.target.getAttribute("data-day"),10);
+//         const habitIndex = parseInt(e.target.getAttribute("data-habit-index"),10);
+
+//         const habit = habits[habitIndex];
+//         habit.days[checkboxDay] = isChecked;
+
+//         if(isChecked){
+//             habit.completedDaysCount++;
+//             habit.completedDays.push(checkboxDay);
+//         } else{
+//             habit.completedDaysCount--;
+//             habit.completedDays = habit.completedDays.filter(day => day!==checkboxDay);
+
+//         }
+//         habit.isCompleted = habit.completedDaysCount === habit.habitGoalDays;
+//         updateCompletedDisplay(habitIndex);
+//         updateStreakDisplay(habitIndex);
+//         updateHabitDetails(habitIndex);
+
+//         updateStreakHighlight(e.target, isChecked);
+//         saveHabits();
+//     })
+// });
 function updateStreakHighlight(checkbox, isChecked) {
     if (isChecked) {
         checkbox.parentElement.classList.add("streak-highlight");
@@ -474,11 +524,14 @@ function updateHabitState(habitIndex, dayIndex, isChecked) {
     streak = calculateStreak(habitIndex);
     habit.isCompleted = habit.completedDaysCount === habit.habitGoalDays;
 
-    updateCompletedDisplay(habitIndex);
-    updateStreakDisplay(habitIndex, streak);
+    // updateCompletedDisplay(habitIndex);
+    // updateStreakDisplay(habitIndex);
+    updateHabitDetails(habitIndex);
     updateHabitUI(habitIndex);
 
     saveHabitsDebounced();
 }
 
 window.onload = loadHabits;
+window.addEventListener("DOMContentLoaded", initializeHabits);
+
