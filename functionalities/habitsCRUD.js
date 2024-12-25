@@ -78,8 +78,7 @@ function displayHabits() {
     }
 
 
-    console.log('f')
-    let weeklyProgress = [];
+
     habits.forEach((habit, habitIndex) => {
         habit.completedDays = habit.completedDays || [];
         habit.completedDaysCount = habit.completedDaysCount || 0;
@@ -150,7 +149,7 @@ function displayHabits() {
                 week_checkboxesTitle = document.createElement("h4");
                 week_checkboxesTitle.innerText = `Week No ${habit_compliting_container.children.length + 1}`;
                 week_checkboxes.appendChild(week_checkboxesTitle);
-                week_checkboxes.classList.add("week-checkboxes");
+                week_checkboxes.classList.add("week-checkboxes", `week-checkboxes-${habitIndex}`);
                 habit_compliting_container.appendChild(week_checkboxes);
             }
 
@@ -161,14 +160,15 @@ function displayHabits() {
             week_checkboxes.appendChild(habit_day);
 
             const progressContainer = document.createElement("div");
-            const progressBar = document.createElement("span");
-            const progressIndicator = document.createElement("span");
-            progressIndicator.classList.add("progress-text");
-            progressBar.classList.add("progress-bar");
-
-            progressIndicator.innerText = `Week 0: 0% completed`;
-            progressContainer.appendChild(progressBar);
-            progressContainer.appendChild(progressIndicator);
+            // const progressBar = document.createElement("span");
+            // const progressIndicator = document.createElement("span");
+            // progressIndicator.className = "progress-text";
+            // progressBar.classList.add("progress-bar");
+            progressContainer.classList.add(`progress-container-${habitIndex}`);
+            habit_compliting_container.appendChild(progressContainer);
+            // progressIndicator.innerText = `Week 0: 0% completed`;
+            // progressContainer.appendChild(progressBar);
+            // progressContainer.appendChild(progressIndicator);
 
             if (!Array.isArray(habit.days) || habit.days.length === 0) {
                 habit.days = Array.from({ length: habit.habitGoalDays }, (_, index) =>
@@ -192,17 +192,16 @@ function displayHabits() {
                 }
                 habit.isCompleted = habit.completedDaysCount == parseInt(habit.habitGoalDays, 10);
 
-                updateStreakHighlight(e.target, isChecked);
+                updateStreakHighlight(habitIndex);
                 updateHabitDetails(habitIndex);
                 calculateWeeklyProgress(habitIndex);
                 calculateProgressPercentages();
-                updateProgressUI();
+                updateProgressUI(habitIndex);
 
                 updateCompletedList(habitIndex);
 
                 saveHabits(); //save habits instantly without debouncing in-order to reflect checkbox's effect habit's data on UI
             });
-
         }
 
         habit_showdetails.innerHTML = '<i class="fa-solid fa-circle-arrow-down"></i>';
@@ -255,7 +254,7 @@ function displayHabits() {
             <p>Habit Description<br> ${habit.habitDescription}</p>
             <p>Start Date<br> ${habit.habitStartDate}</p>
           
-             <p id="remaining-days-${habitIndex}" style=${habit.isCompleted ? 'display:none' : ''}>
+            <p id="remaining-days-${habitIndex}" style=${habit.isCompleted ? 'display:none' : ''}>
             Days Remaining to Complete: ${habit.habitGoalDays - habit.completedDaysCount}
         </p>
             </div><br>
@@ -278,55 +277,80 @@ function displayHabits() {
 
 
         updateHabitDetails(habitIndex);
+        updateStreakHighlight(habitIndex);
+        updateCompletedList(habitIndex);
 
     });
+
     saveHabitsDebounced();
 }
+let weeklyProgress = [];
 function calculateWeeklyProgress(habitIndex) {
-    const weeks = document.querySelectorAll(".week-checkboxes");
+    const weeks = document.querySelectorAll(`.week-checkboxes-${habitIndex}`);
 
     weeklyProgress = [];
-    weeks.forEach((week, index) => {
-        const checkboxes = week.querySelectorAll(`input[data-habit-index = "${habitIndex}"]`);
 
+    if (weeks.length > 1) {
+        weeks.forEach((week, index) => {
+            const checkboxes = week.querySelectorAll(`input[data-habit-index = "${habitIndex}"]`);
+            const completed = Array.from(checkboxes).filter(cb => cb.checked).length;
+
+            weeklyProgress.push({
+                week: index + 1,
+                completed: completed,
+                total: checkboxes.length
+            });
+        });
+    }
+    else {
+        const checkboxes = document.querySelectorAll(`input[data-habit-index = "${habitIndex}"]`);
         const completed = Array.from(checkboxes).filter(cb => cb.checked).length;
 
         weeklyProgress.push({
-            week: index + 1,
+            week: 1,
             completed: completed,
             total: checkboxes.length
         });
-    });
 
+    }
 }
+
 function calculateProgressPercentages() {
     weeklyProgress.forEach(week => {
-        week.percentage = ((week.completed / week.total) * 100).toFixed(2);
-    })
-}
-function updateProgressUI() {
-    const weeks = document.querySelectorAll(".week-checkboxes");
-    const progressContainer = document.createElement("div");
-
-    weeklyProgress.forEach((weekData, index) => {
-        let progressText = weeks[index].querySelector(".progress-text");
-        let progressBar = weeks[index].querySelector(".progress-bar");
-
-        if (!progressText) {
-            progressText = document.createElement("span");
-            progressText.className = "progress-text";
-            progressContainer.appendChild(progressText);
-        }
-        if (!progressBar) {
-            progressBar = document.createElement("span");
-            progressBar.className = "progress-bar";
-            progressContainer.appendChild(progressBar);
-
-        }
-        progressText.innerText = `Week : ${weekData.week} ${weekData.percentage}% Completed`;
-        progressBar.style.width = weekData.percentage;
-        weeks[index].appendChild(progressContainer);
+        week.percentage = week.total > 0 ? Math.round((week.completed / week.total) * 100) : 0;
     });
+}
+
+function updateProgressUI(habitIndex) {
+    const parentContainer = document.querySelector(`.progress-container-${habitIndex}`);
+
+    parentContainer.innerHTML = '';
+    weeklyProgress.forEach(weekData => {
+        const progressItem = document.createElement('div');
+        progressItem.className = "progress-item";
+
+
+        const progressText = document.createElement('span');
+        progressText.className = "progress-text";
+        progressText.innerText += `Week : ${weekData.week} ${weekData.percentage}% Completed`;
+
+        const progressBarContainer = document.createElement("div");
+        progressBarContainer.className = "progress-bar-container";
+
+        const progressBar = document.createElement("div");
+        progressBar.className = "progress-bar";
+        progressBar.style.width = `${weekData.percentage}%`;
+
+        progressBarContainer.appendChild(progressBar);
+
+        progressItem.appendChild(progressText);
+        progressItem.appendChild(progressBarContainer);
+
+        parentContainer.appendChild(progressItem);
+
+    });
+    saveHabitsDebounced();
+
 }
 
 function updateCompletedList(habitIndex) {
@@ -344,7 +368,7 @@ function updateCompletedList(habitIndex) {
         p.innerText = num;
         completedPara.appendChild(p);
     })
-    saveHabitsDebounced();
+    saveHabits();
 }
 
 
@@ -368,13 +392,22 @@ function updateHabitDetails(habitIndex) {
     }
 }
 
-function updateStreakHighlight(checkbox, isChecked) {
-    if (isChecked) {
-        checkbox.parentElement.classList.add("streak-highlight");
-    }
-    else {
-        checkbox.parentElement.classList.remove("streak-highlight");
-    }
+function updateStreakHighlight(habitIndex) {
+    const allWeeks = document.querySelectorAll(".week-checkboxes");
+    allWeeks.forEach((week) => {
+        const checkboxesColllection = week.querySelectorAll(`input[data-habit-index = "${habitIndex}"]`);
+        const checkboxes = Array.from(checkboxesColllection);
+
+        checkboxes.forEach(cb => {
+
+            if (cb.checked) {
+                cb.parentElement.classList.add("streak-highlight");
+            }
+            else {
+                cb.parentElement.classList.remove("streak-highlight");
+            }
+        })
+    })
 }
 function updateHabitUI(habitIndex) {
     const habit = habits[habitIndex];
