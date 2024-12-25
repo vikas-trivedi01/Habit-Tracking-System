@@ -300,6 +300,7 @@ function calculateWeeklyProgress(habitIndex) {
             const completed = Array.from(checkboxes).filter(cb => cb.checked).length;
 
             weeklyProgress.push({
+                habit: habitIndex + 1,
                 week: index + 1,
                 completed: completed,
                 total: checkboxes.length
@@ -311,6 +312,7 @@ function calculateWeeklyProgress(habitIndex) {
         const completed = Array.from(checkboxes).filter(cb => cb.checked).length;
 
         weeklyProgress.push({
+            habit: habitIndex + 1,
             week: 1,
             completed: completed,
             total: checkboxes.length
@@ -356,7 +358,7 @@ function updateProgressUI(habitIndex) {
             if (weekData.completed < 3) {
                 progressBar.style.width = `${weekData.percentage + 50}%`;
             } else {
-                progressBar.style.width = `${weekData.percentage}%`;
+                progressBar.style.width = `${weekData.percentage + 30}%`;
             }
             progressContainer.appendChild(progressBar);
             progressItem.appendChild(progressContainer);
