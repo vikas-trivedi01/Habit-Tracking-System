@@ -116,8 +116,7 @@ input[type="checkbox"] {
   cursor: pointer;
   background-color: rgb(243, 244, 246);
 }
-input[type="checkbox"]:checked{
-
+input[type="checkbox"]:checked {
   background-color: #090a02;
 }
 input[type="checkbox"]::before {
@@ -237,9 +236,8 @@ input[type="checkbox"]:checked::before {
   margin-top: 32px;
 }
 
-#habit-header{
+#habit-header {
   margin-bottom: 32px;
-
 }
 #habit-list {
   gap: 1rem;
@@ -260,7 +258,7 @@ input[type="checkbox"]:checked::before {
   border-radius: 3px;
   border: 1px solid #ddd;
   color: #090f07;
-  width:max-content;
+  width: max-content;
 }
 .completed {
   background-color: #0af0c2 !important;
@@ -274,7 +272,7 @@ input[type="checkbox"]:checked::before {
 /* .add:hover {
   opacity: 0.8;
 } */
-#add-habit{
+#add-habit {
   background-color: #099df9;
   color: rgb(20, 20, 17);
   border: none;
@@ -283,7 +281,7 @@ input[type="checkbox"]:checked::before {
   transition: background 0.9s ease;
   font-size: x-large;
   width: 45%;
-  height:10% !important;
+  height: 10% !important;
   margin: 0% 26%;
 }
 #add-habit:hover {
@@ -300,7 +298,7 @@ input[type="checkbox"]:checked::before {
   box-sizing: border-box;
   font-size: 1rem;
 }
-.habit-form input[type="date"]{
+.habit-form input[type="date"] {
   width: 90%;
   padding: 0.5rem;
   margin-bottom: 50px;
@@ -308,13 +306,12 @@ input[type="checkbox"]:checked::before {
   border-radius: 5px;
   box-sizing: border-box;
   font-size: 1rem;
-
 }
-.validity{
+.validity {
   width: 10%;
   text-align: center;
 }
-#habit-dates{
+#habit-dates {
   display: flex;
   justify-content: space-around;
 }
@@ -327,16 +324,16 @@ input[type="date"]:valid + span::after {
   content: " ✓";
   font-size: x-large;
 }
-#habit-form-foot{
+#habit-form-foot {
   /* display: flex;
   justify-content: space-around; */
-background-color: #f30909;
+  background-color: #f30909;
 }
 
 .hide {
   display: none;
 }
-.show{
+.show {
   display: block;
 }
 
@@ -398,11 +395,11 @@ background-color: #f30909;
 .w-full {
   width: 95%;
 }
-.minimize{
+.minimize {
   transform: scale(0.7);
   transition: 0.7s ease-out;
 }
-.maximize{
+.maximize {
   transform: scale(1);
   transition: 0.7s ease-out;
 }
@@ -412,12 +409,12 @@ background-color: #f30909;
   overflow-y: auto;
   height: 70%;
 }
-.habit-header{
+.habit-header {
   display: flex;
   align-items: center;
   /* background-color: #f30909; */
 }
-.habit-expand{
+.habit-expand {
   width: 3%;
   height: 100% !important;
   background-color: #090909;
@@ -428,11 +425,11 @@ background-color: #f30909;
   cursor: pointer;
 }
 
-.habit-expand-color{
-color: #09f36e;
+.habit-expand-color {
+  color: #09f36e;
 }
-.habit-expanded-color{
-color: #f30920;
+.habit-expanded-color {
+  color: #ef5183;
 }
 
 .habit-title {
@@ -475,14 +472,13 @@ color: #f30920;
   border-radius: var(--border-radius);
 }
 
-#habits-section{
+#habits-section {
   margin: 5% 1%;
   border: 6px double #6c1fe8;
   padding: 2%;
-  background: linear-gradient(120deg, #0cf8dcf3, #ae61e6c3); 
 }
 
-.habit-extra-details{
+.habit-extra-details {
   display: flex;
   border-top: 3px dashed #0b0808;
   align-items: center !important;
@@ -490,9 +486,8 @@ color: #f30920;
   margin-top: 20px;
   padding: 10px;
   background-color: #ecf6ec;
-  
 }
-.habit-extra-details p{
+.habit-extra-details p {
   background-color: #a4ede2;
   color: #121f17;
   border-radius: var(--border-radius);
@@ -501,7 +496,7 @@ color: #f30920;
   width: 100%;
   text-align: center;
 }
-.completed-para-div{
+.completed-para-div {
   display: flex;
   justify-content: space-evenly;
   border-top: 3px dashed #0b0808;
@@ -510,11 +505,11 @@ color: #f30920;
   align-items: center;
   background-color: #ecf6ec;
 }
-.completed-para{
+.completed-para {
   display: flex;
   justify-content: center;
 }
-.completed-para p{
+.completed-para p {
   background-color: #a4ede2;
   color: #121f17;
   border-radius: var(--border-radius);
@@ -522,19 +517,19 @@ color: #f30920;
   margin-right: 20px;
   width: 100%;
 }
-.week-checkboxes{
+.week-checkboxes {
   border: 3px solid rgb(4, 10, 30);
-  display: flex; 
-   justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
   margin: 14px;
   padding: 14px;
   border-radius: var(--border-radius);
 }
-.week-checkboxes h4{
+.week-checkboxes h4 {
   margin-right: 32px;
 }
 /* .habit-checkboxes-container{ */
-  /* display: flex;
+/* display: flex;
   align-items: center;
   flex-direction: row;
   justify-content: space-between; */
@@ -546,10 +541,17 @@ color: #f30920;
 
 } */
 
-.streak-highlight{
+.streak-highlight {
   background-color: #09f3d0 !important;
   margin-right: 12px;
   text-align: center;
   border-radius: var(--border-radius);
   padding: 2px;
+}
+
+.progress-bar {
+  background-color: #f30920;
+}
+.progress-text {
+  color: blue;
 }
