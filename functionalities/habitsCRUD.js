@@ -68,7 +68,6 @@ function completeHabit(habitIndex) {
 }
 
 function displayHabits() {
-
     const habitList = document.getElementById("habit-list");
     const habitCompletingList = document.getElementById("habit-completing-list");
     habitList.innerHTML = "";
@@ -79,6 +78,7 @@ function displayHabits() {
     }
 
 
+    console.log('f')
     let weeklyProgress = [];
     habits.forEach((habit, habitIndex) => {
         habit.completedDays = habit.completedDays || [];
@@ -154,7 +154,7 @@ function displayHabits() {
                 habit_compliting_container.appendChild(week_checkboxes);
             }
 
-            
+
             const habit_day = document.createElement("div");
             habit_day.appendChild(dayNum);
             habit_day.appendChild(checkbox);
@@ -163,8 +163,8 @@ function displayHabits() {
             const progressContainer = document.createElement("div");
             const progressBar = document.createElement("span");
             const progressIndicator = document.createElement("span");
-         progressIndicator.classList.add("progress-text");
-         progressBar.classList.add("progress-bar");
+            progressIndicator.classList.add("progress-text");
+            progressBar.classList.add("progress-bar");
 
             progressIndicator.innerText = `Week 0: 0% completed`;
             progressContainer.appendChild(progressBar);
@@ -197,7 +197,9 @@ function displayHabits() {
                 calculateWeeklyProgress(habitIndex);
                 calculateProgressPercentages();
                 updateProgressUI();
+
                 updateCompletedList(habitIndex);
+
                 saveHabits(); //save habits instantly without debouncing in-order to reflect checkbox's effect habit's data on UI
             });
 
@@ -232,26 +234,20 @@ function displayHabits() {
         let completedParaDiv = document.createElement("div");
         let completedParaTitle = document.createElement("p");
 
-        completedPara.id = `completed-para-${habitIndex}`;
-        completedParaDiv.id = `completed-para-div-${habitIndex}`;
-        completedParaTitle.id = `completed-para-title-${habitIndex}`;
+        completedPara.className = `completed-para-${habitIndex}`;
+        completedParaTitle.className = `completed-para-title-${habitIndex}`;
 
-        habit.completedDays.forEach(num => {
-            let p = document.createElement("p");
-            p.innerText = num;
-            completedPara.appendChild(p);
-        })
 
-        completedParaTitle.innerText = `${habit.completedDays.length > 0 ? "Days When Habit Was Completed" : "Habit was not completed on any day"}`;
-        completedParaDiv.appendChild(completedParaTitle); 
+        completedParaDiv.appendChild(completedParaTitle);
         completedParaDiv.appendChild(completedPara);
 
-        updateCompletedList(habitIndex);
 
         completedParaDiv.classList.add("completed-para-div");
         completedPara.classList.add("completed-para");
 
-        
+        completedParaTitle.innerText = `${habit.completedDays.length > 0 ? "Days When Habit Was Completed" : "Habit was not completed on any day"}`;
+
+
 
 
         habit_extra_details.innerHTML = `
@@ -280,73 +276,78 @@ function displayHabits() {
 
         habitCompletingList.appendChild(habit_container);
 
+
         updateHabitDetails(habitIndex);
 
     });
     saveHabitsDebounced();
 }
-function calculateWeeklyProgress(habitIndex){
+function calculateWeeklyProgress(habitIndex) {
     const weeks = document.querySelectorAll(".week-checkboxes");
-console.log('ds')
+
     weeklyProgress = [];
-    weeks.forEach((week,index)=>{
+    weeks.forEach((week, index) => {
         const checkboxes = week.querySelectorAll(`input[data-habit-index = "${habitIndex}"]`);
 
         const completed = Array.from(checkboxes).filter(cb => cb.checked).length;
 
         weeklyProgress.push({
-            week:index+1,
-            completed:completed,
-            total:checkboxes.length
+            week: index + 1,
+            completed: completed,
+            total: checkboxes.length
         });
     });
 
 }
 function calculateProgressPercentages() {
     weeklyProgress.forEach(week => {
-        week.percentage = ((week.completed / week.total )* 100).toFixed(2);
+        week.percentage = ((week.completed / week.total) * 100).toFixed(2);
     })
 }
 function updateProgressUI() {
     const weeks = document.querySelectorAll(".week-checkboxes");
     const progressContainer = document.createElement("div");
 
-    weeklyProgress.forEach((weekData,index)=>{
+    weeklyProgress.forEach((weekData, index) => {
         let progressText = weeks[index].querySelector(".progress-text");
         let progressBar = weeks[index].querySelector(".progress-bar");
 
-        if(!progressText){
+        if (!progressText) {
             progressText = document.createElement("span");
             progressText.className = "progress-text";
             progressContainer.appendChild(progressText);
         }
-        if(!progressBar){
+        if (!progressBar) {
             progressBar = document.createElement("span");
             progressBar.className = "progress-bar";
             progressContainer.appendChild(progressBar);
-            
+
         }
         progressText.innerText = `Week : ${weekData.week} ${weekData.percentage}% Completed`;
-        progressBar.style.width  = weekData.percentage;
+        progressBar.style.width = weekData.percentage;
         weeks[index].appendChild(progressContainer);
     });
 }
+
 function updateCompletedList(habitIndex) {
     const habit = habits[habitIndex];
-    const completedPara = document.getElementById(`completed-para-${habitIndex}`);
-    const completedParaTitle = document.getElementById(`completed-para-title-${habitIndex}`);
-    const completedParaDiv = document.getElementById(`completed-para-div-${habitIndex}`);
+    const completedPara = document.querySelector(`.completed-para-${habitIndex}`);
+    const completedParaTitle = document.querySelector(`.completed-para-title-${habitIndex}`);
+
+    completedPara.innerHTML = "";
+    completedParaTitle.innerText = habit.completedDays.length > 0
+        ? "Days When Habit Was Completed"
+        : "Habit was not completed on any day";
 
     habit.completedDays.forEach(num => {
         let p = document.createElement("p");
         p.innerText = num;
         completedPara.appendChild(p);
     })
-
-    completedParaTitle.innerText = `${habit.completedDays.length > 0 ? "Days When Habit Was Completed" : "Habit was not completed on any day"}`;
-    completedParaDiv.appendChild(completedParaTitle); 
-    completedParaDiv.appendChild(completedPara);
+    saveHabitsDebounced();
 }
+
+
 function updateHabitDetails(habitIndex) {
     const habit = habits[habitIndex];
 
@@ -463,6 +464,7 @@ function debounce(func, delay) {
 const saveHabitsDebounced = debounce(saveHabits, 1000);
 
 function loadHabits() {
+
     try {
         const storedHabits = localStorage.getItem("habits");//fetch habits from localstorage
         habits = storedHabits ? JSON.parse(storedHabits) : [];
