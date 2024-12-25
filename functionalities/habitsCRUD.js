@@ -119,7 +119,7 @@ function displayHabits() {
         habit_card.className = "habit-card";
         habit_card.appendChild(habit_elem);
         habit_card.appendChild(habit_complete);
-        habit_card.id = `habit-container-${habitIndex}`;
+        habit_card.id = `habit-card-${habitIndex}`;
 
         habitList.appendChild(habit_card);
 
@@ -164,7 +164,9 @@ function displayHabits() {
             // const progressIndicator = document.createElement("span");
             // progressIndicator.className = "progress-text";
             // progressBar.classList.add("progress-bar");
-            progressContainer.classList.add(`progress-container-${habitIndex}`);
+
+            // progressContainer.classList.add(`progress-container-${habitIndex}`);
+            
             habit_compliting_container.appendChild(progressContainer);
             // progressIndicator.innerText = `Week 0: 0% completed`;
             // progressContainer.appendChild(progressBar);
@@ -271,7 +273,7 @@ function displayHabits() {
         habit_container.appendChild(habit_header);
         habit_container.appendChild(habit_compliting_container);
         habit_container.appendChild(habit_extra_details);
-        habit_container.className = 'habit-container';
+        habit_container.classList.add("habit-container",`habit-container-${habitIndex}`);
 
         habitCompletingList.appendChild(habit_container);
 
@@ -322,7 +324,9 @@ function calculateProgressPercentages() {
 }
 
 function updateProgressUI(habitIndex) {
-    const parentContainer = document.querySelector(`.progress-container-${habitIndex}`);
+    // const parentContainer = document.querySelector(`.progress-container-${habitIndex}`);
+    const parentSection = document.querySelector(`.habit-container-${habitIndex} .habit-header`);
+    const parentContainer = document.createElement('div');
 
     parentContainer.innerHTML = '';
     weeklyProgress.forEach(weekData => {
@@ -347,6 +351,12 @@ function updateProgressUI(habitIndex) {
         progressItem.appendChild(progressBarContainer);
 
         parentContainer.appendChild(progressItem);
+  if(parentSection.nextSibling){
+    parentSection.parentNode.insertBefore(parentContainer,parentSection.nextSibling);
+  }else{
+    parentSection.parentNode.appendChild(parentContainer);
+  }
+
 
     });
     saveHabitsDebounced();
@@ -413,7 +423,7 @@ function updateHabitUI(habitIndex) {
     const habit = habits[habitIndex];
     const habitItem = document.getElementById(`habit-item-${habitIndex}`);
     const completedDaysElem = document.getElementById(`completed-days-${habitIndex}`);
-    const markCompleteButton = document.querySelector(`#habit-container-${habitIndex} #mark-completed`);
+    const markCompleteButton = document.querySelector(`#habit-card-${habitIndex} #mark-completed`);
     const editButton = document.querySelector(`#habit-item-${habitIndex} #edit`);
     const deleteButton = document.querySelector(`#habit-item-${habitIndex} #delete`);
 
