@@ -165,7 +165,7 @@ function displayHabits() {
             // progressIndicator.className = "progress-text";
             // progressBar.classList.add("progress-bar");
 
-            progressContainer.classList.add(`progress-container-${habitIndex}`);
+            progressContainer.classList.add(`progress-container-${habitIndex}`, "progress-container");
 
             habit_compliting_container.appendChild(progressContainer);
 
@@ -326,37 +326,44 @@ function calculateProgressPercentages() {
 }
 
 function updateProgressUI(habitIndex) {
-    const parentSection = document.querySelector(`.habit-container-${habitIndex} .habit-header`);
+    const progressSection = document.querySelector(`.habit-container-${habitIndex} .habit-header`);
 
-    // Check if the progress container already exists; if yes, reuse it
-    let parentContainer = document.querySelector(`.habit-container-${habitIndex} .progress-container`);
+    let parentContainer = document.querySelector(`.habit-container-${habitIndex} .progress-container-${habitIndex}`);
+
     if (!parentContainer) {
         parentContainer = document.createElement('div');
-        parentContainer.className = 'progress-container';
-        parentSection.parentNode.insertBefore(parentContainer, parentSection.nextSibling);
+        parentContainer.className = `progress-container-${habitIndex}`;
+        progressSection.parentNode.insertBefore(parentContainer, progressSection.nextSibling);
     }
 
     parentContainer.innerHTML = '';
 
     weeklyProgress.forEach((weekData) => {
-        const progressContainer = document.createElement("div");
-        const progressBar = document.createElement("div");
+        if (weekData.completed > 0) {
+            const progressContainer = document.createElement("div");
+            const progressBar = document.createElement("div");
 
-        const progressItem = document.createElement('div');
-        progressItem.className = "progress-item";
+            const progressItem = document.createElement('div');
+            progressItem.className = "progress-item";
 
-        if (weekData.percentage > 0) {
-            progressBar.innerText = `Week: ${weekData.week} ${weekData.percentage}% Completed`;
+            if (weekData.percentage > 0) {
+                progressBar.innerText = `Week: ${weekData.week} ${weekData.percentage}% Completed`;
+            }
+
+            progressContainer.className = "progress-bar-container";
+            progressBar.className = "progress-bar";
+
+            if (weekData.completed < 3) {
+                progressBar.style.width = `${weekData.percentage + 50}%`;
+            } else {
+                progressBar.style.width = `${weekData.percentage}%`;
+            }
+            progressContainer.appendChild(progressBar);
+            progressItem.appendChild(progressContainer);
+            parentContainer.appendChild(progressItem);
         }
-
-        progressContainer.className = "progress-bar-container";
-        progressBar.className = "progress-bar";
-        progressBar.style.width = `${weekData.percentage}%`;
-
-        progressContainer.appendChild(progressBar);
-        progressItem.appendChild(progressContainer);
-        parentContainer.appendChild(progressItem);
     });
+    progressSection.parentNode.insertBefore(parentContainer, progressSection.nextSibling);
     saveProgress(habitIndex);
 
 }

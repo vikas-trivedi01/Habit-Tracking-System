@@ -550,8 +550,18 @@ input[type="date"]:valid + span::after {
 }
 
 .progress-bar {
-  background-color: #f30920;
+  background-color: #f10a7d !important;
+  border-radius: var(--border-radius);
+  color: #131112;
+  padding: 10px;
+  text-align: center;
+  margin: 12px;
+  overflow: auto;
 }
-.progress-text {
-  color: blue;
+.progress-container{
+  display: flex;
+  justify-content: space-around;
+  overflow-x: auto;
+  flex-wrap: wrap;
+  margin: 10px;
 }
