@@ -165,9 +165,10 @@ function displayHabits() {
             // progressIndicator.className = "progress-text";
             // progressBar.classList.add("progress-bar");
 
-            // progressContainer.classList.add(`progress-container-${habitIndex}`);
-            
+            progressContainer.classList.add(`progress-container-${habitIndex}`);
+
             habit_compliting_container.appendChild(progressContainer);
+
             // progressIndicator.innerText = `Week 0: 0% completed`;
             // progressContainer.appendChild(progressBar);
             // progressContainer.appendChild(progressIndicator);
@@ -253,13 +254,13 @@ function displayHabits() {
 
         habit_extra_details.innerHTML = `
         <div class="habit-extra-details">
-            <p>Habit Description<br> ${habit.habitDescription}</p>
-            <p>Start Date<br> ${habit.habitStartDate}</p>
-          
-            <p id="remaining-days-${habitIndex}" style=${habit.isCompleted ? 'display:none' : ''}>
-            Days Remaining to Complete: ${habit.habitGoalDays - habit.completedDaysCount}
+        <p>Habit Description<br> ${habit.habitDescription}</p>
+        <p>Start Date<br> ${habit.habitStartDate}</p>
+        
+        <p id="remaining-days-${habitIndex}" style=${habit.isCompleted ? 'display:none' : ''}>
+        Days Remaining to Complete: ${habit.habitGoalDays - habit.completedDaysCount}
         </p>
-            </div><br>
+        </div><br>
         `;
 
         habit_extra_details.appendChild(completedParaDiv);
@@ -273,7 +274,7 @@ function displayHabits() {
         habit_container.appendChild(habit_header);
         habit_container.appendChild(habit_compliting_container);
         habit_container.appendChild(habit_extra_details);
-        habit_container.classList.add("habit-container",`habit-container-${habitIndex}`);
+        habit_container.classList.add("habit-container", `habit-container-${habitIndex}`);
 
         habitCompletingList.appendChild(habit_container);
 
@@ -281,6 +282,7 @@ function displayHabits() {
         updateHabitDetails(habitIndex);
         updateStreakHighlight(habitIndex);
         updateCompletedList(habitIndex);
+        loadProgress(habitIndex)
 
     });
 
@@ -324,43 +326,50 @@ function calculateProgressPercentages() {
 }
 
 function updateProgressUI(habitIndex) {
-    // const parentContainer = document.querySelector(`.progress-container-${habitIndex}`);
     const parentSection = document.querySelector(`.habit-container-${habitIndex} .habit-header`);
-    const parentContainer = document.createElement('div');
+
+    // Check if the progress container already exists; if yes, reuse it
+    let parentContainer = document.querySelector(`.habit-container-${habitIndex} .progress-container`);
+    if (!parentContainer) {
+        parentContainer = document.createElement('div');
+        parentContainer.className = 'progress-container';
+        parentSection.parentNode.insertBefore(parentContainer, parentSection.nextSibling);
+    }
 
     parentContainer.innerHTML = '';
-    weeklyProgress.forEach(weekData => {
+
+    weeklyProgress.forEach((weekData) => {
+        const progressContainer = document.createElement("div");
+        const progressBar = document.createElement("div");
+
         const progressItem = document.createElement('div');
         progressItem.className = "progress-item";
 
+        if (weekData.percentage > 0) {
+            progressBar.innerText = `Week: ${weekData.week} ${weekData.percentage}% Completed`;
+        }
 
-        const progressText = document.createElement('span');
-        progressText.className = "progress-text";
-        progressText.innerText += `Week : ${weekData.week} ${weekData.percentage}% Completed`;
-
-        const progressBarContainer = document.createElement("div");
-        progressBarContainer.className = "progress-bar-container";
-
-        const progressBar = document.createElement("div");
+        progressContainer.className = "progress-bar-container";
         progressBar.className = "progress-bar";
         progressBar.style.width = `${weekData.percentage}%`;
 
-        progressBarContainer.appendChild(progressBar);
-
-        progressItem.appendChild(progressText);
-        progressItem.appendChild(progressBarContainer);
-
+        progressContainer.appendChild(progressBar);
+        progressItem.appendChild(progressContainer);
         parentContainer.appendChild(progressItem);
-  if(parentSection.nextSibling){
-    parentSection.parentNode.insertBefore(parentContainer,parentSection.nextSibling);
-  }else{
-    parentSection.parentNode.appendChild(parentContainer);
-  }
-
-
     });
-    saveHabitsDebounced();
+    saveProgress(habitIndex);
 
+}
+function saveProgress(habitIndex) {
+    const progressData = JSON.parse(localStorage.getItem('habitProgress')) || {};
+    progressData[habitIndex] = weeklyProgress;
+    localStorage.setItem('habitProgress', JSON.stringify(progressData));
+}
+
+function loadProgress(habitIndex) {
+    const progressData = JSON.parse(localStorage.getItem('habitProgress')) || {};
+    weeklyProgress = progressData[habitIndex] || [];
+    updateProgressUI(habitIndex);
 }
 
 function updateCompletedList(habitIndex) {
