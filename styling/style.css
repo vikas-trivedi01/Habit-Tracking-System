@@ -579,10 +579,8 @@ input[type="date"]:valid + span::after {
 
 /* progress styling  */
 .progress-container{
-  position: relative;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+ display: flex;
+ flex-direction: column;
 }
 #progress-intro{
 width: 95%;
@@ -592,7 +590,7 @@ margin-top: 2%;
 border-radius: var(--border-radius);
 padding: 15px;
 }
-.canvas-expand{
+.canvas-expand-icon{
   width: 5%;
   height: 100% !important;
   background-color: #090909;
@@ -607,5 +605,20 @@ padding: 15px;
 }
 .canvas-expanded-color {
   color: #ef5183;
+}
+.habit-progress-container{
+  background-color: #85c9f9;
+  border-radius: var(--border-radius);
+  padding: 20px;
+  margin-bottom: 3%;
+}
+.habit-container-header{
+  
+  background-color: #101519;
+  border-radius: var(--border-radius);
+  padding: 10px;
+  margin: 3%;
+  display: flex;
+  justify-content: space-around;
 }
 
