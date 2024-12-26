@@ -312,7 +312,7 @@ function calculateWeeklyProgress(habitIndex) {
         const completed = Array.from(checkboxes).filter(cb => cb.checked).length;
 
         weeklyProgress.push({
-            habit: habitIndex + 1,
+            habit: habitIndex,
             week: 1,
             completed: completed,
             total: checkboxes.length
@@ -468,7 +468,22 @@ function cardGrow(habitIndex) {
 
 }
 function deleteHabit(habitIndex) {
-    habits.splice(habitIndex, 1);//remove habit from index
+    habits.splice(habitIndex, 1);
+    const progressData = JSON.parse(localStorage.getItem('habitProgress')) || {};
+
+    //remove progress of the habit also 
+    if (progressData[habitIndex]) {
+        delete progressData[habitIndex]
+    }
+
+    const updatedProgressData = {};
+
+    Object.keys(progressData).forEach((key, index) => {
+        updatedProgressData[index] = progressData[key];
+    })
+
+    localStorage.setItem('habitProgress', JSON.stringify(updatedProgressData));
+
     displayHabits();
     saveHabitsDebounced();
 }
