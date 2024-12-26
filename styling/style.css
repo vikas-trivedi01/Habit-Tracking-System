@@ -56,8 +56,8 @@ ul {
   transition: var(--smooth-trans);
   transform: scale(1.2);
 }
-.nav-item a:hover{
-color: rgb(247, 241, 241);
+.nav-item a:hover {
+  color: rgb(247, 241, 241);
 }
 #slogan {
   color: cadetblue;
@@ -212,7 +212,6 @@ input[type="checkbox"]:checked::before {
   text-align: end;
   display: flex;
   margin-left: 4%;
-
 }
 
 #socials {
@@ -568,7 +567,7 @@ input[type="date"]:valid + span::after {
   margin: 12px;
   overflow: auto;
 }
-.progress-container{
+.progress-container {
   display: flex;
   justify-content: space-around;
   overflow-x: auto;
@@ -576,25 +575,27 @@ input[type="date"]:valid + span::after {
   margin: 10px;
 }
 
-
 /* progress styling  */
-.progress-container{
- display: flex;
- flex-direction: column;
+.progress-section-container {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(110deg, #f51d5e, #e4f28a);
+  padding: 13px;
+  margin-top: 20px;
 }
-#progress-intro{
-width: 95%;
-background-color: rgb(247, 139, 198);
-margin-left: 3%;
-margin-top: 2%;
-border-radius: var(--border-radius);
-padding: 15px;
+#progress-intro {
+  width: 95%;
+  background-color: rgb(247, 139, 198);
+  margin-left: 3%;
+  margin-top: 5%;
+  border-radius: var(--border-radius);
+  padding: 15px;
 }
-.canvas-expand-icon{
+.canvas-expand-icon {
   width: 5%;
   height: 100% !important;
   background-color: #090909;
-  font-size: xx-large;
+  font-size: x-large;
   margin-right: 1%;
   border-radius: var(--border-radius);
   padding: 4px;
@@ -606,19 +607,28 @@ padding: 15px;
 .canvas-expanded-color {
   color: #ef5183;
 }
-.habit-progress-container{
-  background-color: #85c9f9;
+.habit-progress-container {
+  /* background-color: #85c9f9; */
   border-radius: var(--border-radius);
   padding: 20px;
   margin-bottom: 3%;
 }
-.habit-container-header{
-  
-  background-color: #101519;
+.habit-container-header {
+  background-color: #ffffff;
   border-radius: var(--border-radius);
   padding: 10px;
-  margin: 3%;
+  margin: 0% 3%;
   display: flex;
-  justify-content: space-around;
+  text-align: center;
+  align-items: center;
 }
-
+.habit-container-title {
+  text-align: center;
+  width: 40%;
+  margin: 1% 35%;
+  font-size: x-large;
+  letter-spacing: 10px;
+  font-weight: 800;
+  border: 4px double #110c13;
+  border-radius: var(--border-radius);
+}
