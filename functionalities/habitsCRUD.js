@@ -312,7 +312,7 @@ function calculateWeeklyProgress(habitIndex) {
         const completed = Array.from(checkboxes).filter(cb => cb.checked).length;
 
         weeklyProgress.push({
-            habit: habitIndex,
+            habit: habitIndex + 1,
             week: 1,
             completed: completed,
             total: checkboxes.length
