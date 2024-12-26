@@ -632,3 +632,18 @@ input[type="date"]:valid + span::after {
   border: 4px double #110c13;
   border-radius: var(--border-radius);
 }
+.habit-canvas-container{
+  background-color: #9fe3ef;
+  /* border: 3px solid red; */
+  margin: 40px 130px;
+  padding: 50px;
+  border-radius: var(--border-radius);
+  width: 80%;
+
+}
+.habit-canvas-container canvas{
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-0%);
+}
