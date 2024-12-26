@@ -589,17 +589,19 @@ input[type="date"]:valid + span::after {
   margin-left: 3%;
   margin-top: 5%;
   border-radius: var(--border-radius);
-  padding: 15px;
 }
 .canvas-expand-icon {
-  width: 5%;
+  width: 20%;
   height: 100% !important;
   background-color: #090909;
   font-size: x-large;
-  margin-right: 1%;
+  margin-left: 5%;
   border-radius: var(--border-radius);
   padding: 4px;
   cursor: pointer;
+}
+.canvas-expand-icon  i{
+  font-size: 30px;
 }
 .canvas-expand-color {
   color: #ffffff;
@@ -621,15 +623,17 @@ input[type="date"]:valid + span::after {
   display: flex;
   text-align: center;
   align-items: center;
+  flex-wrap: wrap;
+  font-size: x-large;
 }
 .habit-container-title {
   text-align: center;
   width: 40%;
-  margin: 1% 35%;
-  font-size: x-large;
-  letter-spacing: 10px;
-  font-weight: 800;
-  border: 4px double #110c13;
+  margin: 1% 10%;
+  letter-spacing: 5px;
+  font-weight: 600;
+  /* border: 4px double #110c13; */
+  background-color: #f79e67;
   border-radius: var(--border-radius);
 }
 .habit-canvas-container{
@@ -646,4 +650,18 @@ input[type="date"]:valid + span::after {
   top: 50%;
   left: 50%;
   transform: translate(-50%,-0%);
+}
+
+.habit-container-total-weeks,
+.habit-container-total-days{
+  width: 50%;
+}
+
+#progress-section-intro{
+  width: 95%;
+  background-color: rgb(156, 191, 243);
+  margin-left: 3%;
+  margin-top: 2%;
+  border-radius: var(--border-radius);
+  padding: 20px;
 }
