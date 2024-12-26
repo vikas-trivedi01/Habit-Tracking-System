@@ -16,7 +16,7 @@ body {
   --border-radius: 10px;
   --primary-color: rgb(242, 241, 243);
   --secondary-color: #2085d8;
-  --smooth-trans: 0.5s ease-in;
+  --smooth-trans: 0.7s ease-out;
 }
 
 body {
@@ -40,7 +40,7 @@ ul {
   justify-content: space-around;
   background-color: rgb(0, 208, 255);
   border-radius: var(--border-radius);
-  padding: 7px;
+  padding: 12px;
 }
 
 .nav-item a {
@@ -51,11 +51,14 @@ ul {
 }
 
 .nav-item:hover {
-  background-color: #13fe7d;
+  background-color: #eb7e9d;
   border-radius: var(--border-radius);
   transition: var(--smooth-trans);
+  transform: scale(1.2);
 }
-
+.nav-item a:hover{
+color: rgb(247, 241, 241);
+}
 #slogan {
   color: cadetblue;
   margin-left: 16%;
@@ -68,6 +71,7 @@ ul {
   margin-top: 2%;
   border-radius: var(--border-radius);
 }
+
 /* quotes section  */
 
 #quotes-selection {
@@ -571,3 +575,37 @@ input[type="date"]:valid + span::after {
   flex-wrap: wrap;
   margin: 10px;
 }
+
+
+/* progress styling  */
+.progress-container{
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#progress-intro{
+width: 95%;
+background-color: rgb(247, 139, 198);
+margin-left: 3%;
+margin-top: 2%;
+border-radius: var(--border-radius);
+padding: 15px;
+}
+.canvas-expand{
+  width: 5%;
+  height: 100% !important;
+  background-color: #090909;
+  font-size: xx-large;
+  margin-right: 1%;
+  border-radius: var(--border-radius);
+  padding: 4px;
+  cursor: pointer;
+}
+.canvas-expand-color {
+  color: #ffffff;
+}
+.canvas-expanded-color {
+  color: #ef5183;
+}
+
