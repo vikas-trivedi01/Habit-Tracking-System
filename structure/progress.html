@@ -11,8 +11,6 @@
       rel="stylesheet"
     />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-
-
   </head>
   <body>
     <!-- Navbar  -->
@@ -30,7 +28,21 @@
       </ul>
     </nav>
 
-    <canvas id="stats" style="width:100%;max-width:700px;position: relative;top: 50%;left: 50%;transform: translate(-50%,-50%);"></canvas>
+    <p id="intro" style="padding: 15px;">
+      Welcome to the Progress Tracker! Here, you can monitor your daily habit achievements and analyze your performance over time. Track your consistency, see your progress towards goals, and gain insights into your weekly trends to stay motivated and improve your habits.
+    </p>
+    <p id="progress-intro">
+    Visualize your progress for each habit! These charts give you a clear view of how consistently you’ve been working on your habits week by week. See how many days you've completed each habit, analyze your streaks, and identify areas where you can improve.
+  </p>
+    <div class="progress-container">
+      <canvas
+        id="progressChart"
+        style="
+          width: 100%;
+          max-width: 700px;
+        "
+      ></canvas>
+    </div>
 
     <!-- footer  -->
     <!-- <footer id="footer">
@@ -70,6 +82,6 @@
       </div>
     </footer> -->
 
-    <script src="../functionalities/stats.js"></script>
+    <script src="../functionalities/progress.js"></script>
   </body>
 </html>
