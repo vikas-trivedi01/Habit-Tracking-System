@@ -17,21 +17,21 @@ habits.forEach((habit, habitIndex) => {
     habitContainerHeader.classList.add('habit-container-header');
 
     const habitContainerTitle = document.createElement('h4');
-    habitContainerTitle.innerText = `${habit.habitName}`;
+    habitContainerTitle.innerText = `Habit : ${habit.habitName}`;
     habitContainerTitle.classList.add('habit-container-title');
-    
-    
-    const {totalWeeks,totalCompletedDays} = calculateHabitProgress(habitIndex);
-    
+
+
+    const { totalWeeks, totalCompletedDays } = calculateHabitProgress(habitIndex);
+
     const habitContainerTotalWeeks = document.createElement('p');
     habitContainerTotalWeeks.innerText = `Total Weeks : ${totalWeeks}`;
     habitContainerTotalWeeks.classList.add('habit-container-total-weeks');
-   
+
     const habitContainerTotalDays = document.createElement('p');
     habitContainerTotalDays.innerText = `Total Completed Days : ${totalCompletedDays}`;
     habitContainerTotalDays.classList.add('habit-container-total-days');
-   
-   
+
+
     const habitCanvasContainer = document.createElement('div');
     habitCanvasContainer.classList.add('habit-canvas-container');
     const habitProgress = document.createElement('canvas');
@@ -41,9 +41,9 @@ habits.forEach((habit, habitIndex) => {
     habitProgress.style.maxWidth = '800px';
 
     habitCanvasContainer.appendChild(habitProgress);
-    
+
     const chartIcon = createChartIcon(habitCanvasContainer);//pass canvas to toggle it's visibility using an icon
-    
+
     habitContainerHeader.appendChild(habitContainerTitle);
     habitContainerHeader.appendChild(chartIcon);
     habitContainerHeader.appendChild(habitContainerTotalDays);
@@ -94,6 +94,19 @@ function createChart(canvas, habitIndex) {
     const habitProgress = progressData[habitIndex]; // specific habit
     const weeks = habitProgress.map(habit => `Week ${habit.week}`); //habit = week of habit
     const completedDays = habitProgress.map(habit => habit.completed);
+    const streak = habitProgress.map(habit => habit.completed);
+
+    console.log(Math.max(...streak))
+
+    let allWeeksPercentages = []
+    habitProgress.forEach((week, index) => {
+        allWeeksPercentages.push({ week: index + 1, percentage: week.percentage })
+    })
+
+    const weekPercentages = percentage.map(week => week.percentage);
+
+    console.log(Math.max(...weekPercentages))
+
 
     new Chart(canvas, {
         type: "line",
@@ -130,10 +143,10 @@ function createChart(canvas, habitIndex) {
     });
 }
 
-function calculateHabitProgress(habitIndex){
-    const habitProgress = progressData[habitIndex]; 
-    const totalWeeks = habitProgress.map(habit => `Week ${habit.week}`).length; 
-    const totalCompletedDays = habitProgress.map(habit => habit.completed).length;
+function calculateHabitProgress(habitIndex) {
+    const habitProgress = progressData[habitIndex];
+    const totalWeeks = habitProgress.map(habit => `Week ${habit.week}`).length;
+    const totalCompletedDays = habitProgress.reduce((acc, week) => acc + week.completed, 0);
 
-    return {totalWeeks,totalCompletedDays};
+    return { totalWeeks, totalCompletedDays };
 }
