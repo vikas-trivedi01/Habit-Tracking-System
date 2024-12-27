@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Habit Tracking System</title>
     <link rel="stylesheet" href="../styling/style.css" />
+    <link rel="stylesheet" href="../styling/dropdown.css" />
 
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
@@ -36,7 +37,7 @@
         helping you monitor your consistency, identify trends, and celebrate
         milestones."
       </p>
-      <hr style="border: 3px solid rgb(0, 60, 255)" />
+      <hr style="border: 3px solid rgb(0, 60, 255)">
 
       <p style="padding: 25px; text-align: justify">
         Visualize your progress for each habit! These charts give you a clear
@@ -45,8 +46,7 @@
         streaks, and identify areas where you can improve.
       </p>
     </div>
-    <br />
-    <hr style="border: 5px double rgb(241, 110, 128)" />
+    <br>
 
     <div id="progress-section-intro">
 
@@ -54,7 +54,7 @@
       charts below show the number of days you completed your habit each week.
       Analyze your streaks and see how you're progressing week by week.
       
-      <br /><br />
+      <br><br>
 
       <ul style="list-style: disc">
         <li>
@@ -68,18 +68,25 @@
       </ul>
 
     </div>
+
     <div class="progress-section-container"></div>
 
     <div id="progress-insights-select">
-      <p>Insights of All Weeks</p>
+      <p>Insights of All Habits</p><hr><br>
       <div class="custom-select">
-      <select id="insights-selector">
+      <select id="insights-selector-weekly">
         <option value="banner">Maximum Streaks Among All Weeks</option>
+      </select>
+      <select id="insights-selector-average">
+        <option value="banner">Average Progress Of Habits</option>
       </select>
     </div>
   </div>
   <div id="progress-insights-weekly">
     <h2 style="text-align: center;">Weekly Insights</h2>
+  </div>
+  <div id="progress-insights-average">
+    <h2 style="text-align: center;">Average Insights</h2>
   </div>
 
     <!-- footer  -->
