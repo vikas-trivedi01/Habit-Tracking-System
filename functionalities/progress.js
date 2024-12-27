@@ -61,7 +61,7 @@ habits.forEach((habit, habitIndex) => {
 
     createChart(habitProgress, habitIndex);
 
-    const insightsSelector = document.querySelector('#progress-insights #insights-selector');
+    const insightsSelector = document.querySelector('#progress-insights-select #insights-selector');
     const habitOption = document.createElement('option');
     habitOption.id = `${habitIndex}`;
     habitOption.value = `${habitIndex}`;
@@ -69,11 +69,15 @@ habits.forEach((habit, habitIndex) => {
     insightsSelector.appendChild(habitOption);
 
 });
+
 const insightsSelector = document.querySelector('#insights-selector');
+
 insightsSelector.addEventListener('change', (e) => {
+
     const selectedHabitIndex = e.target.value;
     displayInsights(selectedHabitIndex);
 });
+
 function createChartIcon(habitChart) {
     const chartIcon = document.createElement("button");
 
@@ -169,43 +173,43 @@ function calculateProgressInsights(habitIndex) {
     })
 
 
-    const bestWeek = Math.max(...allWeeksPercentages.map(week => week.percentage));
-    const bestWeekNum = allWeeksPercentages.find(week => week.percentage == bestWeek).weekNumber;
-    return { maximumStreak, bestWeek, bestWeekNum };
+    const bestWeekPercentage = Math.max(...allWeeksPercentages.map(week => week.percentage));
+    const bestWeekNum = allWeeksPercentages.find(week => week.percentage == bestWeekPercentage).weekNumber;
+    return { maximumStreak, bestWeekPercentage, bestWeekNum };
 
 }
 
-function calculateTopHabits(){
+function calculateTopHabits() {
     let habitAverageProgress = [];//store average progress of each habit
     let topHabits = [];//store top habits with high average progress
     const finalSummary = [];//store the final summary of habits
 
+
     //calculate average progress for each habit
-    Object.values(progressData).forEach((weekData,habitIndex)=>{
-        const totalPercentage = weekData.reduce((sum,week)=>sum + week.percentage,0);
-        const averagePercentage = (totalPercentage/weekData.length).toFixed(2);
+    Object.values(progressData).forEach((weekData, habitIndex) => {
+        const totalPercentage = weekData.reduce((sum, week) => sum + week.percentage, 0);
+        const averagePercentage = (totalPercentage / weekData.length).toFixed(2);
 
         habitAverageProgress.push({
-            habitNumber : habitIndex + 1,
-            habitName : habits[habitIndex].habitName,
-            averageProgress:parseFloat(averagePercentage),
+            habitNumber: habitIndex + 1,
+            habitName: habits[habitIndex].habitName,
+            averageProgress: parseFloat(averagePercentage),
         });
     });
 
-    habitAverageProgress.forEach((habit)=>{
-        if(habit.averageProgress >= 80){
-            topHabits.push({habitNumber:habit.habitNumber,habitName:habit.habitName,});
+    habitAverageProgress.forEach((habit) => {
+        if (habit.averageProgress >= 80) {
+            topHabits.push({ habitNumber: habit.habitNumber, habitName: habit.habitName, });
         }
     });
 
-    habitAverageProgress.forEach((habit)=>{
+    habitAverageProgress.forEach((habit, habitIndex) => {
         finalSummary.push(
             {
-                habitNumber : habit.habitNumber,
-                habitName:  habit.habitName,
-                averageProgress : habit.averageProgress,
-                hasStar : topHabits.some(topHabit => topHabit.habitNumber === habit.habitNumber),  
-
+                habitNumber: habit.habitNumber,
+                habitName: habit.habitName,
+                averageProgress: habit.averageProgress,
+                isTopHabit: topHabits.some(topHabit => topHabit.habitNumber === habit.habitNumber),
             }
         );
     });
@@ -214,15 +218,28 @@ function calculateTopHabits(){
 
 
 function displayInsights(habitIndex) {
-    const insightsContainer = document.querySelector('#progress-insights');
-    const { maximumStreak, bestWeek, bestWeekNum } = calculateProgressInsights(habitIndex);
+    const insightsContainer = document.querySelector('#progress-insights-weekly');
+    insightsContainer.style.display = "block";
+
+    const { maximumStreak, bestWeekPercentage, bestWeekNum } = calculateProgressInsights(habitIndex);
+
     const insights = document.createElement('div');
+    insights.classList.add("insights-container");
+
+    const habitTitle = document.createElement('h3');
+
+    const hrElem = document.createElement('hr');
+    hrElem.style.border = "3px solid rgb(206, 202, 205)";
+
     const maximumStreakElem = document.createElement('p');
     const bestWeekElem = document.createElement('p');
 
-    maximumStreakElem.innerText = `${maximumStreak}`;
-    bestWeekElem.innerText = `Week No ${bestWeekNum} : Percentage :${bestWeek}%`;
+    habitTitle.innerText = `Habit Name : ${habits[habitIndex].habitName}`;
+    maximumStreakElem.innerText = `Maximum Streak Among All Weeks : ${maximumStreak}`;
+    bestWeekElem.innerHTML = `Best Week No : ${bestWeekNum} <br> Best Week Percentage :${bestWeekPercentage}%`;
 
+    insights.appendChild(habitTitle);
+    insights.appendChild(hrElem);
     insights.appendChild(maximumStreakElem);
     insights.appendChild(bestWeekElem);
 
