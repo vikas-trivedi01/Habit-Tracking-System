@@ -168,23 +168,60 @@ function calculateProgressInsights(habitIndex) {
         allWeeksPercentages.push({ weekNumber: weekIndex + 1, percentage: week.percentage })
     })
 
-    const weeksPercentages = allWeeksPercentages.map(week => week.percentage);
 
-    const bestWeek = Math.max(...weeksPercentages);
-
-    return { maximumStreak, bestWeek };
+    const bestWeek = Math.max(...allWeeksPercentages.map(week => week.percentage));
+    const bestWeekNum = allWeeksPercentages.find(week => week.percentage == bestWeek).weekNumber;
+    return { maximumStreak, bestWeek, bestWeekNum };
 
 }
 
+function calculateTopHabits(){
+    let habitAverageProgress = [];//store average progress of each habit
+    let topHabits = [];//store top habits with high average progress
+    const finalSummary = [];//store the final summary of habits
+
+    //calculate average progress for each habit
+    Object.values(progressData).forEach((weekData,habitIndex)=>{
+        const totalPercentage = weekData.reduce((sum,week)=>sum + week.percentage,0);
+        const averagePercentage = (totalPercentage/weekData.length).toFixed(2);
+
+        habitAverageProgress.push({
+            habitNumber : habitIndex + 1,
+            habitName : habits[habitIndex].habitName,
+            averageProgress:parseFloat(averagePercentage),
+        });
+    });
+
+    habitAverageProgress.forEach((habit)=>{
+        if(habit.averageProgress >= 80){
+            topHabits.push({habitNumber:habit.habitNumber,habitName:habit.habitName,});
+        }
+    });
+
+    habitAverageProgress.forEach((habit)=>{
+        finalSummary.push(
+            {
+                habitNumber : habit.habitNumber,
+                habitName:  habit.habitName,
+                averageProgress : habit.averageProgress,
+                hasStar : topHabits.some(topHabit => topHabit.habitNumber === habit.habitNumber),  
+
+            }
+        );
+    });
+
+}
+
+
 function displayInsights(habitIndex) {
     const insightsContainer = document.querySelector('#progress-insights');
-    const { maximumStreak, bestWeek } = calculateProgressInsights(habitIndex);
+    const { maximumStreak, bestWeek, bestWeekNum } = calculateProgressInsights(habitIndex);
     const insights = document.createElement('div');
     const maximumStreakElem = document.createElement('p');
     const bestWeekElem = document.createElement('p');
 
     maximumStreakElem.innerText = `${maximumStreak}`;
-    bestWeekElem.innerText = `${bestWeek}`;
+    bestWeekElem.innerText = `Week No ${bestWeekNum} : Percentage :${bestWeek}%`;
 
     insights.appendChild(maximumStreakElem);
     insights.appendChild(bestWeekElem);
