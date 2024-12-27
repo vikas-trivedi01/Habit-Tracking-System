@@ -665,3 +665,44 @@ input[type="date"]:valid + span::after {
   border-radius: var(--border-radius);
   padding: 20px;
 }
+
+#progress-insights-select{
+  background-color: rgb(92, 111, 205);
+  margin: 20px;
+  text-align: center;
+  font-size: x-large;
+  height: 60%;
+  padding: 20px;
+}
+#progress-insights-select p{
+  font-size: xx-large;
+} 
+
+.custom-select {
+  width: 50%;
+  margin-left: 25%;
+}
+
+.custom-select select {
+  appearance: none;
+  width: 100%;
+  font-size: 1.15rem;
+  padding: 0.675em 6em 0.675em 1em;
+  background-color: #fff;
+  border: 1px solid #caced1;
+  border-radius: 0.25rem;
+  color: #000;
+  cursor: pointer;
+}
+.insights-container{
+  background-color: #a4ede2;
+  border-radius: var(--border-radius);
+  margin-bottom:15px ;
+  padding:15px;
+}
+
+#progress-insights-weekly{
+  background-color: #f3b5b5;
+  /* border-radius: var(--border-radius); */
+  padding:15px ;
+}

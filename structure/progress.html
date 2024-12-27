@@ -61,7 +61,7 @@
           Interactive Line Charts: Hover over points in the charts to see the
           exact number of completed days for each week.
         </li>
-        <li>
+        <li> 
           Example: For the habit "Morning Walk", the chart illustrates how many
           days in each week you completed this activity.
         </li>
@@ -70,8 +70,20 @@
     </div>
     <div class="progress-section-container"></div>
 
+    <div id="progress-insights-select">
+      <p>Insights of All Weeks</p>
+      <div class="custom-select">
+      <select id="insights-selector">
+        <option value="banner">Maximum Streaks Among All Weeks</option>
+      </select>
+    </div>
+  </div>
+  <div id="progress-insights-weekly">
+    <h2 style="text-align: center;">Weekly Insights</h2>
+  </div>
+
     <!-- footer  -->
-    <!-- <footer id="footer">
+    <footer id="footer">
       <div id="foot-line">
         <p id="foot-para">
           "Powered by Passion & Motivation" | Habit Tracking System | "Inspiring
@@ -106,7 +118,7 @@
         <i class="me-3 fa-regular fa-copyright fa-xl"></i> &nbsp;&nbsp;All
         Rights Reserved
       </div>
-    </footer> -->
+    </footer>
 
     <script src="../functionalities/progress.js"></script>
   </body>
