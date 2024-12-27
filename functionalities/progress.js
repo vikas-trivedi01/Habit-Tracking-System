@@ -94,6 +94,53 @@ insightsSelectorAverage.addEventListener('change', (e) => {
     displayAverageInsights(selectedHabitIndex);
 });
 
+document.querySelector('#top-habits').addEventListener('click', () => {
+
+    const insightsContainer = document.querySelector('#progress-insights-top-habits');
+    const insightsContainerWeekly = document.querySelector('#progress-insights-weekly');
+    const insightsContainerAverage = document.querySelector('#progress-insights-average');
+
+    insightsContainer.style.display = "block";
+    insightsContainerWeekly.style.display = "none";
+    insightsContainerAverage.style.display = "none";
+
+
+    const { topHabits } = analyzeHabitProgress();
+
+    if (!topHabits) {
+
+        const notFound = document.createElement('h3');
+        notFound.innerText = "No Data Found !";
+
+        insights.appendChild(notFound);
+        insightsContainer.appendChild(insights);
+    }
+    else {
+
+        topHabits.forEach(habit => {
+
+            const insights = document.createElement('div');
+            insights.classList.add("insights-container");
+
+            const habitTitle = document.createElement('h3');
+
+            const hrElem = document.createElement('hr');
+            hrElem.style.border = "3px solid #75ebb0";
+
+            const habitNumber = document.createElement('h5');
+
+            habitTitle.innerHTML = `Habit Name <br>${habit.habitName}`;
+            habitNumber.innerHTML = `Habit No <br> ${habit.habitNumber}`;
+
+            insights.appendChild(habitTitle);
+            insights.appendChild(hrElem);
+            insights.appendChild(habitNumber);
+
+            insightsContainer.appendChild(insights);
+
+        })
+    }
+})
 function createChartIcon(habitChart) {
     const chartIcon = document.createElement("button");
 
@@ -230,13 +277,16 @@ function analyzeHabitProgress() {
         );
     });
 
-    return habitAverageProgress;
+    return { habitAverageProgress, topHabits };
 }
 
 
 function displayWeeklyInsights(habitIndex) {
     const insightsContainer = document.querySelector('#progress-insights-weekly');
+    const insightsContainerAverage = document.querySelector('#progress-insights-average');
+
     insightsContainer.style.display = "block";
+    insightsContainerAverage.style.display = "none";
 
     const insights = document.createElement('div');
     insights.classList.add("insights-container");
@@ -275,10 +325,12 @@ function displayWeeklyInsights(habitIndex) {
 
 function displayAverageInsights(habitIndex) {
     const insightsContainer = document.querySelector('#progress-insights-average');
+    const insightsContainerWeekly = document.querySelector('#progress-insights-weekly');
     insightsContainer.style.display = "block";
+    insightsContainerWeekly.style.display = "none";
     insightsContainer.style.textAlign = "center";
 
-    const allHabitsAverageProgress = analyzeHabitProgress();
+    const { habitAverageProgress: allHabitsAverageProgress } = analyzeHabitProgress();
 
     const habitAverageProgress = allHabitsAverageProgress[habitIndex];
 
@@ -289,7 +341,7 @@ function displayAverageInsights(habitIndex) {
     const habitTitle = document.createElement('h3');
 
     const hrElem = document.createElement('hr');
-    hrElem.style.border = "3px solid rgb(253, 137, 243)";
+    hrElem.style.border = "3px solid #75b0eb";
 
     const habitNumber = document.createElement('p');
     const averageProgress = document.createElement('p');
