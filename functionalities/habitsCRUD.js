@@ -74,10 +74,8 @@ function displayHabits() {
     habitCompletingList.innerHTML = "";
 
     if (habits.length === 0) {
-        habitList.innerText = "No Habits to Display";
+        habitList.innerHTML = "<h3>No Habits to Display</h3>";
     }
-
-
 
     habits.forEach((habit, habitIndex) => {
         habit.completedDays = habit.completedDays || [];
@@ -87,10 +85,13 @@ function displayHabits() {
         //create necessary elements
         const habit_elem = document.createElement("div");
         const habit_complete = document.createElement("div");
+
         const habit_card = document.createElement("div");
         const habit_compliting_container = document.createElement("div");
+
         const habit_container = document.createElement("div");
         const habit_header = document.createElement("div");
+
         const habit_showdetails = document.createElement("button");
         const habit_extra_details = document.createElement("div");
 
@@ -147,7 +148,7 @@ function displayHabits() {
             if (day % 7 == 1) {
                 week_checkboxes = document.createElement("div");
                 week_checkboxesTitle = document.createElement("h4");
-                week_checkboxesTitle.innerText = `Week No ${habit_compliting_container.children.length + 1}`;
+                week_checkboxesTitle.innerText = `Week No ${Math.ceil(day / 7)}`;
                 week_checkboxes.appendChild(week_checkboxesTitle);
                 week_checkboxes.classList.add("week-checkboxes", `week-checkboxes-${habitIndex}`);
                 habit_compliting_container.appendChild(week_checkboxes);
@@ -160,19 +161,12 @@ function displayHabits() {
             week_checkboxes.appendChild(habit_day);
 
             const progressContainer = document.createElement("div");
-            // const progressBar = document.createElement("span");
-            // const progressIndicator = document.createElement("span");
-            // progressIndicator.className = "progress-text";
-            // progressBar.classList.add("progress-bar");
 
             progressContainer.classList.add(`progress-container-${habitIndex}`, "progress-container");
 
             habit_compliting_container.appendChild(progressContainer);
 
-            // progressIndicator.innerText = `Week 0: 0% completed`;
-            // progressContainer.appendChild(progressBar);
-            // progressContainer.appendChild(progressIndicator);
-
+        
             if (!Array.isArray(habit.days) || habit.days.length === 0) {
                 habit.days = Array.from({ length: habit.habitGoalDays }, (_, index) =>
                     habit.completedDays.includes(index)
@@ -250,8 +244,6 @@ function displayHabits() {
         completedParaTitle.innerText = `${habit.completedDays.length > 0 ? "Days When Habit Was Completed" : "Habit was not completed on any day"}`;
 
 
-
-
         habit_extra_details.innerHTML = `
         <div class="habit-extra-details">
         <p>Habit Description<br> ${habit.habitDescription}</p>
@@ -277,7 +269,6 @@ function displayHabits() {
         habit_container.classList.add("habit-container", `habit-container-${habitIndex}`);
 
         habitCompletingList.appendChild(habit_container);
-
 
         updateHabitDetails(habitIndex);
         updateStreakHighlight(habitIndex);
@@ -437,6 +428,7 @@ function updateStreakHighlight(habitIndex) {
         })
     })
 }
+
 function updateHabitUI(habitIndex) {
     const habit = habits[habitIndex];
     const habitItem = document.getElementById(`habit-item-${habitIndex}`);
@@ -460,6 +452,7 @@ function cardShrink(habitIndex) {
     const card = document.getElementById(`habit-info-${habitIndex}`);
     card.classList.add("minimize");
 }
+
 function cardGrow(habitIndex) {
 
     const card = document.getElementById(`habit-info-${habitIndex}`);
@@ -467,6 +460,7 @@ function cardGrow(habitIndex) {
     setTimeout(() => window.location.reload(), 1000)
 
 }
+
 function deleteHabit(habitIndex) {
     habits.splice(habitIndex, 1);
     const progressData = JSON.parse(localStorage.getItem('habitProgress')) || {};
