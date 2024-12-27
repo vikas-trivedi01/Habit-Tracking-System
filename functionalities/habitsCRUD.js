@@ -74,7 +74,7 @@ function displayHabits() {
     habitCompletingList.innerHTML = "";
 
     if (habits.length === 0) {
-        habitList.innerHTML = "<h3>No Habits to Display</h3>";
+        habitList.innerHTML = "<h2>No Habits to Display</h2>";
     }
 
     habits.forEach((habit, habitIndex) => {

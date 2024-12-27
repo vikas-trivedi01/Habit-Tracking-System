@@ -6,7 +6,7 @@ const habits = JSON.parse(localStorage.getItem('habits')) || [];
 function getHabitProgress(habitIndex) {
     return progressData[habitIndex];
 }
-calculateTopHabits();
+
 // container to hold all habit's charts
 const progressContainer = document.querySelector('.progress-section-container');
 
@@ -61,21 +61,37 @@ habits.forEach((habit, habitIndex) => {
 
     createChart(habitProgress, habitIndex);
 
-    const insightsSelector = document.querySelector('#progress-insights-select #insights-selector');
-    const habitOption = document.createElement('option');
-    habitOption.id = `${habitIndex}`;
-    habitOption.value = `${habitIndex}`;
-    habitOption.innerText = `${habit.habitName}`;
-    insightsSelector.appendChild(habitOption);
+    const insightsSelectorWeekly = document.querySelector('#insights-selector-weekly');
+    const insightsSelectorAverage = document.querySelector('#insights-selector-average');
+
+    const weeklyOption = document.createElement('option');
+    weeklyOption.id = `${habitIndex}`;
+    weeklyOption.value = `${habitIndex}`;
+    weeklyOption.innerText = `${habit.habitName}`;
+
+
+    const averageOption = document.createElement('option');
+    averageOption.id = `${habitIndex}`;
+    averageOption.value = `${habitIndex}`;
+    averageOption.innerText = `${habit.habitName}`;
+
+    insightsSelectorWeekly.appendChild(weeklyOption);
+    insightsSelectorAverage.appendChild(averageOption);
+
 
 });
 
-const insightsSelector = document.querySelector('#insights-selector');
+const insightsSelectorWeekly = document.querySelector('#insights-selector-weekly');
 
-insightsSelector.addEventListener('change', (e) => {
-
+insightsSelectorWeekly.addEventListener('change', (e) => {
     const selectedHabitIndex = e.target.value;
-    displayInsights(selectedHabitIndex);
+    displayWeeklyInsights(selectedHabitIndex);
+});
+const insightsSelectorAverage = document.querySelector('#insights-selector-average');
+
+insightsSelectorAverage.addEventListener('change', (e) => {
+    const selectedHabitIndex = e.target.value;
+    displayAverageInsights(selectedHabitIndex);
 });
 
 function createChartIcon(habitChart) {
@@ -179,8 +195,8 @@ function calculateProgressInsights(habitIndex) {
 
 }
 
-function calculateTopHabits() {
-    let habitAverageProgress = [];//store average progress of each habit
+function analyzeHabitProgress() {
+    let habitAverageProgress = [];//store average progress of each habit (average of all weeks)
     let topHabits = [];//store top habits with high average progress
     const finalSummary = [];//store the final summary of habits
 
@@ -203,7 +219,7 @@ function calculateTopHabits() {
         }
     });
 
-    habitAverageProgress.forEach((habit, habitIndex) => {
+    habitAverageProgress.forEach((habit) => {
         finalSummary.push(
             {
                 habitNumber: habit.habitNumber,
@@ -214,14 +230,58 @@ function calculateTopHabits() {
         );
     });
 
+    return habitAverageProgress;
 }
 
 
-function displayInsights(habitIndex) {
+function displayWeeklyInsights(habitIndex) {
     const insightsContainer = document.querySelector('#progress-insights-weekly');
     insightsContainer.style.display = "block";
 
+    const insights = document.createElement('div');
+    insights.classList.add("insights-container");
+
     const { maximumStreak, bestWeekPercentage, bestWeekNum } = calculateProgressInsights(habitIndex);
+
+    if (!maximumStreak && !bestWeekPercentage && !bestWeekNum) {
+
+        const notFound = document.createElement('h3');
+        notFound.innerText = "No Data Found !";
+
+        insights.appendChild(notFound);
+    }
+    else {
+
+        const habitTitle = document.createElement('h3');
+
+        const hrElem = document.createElement('hr');
+        hrElem.style.border = "3px solid rgb(206, 202, 205)";
+
+        const maximumStreakElem = document.createElement('p');
+        const bestWeekElem = document.createElement('p');
+
+        habitTitle.innerText = `Habit Name : ${habits[habitIndex].habitName}`;
+        maximumStreakElem.innerText = `Maximum Streak Among All Weeks : ${maximumStreak}`;
+        bestWeekElem.innerHTML = `Best Week No : ${bestWeekNum} <br> Best Week Percentage :${bestWeekPercentage}%`;
+
+        insights.appendChild(habitTitle);
+        insights.appendChild(hrElem);
+        insights.appendChild(maximumStreakElem);
+        insights.appendChild(bestWeekElem);
+    }
+    insightsContainer.appendChild(insights);
+
+}
+
+function displayAverageInsights(habitIndex) {
+    const insightsContainer = document.querySelector('#progress-insights-average');
+    insightsContainer.style.display = "block";
+    insightsContainer.style.textAlign = "center";
+
+    const allHabitsAverageProgress = analyzeHabitProgress();
+
+    const habitAverageProgress = allHabitsAverageProgress[habitIndex];
+
 
     const insights = document.createElement('div');
     insights.classList.add("insights-container");
@@ -229,19 +289,25 @@ function displayInsights(habitIndex) {
     const habitTitle = document.createElement('h3');
 
     const hrElem = document.createElement('hr');
-    hrElem.style.border = "3px solid rgb(206, 202, 205)";
+    hrElem.style.border = "3px solid rgb(253, 137, 243)";
 
-    const maximumStreakElem = document.createElement('p');
-    const bestWeekElem = document.createElement('p');
+    const habitNumber = document.createElement('p');
+    const averageProgress = document.createElement('p');
 
-    habitTitle.innerText = `Habit Name : ${habits[habitIndex].habitName}`;
-    maximumStreakElem.innerText = `Maximum Streak Among All Weeks : ${maximumStreak}`;
-    bestWeekElem.innerHTML = `Best Week No : ${bestWeekNum} <br> Best Week Percentage :${bestWeekPercentage}%`;
+    habitTitle.innerText = `Habit Name : ${habitAverageProgress.habitName}`;
+    habitNumber.innerHTML = `<br>Habit No : ${habitAverageProgress.habitNumber}`;
+    averageProgress.innerHTML = `
+    <br>
+    Average Progress Percentage Out Of All Weeks : 
+    ${!isNaN(habitAverageProgress.averageProgress)
+            ? habitAverageProgress.averageProgress + '%'
+            : "<br>Not completed any day of this habit"}
+  `;
 
     insights.appendChild(habitTitle);
     insights.appendChild(hrElem);
-    insights.appendChild(maximumStreakElem);
-    insights.appendChild(bestWeekElem);
+    insights.appendChild(habitNumber);
+    insights.appendChild(averageProgress);
 
     insightsContainer.appendChild(insights);
 }
