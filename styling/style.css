@@ -517,6 +517,7 @@ input[type="date"]:valid + span::after {
 .completed-para {
   display: flex;
   justify-content: center;
+  overflow-x: auto;
 }
 .completed-para p {
   background-color: #a4ede2;
@@ -585,7 +586,7 @@ input[type="date"]:valid + span::after {
 }
 #progress-intro {
   width: 95%;
-  background-color: rgb(247, 139, 198);
+  background-color: rgb(255, 255, 255);
   margin-left: 3%;
   margin-top: 5%;
   border-radius: var(--border-radius);
@@ -600,7 +601,7 @@ input[type="date"]:valid + span::after {
   padding: 4px;
   cursor: pointer;
 }
-.canvas-expand-icon  i{
+.canvas-expand-icon i {
   font-size: 30px;
 }
 .canvas-expand-color {
@@ -636,28 +637,27 @@ input[type="date"]:valid + span::after {
   background-color: #f79e67;
   border-radius: var(--border-radius);
 }
-.habit-canvas-container{
+.habit-canvas-container {
   background-color: #9fe3ef;
   /* border: 3px solid red; */
   margin: 40px 130px;
   padding: 50px;
   border-radius: var(--border-radius);
   width: 80%;
-
 }
-.habit-canvas-container canvas{
+.habit-canvas-container canvas {
   position: relative;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-0%);
+  transform: translate(-50%, -0%);
 }
 
 .habit-container-total-weeks,
-.habit-container-total-days{
+.habit-container-total-days {
   width: 50%;
 }
 
-#progress-section-intro{
+#progress-section-intro {
   width: 95%;
   background-color: rgb(156, 191, 243);
   margin-left: 3%;
@@ -666,43 +666,35 @@ input[type="date"]:valid + span::after {
   padding: 20px;
 }
 
-#progress-insights-select{
-  background-color: rgb(92, 111, 205);
+#progress-insights-select {
+  background-color: rgb(133, 245, 239);
   margin: 20px;
   text-align: center;
   font-size: x-large;
   height: 60%;
   padding: 20px;
 }
-#progress-insights-select p{
+#progress-insights-select p {
   font-size: xx-large;
-} 
-
-.custom-select {
-  width: 50%;
-  margin-left: 25%;
 }
 
-.custom-select select {
-  appearance: none;
-  width: 100%;
-  font-size: 1.15rem;
-  padding: 0.675em 6em 0.675em 1em;
-  background-color: #fff;
-  border: 1px solid #caced1;
-  border-radius: 0.25rem;
-  color: #000;
-  cursor: pointer;
-}
-.insights-container{
+.insights-container {
   background-color: #a4ede2;
   border-radius: var(--border-radius);
-  margin-bottom:15px ;
-  padding:15px;
+  margin-bottom: 15px;
+  padding: 15px;
 }
 
-#progress-insights-weekly{
+#progress-insights-weekly {
+  display: none;
+  border-radius: 3px;
   background-color: #f3b5b5;
-  /* border-radius: var(--border-radius); */
-  padding:15px ;
+  padding: 15px;
+}
+
+#progress-insights-average {
+  display: none;
+  border-radius: 3px;
+  background-color: #aa7cf4;
+  padding: 15px;
 }
