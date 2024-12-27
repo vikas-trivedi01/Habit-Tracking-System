@@ -178,7 +178,7 @@ input[type="checkbox"]:checked::before {
   display: flex;
   align-content: center;
   justify-content: space-around;
-  background-color: rgb(29, 23, 24);
+  background-color: rgb(0, 0, 0);
   border-radius: var(--border-radius);
   padding: 12px;
   margin-top: 1%;
@@ -189,23 +189,24 @@ input[type="checkbox"]:checked::before {
   width: 35%;
   padding: 12px;
   font-weight: bolder;
-  background-color: rgb(29, 23, 24);
+  background-color: rgb(0, 0, 0);
   margin: 2% 30%;
 }
 
 #foot-line {
-  width: 70%;
+  width: 78%;
   margin-left: 10%;
   font-weight: 600;
 }
 
 #foot-para {
   padding: 12px;
-  background-color: rgb(29, 23, 24);
+  background-color: rgb(0, 0, 0);
+  word-spacing: 12px;
 }
 
 #follow {
-  background-color: rgb(29, 23, 24);
+  background-color: rgb(0, 0, 0);
   font-weight: 800;
   width: 13%;
   padding: 14px;
@@ -681,20 +682,40 @@ input[type="date"]:valid + span::after {
 .insights-container {
   background-color: #a4ede2;
   border-radius: var(--border-radius);
-  margin-bottom: 15px;
+  margin: 30px 20px 10px 30px;
+  padding: 15px 50px;
+}
+
+#progress-insights-weekly, #progress-insights-average, #progress-insights-top-habits {
+  display: none;
+  border-radius: 3px;
   padding: 15px;
+  text-align: center;
+  margin-bottom: 25px;
 }
 
 #progress-insights-weekly {
-  display: none;
-  border-radius: 3px;
   background-color: #f3b5b5;
-  padding: 15px;
+  margin-top: 50px;
+}  
+#progress-insights-average {
+  background-color: #75b0eb;
+}
+#progress-insights-top-habits{
+  background-color: #75ebb0;
 }
 
-#progress-insights-average {
-  display: none;
-  border-radius: 3px;
-  background-color: #aa7cf4;
-  padding: 15px;
+.current-insight {
+  display: flex !important;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.current-insight  h2 {
+    width: 50%;
+    height: max-content;
+    background-color: rgb(41, 36, 24);
+    color: #c300ff;
+    margin: 2% 25%;
+    padding: 10px;
+    border-radius: var(--border-radius);
 }
