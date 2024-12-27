@@ -3,10 +3,15 @@
 const progressData = JSON.parse(localStorage.getItem('habitProgress')) || {};
 const habits = JSON.parse(localStorage.getItem('habits')) || [];
 
+function getHabitProgress(habitIndex) {
+    return progressData[habitIndex];
+}
+calculateTopHabits();
 // container to hold all habit's charts
 const progressContainer = document.querySelector('.progress-section-container');
 
 //iterate through all habits to process each habit
+
 habits.forEach((habit, habitIndex) => {
 
     const habitContainer = document.createElement('div');
@@ -54,9 +59,21 @@ habits.forEach((habit, habitIndex) => {
 
     progressContainer.appendChild(habitContainer);
 
-    createChart(habitProgress, habitIndex, habit.habitName);
-})
+    createChart(habitProgress, habitIndex);
 
+    const insightsSelector = document.querySelector('#progress-insights #insights-selector');
+    const habitOption = document.createElement('option');
+    habitOption.id = `${habitIndex}`;
+    habitOption.value = `${habitIndex}`;
+    habitOption.innerText = `${habit.habitName}`;
+    insightsSelector.appendChild(habitOption);
+
+});
+const insightsSelector = document.querySelector('#insights-selector');
+insightsSelector.addEventListener('change', (e) => {
+    const selectedHabitIndex = e.target.value;
+    displayInsights(selectedHabitIndex);
+});
 function createChartIcon(habitChart) {
     const chartIcon = document.createElement("button");
 
@@ -91,22 +108,9 @@ function createChartIcon(habitChart) {
 // function to create habit's chart
 function createChart(canvas, habitIndex) {
 
-    const habitProgress = progressData[habitIndex]; // specific habit
+    const habitProgress = getHabitProgress(habitIndex); // specific habit
     const weeks = habitProgress.map(habit => `Week ${habit.week}`); //habit = week of habit
     const completedDays = habitProgress.map(habit => habit.completed);
-    const streak = habitProgress.map(habit => habit.completed);
-
-    console.log(Math.max(...streak))
-
-    let allWeeksPercentages = []
-    habitProgress.forEach((week, index) => {
-        allWeeksPercentages.push({ week: index + 1, percentage: week.percentage })
-    })
-
-    const weekPercentages = percentage.map(week => week.percentage);
-
-    console.log(Math.max(...weekPercentages))
-
 
     new Chart(canvas, {
         type: "line",
@@ -144,9 +148,46 @@ function createChart(canvas, habitIndex) {
 }
 
 function calculateHabitProgress(habitIndex) {
-    const habitProgress = progressData[habitIndex];
+    const habitProgress = getHabitProgress(habitIndex);
+
     const totalWeeks = habitProgress.map(habit => `Week ${habit.week}`).length;
     const totalCompletedDays = habitProgress.reduce((acc, week) => acc + week.completed, 0);
 
     return { totalWeeks, totalCompletedDays };
+}
+
+function calculateProgressInsights(habitIndex) {
+    const habitProgress = getHabitProgress(habitIndex);
+    let allWeeksPercentages = [];
+
+    const streaks = habitProgress.map(week => week.completed);
+
+    const maximumStreak = Math.max(...streaks);
+
+    habitProgress.forEach((week, weekIndex) => {
+        allWeeksPercentages.push({ weekNumber: weekIndex + 1, percentage: week.percentage })
+    })
+
+    const weeksPercentages = allWeeksPercentages.map(week => week.percentage);
+
+    const bestWeek = Math.max(...weeksPercentages);
+
+    return { maximumStreak, bestWeek };
+
+}
+
+function displayInsights(habitIndex) {
+    const insightsContainer = document.querySelector('#progress-insights');
+    const { maximumStreak, bestWeek } = calculateProgressInsights(habitIndex);
+    const insights = document.createElement('div');
+    const maximumStreakElem = document.createElement('p');
+    const bestWeekElem = document.createElement('p');
+
+    maximumStreakElem.innerText = `${maximumStreak}`;
+    bestWeekElem.innerText = `${bestWeek}`;
+
+    insights.appendChild(maximumStreakElem);
+    insights.appendChild(bestWeekElem);
+
+    insightsContainer.appendChild(insights);
 }
