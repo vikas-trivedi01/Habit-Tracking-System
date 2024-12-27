@@ -1,0 +1,34 @@
+.custom-select {
+    /* width: 50%; */
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-evenly;
+}
+ 
+.custom-select select option {
+    text-align: center;
+    background-color: rgb(12, 8, 7) ;
+    color: aqua;
+} 
+
+.custom-select select {
+    font: 400 18px sans-serif;
+    appearance: none;
+    color: rgb(0, 183, 255);
+    border: 1px solid white;
+    padding: 20px 0px;
+    border-radius: 8px;
+    background-color: rgb(12, 8, 7);
+    background-image: linear-gradient(to right, orange 0.5em, transparent 0.5em);
+    background-repeat: no-repeat;
+    cursor: pointer;
+    width: 80%;
+    margin: 10px;
+}
+  
+.custom-select select:hover {
+    color: rgb(15, 14, 11);
+    background-color: #ffffff;
+}
+
+  
