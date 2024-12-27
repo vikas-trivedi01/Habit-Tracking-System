@@ -99,48 +99,63 @@ document.querySelector('#top-habits').addEventListener('click', () => {
     const insightsContainer = document.querySelector('#progress-insights-top-habits');
     const insightsContainerWeekly = document.querySelector('#progress-insights-weekly');
     const insightsContainerAverage = document.querySelector('#progress-insights-average');
+    const insightsContainerSummaryHabits = document.querySelector('#progress-insights-summary-habits');
 
-    insightsContainer.style.display = "block";
-    insightsContainerWeekly.style.display = "none";
-    insightsContainerAverage.style.display = "none";
+
+    if (insightsContainerWeekly.classList.contains("current-insight")) {
+        insightsContainerWeekly.classList.add("hide");
+        insightsContainerWeekly.classList.remove("current-insight");
+    }
+    if (insightsContainerAverage.classList.contains("current-insight")) {
+        insightsContainerAverage.classList.add("hide");
+        insightsContainerAverage.classList.remove("current-insight");
+    }
+    if (insightsContainerSummaryHabits.classList.contains("current-insight")) {
+        insightsContainerSummaryHabits.classList.add("hide");
+        insightsContainerSummaryHabits.classList.remove("current-insight");
+    }
+    if (!insightsContainer.classList.contains("current-insight")) {
+        insightsContainer.classList.add("current-insight");
+        insightsContainer.classList.remove("hide");
+    }
 
 
     const { topHabits } = analyzeHabitProgress();
 
-    if (!topHabits) {
+    // if (!topHabits) {
+    //     const notFound = document.createElement('h3');
+    //     notFound.innerText = "No Data Found !";
 
-        const notFound = document.createElement('h3');
-        notFound.innerText = "No Data Found !";
+    //     insights.appendChild(notFound);
+    //     insightsContainer.appendChild(insights);
+    // }
+    // else {
 
-        insights.appendChild(notFound);
+    topHabits.forEach(habit => {
+
+        const insights = document.createElement('div');
+        insights.classList.add("insights-container");
+
+        const habitTitle = document.createElement('h3');
+
+        const hrElem = document.createElement('hr');
+        hrElem.style.border = "3px solid #75ebb0";
+
+        const habitNumber = document.createElement('h5');
+
+        habitTitle.innerHTML = `Habit Name <br>${habit.habitName}`;
+        habitNumber.innerHTML = `Habit No <br> ${habit.habitNumber}`;
+
+        insights.appendChild(habitTitle);
+        insights.appendChild(hrElem);
+        insights.appendChild(habitNumber);
+
         insightsContainer.appendChild(insights);
-    }
-    else {
 
-        topHabits.forEach(habit => {
-
-            const insights = document.createElement('div');
-            insights.classList.add("insights-container");
-
-            const habitTitle = document.createElement('h3');
-
-            const hrElem = document.createElement('hr');
-            hrElem.style.border = "3px solid #75ebb0";
-
-            const habitNumber = document.createElement('h5');
-
-            habitTitle.innerHTML = `Habit Name <br>${habit.habitName}`;
-            habitNumber.innerHTML = `Habit No <br> ${habit.habitNumber}`;
-
-            insights.appendChild(habitTitle);
-            insights.appendChild(hrElem);
-            insights.appendChild(habitNumber);
-
-            insightsContainer.appendChild(insights);
-
-        })
-    }
+    })
+    // }
 })
+
 function createChartIcon(habitChart) {
     const chartIcon = document.createElement("button");
 
@@ -284,51 +299,87 @@ function analyzeHabitProgress() {
 function displayWeeklyInsights(habitIndex) {
     const insightsContainer = document.querySelector('#progress-insights-weekly');
     const insightsContainerAverage = document.querySelector('#progress-insights-average');
+    const insightsContainerTopHabits = document.querySelector('#progress-insights-top-habits');
+    const insightsContainerSummaryHabits = document.querySelector('#progress-insights-summary-habits');
 
-    insightsContainer.style.display = "block";
-    insightsContainerAverage.style.display = "none";
+
+    if (insightsContainerAverage.classList.contains("current-insight")) {
+        insightsContainerAverage.classList.add("hide");
+        insightsContainerAverage.classList.remove("current-insight");
+    }
+    if (insightsContainerTopHabits.classList.contains("current-insight")) {
+        insightsContainerTopHabits.classList.add("hide");
+        insightsContainerTopHabits.classList.remove("current-insight");
+    }
+    if (insightsContainerSummaryHabits.classList.contains("current-insight")) {
+        insightsContainerSummaryHabits.classList.add("hide");
+        insightsContainerSummaryHabits.classList.remove("current-insight");
+    }
+    if (!insightsContainer.classList.contains("current-insight")) {
+        insightsContainer.classList.add("current-insight");
+        insightsContainer.classList.remove("hide");
+    }
 
     const insights = document.createElement('div');
     insights.classList.add("insights-container");
 
     const { maximumStreak, bestWeekPercentage, bestWeekNum } = calculateProgressInsights(habitIndex);
 
-    if (!maximumStreak && !bestWeekPercentage && !bestWeekNum) {
+    // if (!maximumStreak && !bestWeekPercentage && !bestWeekNum) {
 
-        const notFound = document.createElement('h3');
-        notFound.innerText = "No Data Found !";
+    //     const notFound = document.createElement('h3');
+    //     notFound.innerText = "No Data Found !";
 
-        insights.appendChild(notFound);
-    }
-    else {
+    //     insights.appendChild(notFound);
+    //     insightsContainer.appendChild(insights);
+    // }
+    // else {
 
-        const habitTitle = document.createElement('h3');
+    const habitTitle = document.createElement('h3');
 
-        const hrElem = document.createElement('hr');
-        hrElem.style.border = "3px solid rgb(206, 202, 205)";
+    const hrElem = document.createElement('hr');
+    hrElem.style.border = "3px solid rgb(206, 202, 205)";
 
-        const maximumStreakElem = document.createElement('p');
-        const bestWeekElem = document.createElement('p');
+    const maximumStreakElem = document.createElement('p');
+    const bestWeekElem = document.createElement('p');
 
-        habitTitle.innerText = `Habit Name : ${habits[habitIndex].habitName}`;
-        maximumStreakElem.innerText = `Maximum Streak Among All Weeks : ${maximumStreak}`;
-        bestWeekElem.innerHTML = `Best Week No : ${bestWeekNum} <br> Best Week Percentage :${bestWeekPercentage}%`;
+    habitTitle.innerText = `Habit Name : ${habits[habitIndex].habitName}`;
+    maximumStreakElem.innerText = `Maximum Streak Among All Weeks : ${maximumStreak}`;
+    bestWeekElem.innerHTML = `Best Week No : ${bestWeekNum} <br> Best Week Percentage :${bestWeekPercentage}%`;
 
-        insights.appendChild(habitTitle);
-        insights.appendChild(hrElem);
-        insights.appendChild(maximumStreakElem);
-        insights.appendChild(bestWeekElem);
-    }
+    insights.appendChild(habitTitle);
+    insights.appendChild(hrElem);
+    insights.appendChild(maximumStreakElem);
+    insights.appendChild(bestWeekElem);
     insightsContainer.appendChild(insights);
+    // }
 
 }
 
 function displayAverageInsights(habitIndex) {
     const insightsContainer = document.querySelector('#progress-insights-average');
     const insightsContainerWeekly = document.querySelector('#progress-insights-weekly');
-    insightsContainer.style.display = "block";
-    insightsContainerWeekly.style.display = "none";
-    insightsContainer.style.textAlign = "center";
+    const insightsContainerTopHabits = document.querySelector('#progress-insights-top-habits');
+    const insightsContainerSummaryHabits = document.querySelector('#progress-insights-summary-habits');
+
+
+
+    if (insightsContainerWeekly.classList.contains("current-insight")) {
+        insightsContainerWeekly.classList.add("hide");
+        insightsContainerWeekly.classList.remove("current-insight");
+    }
+    if (insightsContainerTopHabits.classList.contains("current-insight")) {
+        insightsContainerTopHabits.classList.add("hide");
+        insightsContainerTopHabits.classList.remove("current-insight");
+    }
+    if (insightsContainerSummaryHabits.classList.contains("current-insight")) {
+        insightsContainerSummaryHabits.classList.add("hide");
+        insightsContainerSummaryHabits.classList.remove("current-insight");
+    }
+    if (!insightsContainer.classList.contains("current-insight")) {
+        insightsContainer.classList.add("current-insight");
+        insightsContainer.classList.remove("hide");
+    }
 
     const { habitAverageProgress: allHabitsAverageProgress } = analyzeHabitProgress();
 
