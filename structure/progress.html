@@ -37,7 +37,7 @@
         helping you monitor your consistency, identify trends, and celebrate
         milestones."
       </p>
-      <hr style="border: 3px solid rgb(0, 60, 255)">
+      <hr style="border: 3px solid rgb(0, 60, 255)" />
 
       <p style="padding: 25px; text-align: justify">
         Visualize your progress for each habit! These charts give you a clear
@@ -46,48 +46,59 @@
         streaks, and identify areas where you can improve.
       </p>
     </div>
-    <br>
+    <br />
 
     <div id="progress-section-intro">
-
       Get a bird's-eye view of your weekly performance for each habit. The
       charts below show the number of days you completed your habit each week.
       Analyze your streaks and see how you're progressing week by week.
-      
-      <br><br>
+
+      <br /><br />
 
       <ul style="list-style: disc">
         <li>
           Interactive Line Charts: Hover over points in the charts to see the
           exact number of completed days for each week.
         </li>
-        <li> 
+        <li>
           Example: For the habit "Morning Walk", the chart illustrates how many
           days in each week you completed this activity.
         </li>
       </ul>
-
     </div>
 
     <div class="progress-section-container"></div>
 
     <div id="progress-insights-select">
-      <p>Insights of All Habits</p><hr><br>
+      <p style="font-weight: 700">Insights of All Habits</p>
+      <hr />
+      <br />
       <div class="custom-select">
-      <select id="insights-selector-weekly">
-        <option value="banner">Maximum Streaks Among All Weeks</option>
-      </select>
-      <select id="insights-selector-average">
-        <option value="banner">Average Progress Of Habits</option>
-      </select>
+        <select id="insights-selector-weekly">
+          <option value="banner">Maximum Streaks Among All Weeks</option>
+        </select>
+        <select id="insights-selector-average">
+          <option value="banner">Average Progress Of Habits</option>
+        </select>
+      </div>
+      <div id="all-insights">
+        <button id="top-habits" class="insights-buttons">Top Habits</button>
+        <button id="summary-habits" class="insights-buttons">
+          Summary Of All Habits
+        </button>
+      </div>
     </div>
-  </div>
-  <div id="progress-insights-weekly">
-    <h2 style="text-align: center;">Weekly Insights</h2>
-  </div>
-  <div id="progress-insights-average">
-    <h2 style="text-align: center;">Average Insights</h2>
-  </div>
+    <div id="show-insights">
+      <div id="progress-insights-weekly">
+        <h2 style="text-align: center">Weekly Insights</h2>
+      </div>
+      <div id="progress-insights-average">
+        <h2 style="text-align: center">Average Insights</h2>
+      </div>
+      <div id="progress-insights-top-habits">
+        <h2 style="text-align: center">Top Habits Insights</h2>
+      </div>
+    </div>
 
     <!-- footer  -->
     <footer id="footer">
