@@ -686,7 +686,9 @@ input[type="date"]:valid + span::after {
   padding: 15px 50px;
 }
 
-#progress-insights-weekly, #progress-insights-average, #progress-insights-top-habits {
+#progress-insights-weekly,
+#progress-insights-average,
+#progress-insights-top-habits {
   display: none;
   border-radius: 3px;
   padding: 15px;
@@ -697,11 +699,11 @@ input[type="date"]:valid + span::after {
 #progress-insights-weekly {
   background-color: #f3b5b5;
   margin-top: 50px;
-}  
+}
 #progress-insights-average {
   background-color: #75b0eb;
 }
-#progress-insights-top-habits{
+#progress-insights-top-habits {
   background-color: #75ebb0;
 }
 
@@ -710,12 +712,54 @@ input[type="date"]:valid + span::after {
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.current-insight  h2 {
-    width: 50%;
-    height: max-content;
-    background-color: rgb(41, 36, 24);
-    color: #c300ff;
-    margin: 2% 25%;
-    padding: 10px;
-    border-radius: var(--border-radius);
+
+.current-insight h2 {
+  width: 50%;
+  height: max-content;
+  background-color: rgb(41, 36, 24);
+  color: #c300ff;
+  margin: 2% 25%;
+  padding: 10px;
+  border-radius: var(--border-radius);
+}
+
+#introduction, #achievements-highlights {
+  margin: 2% 10%;
+  padding: 30px;
+  border-radius: var(--border-radius);
+  color:#ffffff;
+}
+
+#introduction {
+  background: linear-gradient(140deg, #eca78c, #8ec5fc);
+}
+
+#achievements-highlights {
+  background: linear-gradient(10deg, #ff9a9e, #faf2c0);
+}
+
+#introduction h2 , #achievements-highlights h2{
+  color: #000000;
+}
+
+.highlight{
+  background-color: #000000;
+  border-radius: 7px;
+  padding: 13px;
+  margin-right: 20px;
+}
+
+#introduction ul li, #achievements-highlights ul li {
+  margin: 40px 0px;
+}
+
+#instruction {
+  background-color: #000000;
+  color: #0af0c2;
+  text-align: center;
+  padding: 20px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  border-radius: 5px;
+  margin: 5% 15% ;
 }
