@@ -38,20 +38,20 @@ ul {
   display: flex;
   align-content: center;
   justify-content: space-around;
-  background-color: rgb(0, 208, 255);
+  background: linear-gradient(12deg, #ff397b, #02ffd5);
   border-radius: var(--border-radius);
   padding: 12px;
 }
 
 .nav-item a {
-  color: rgb(18, 13, 13);
+  color: rgb(255, 255, 255);
   list-style-type: none;
   text-decoration: none;
   padding: 15px;
 }
 
 .nav-item:hover {
-  background-color: #eb7e9d;
+  background-color: #00a6ff;
   border-radius: var(--border-radius);
   transition: var(--smooth-trans);
   transform: scale(1.2);
@@ -584,7 +584,7 @@ input[type="date"]:valid + span::after {
 .progress-section-container {
   display: flex;
   flex-direction: column;
-  background: linear-gradient(110deg, #f51d5e, #e4f28a);
+  background: linear-gradient(10deg, #f51d5e, #8a9ff2);
   padding: 13px;
   margin-top: 20px;
 }
@@ -600,10 +600,14 @@ input[type="date"]:valid + span::after {
   height: 100% !important;
   background-color: #090909;
   font-size: x-large;
-  margin-left: 5%;
+  margin-left: 10%;
   border-radius: var(--border-radius);
   padding: 4px;
   cursor: pointer;
+}
+.canvas-expand-icon:hover {
+  background-color: #34dbd0;
+  transition: var(--smooth-trans);
 }
 .canvas-expand-icon i {
   font-size: 30px;
@@ -611,8 +615,14 @@ input[type="date"]:valid + span::after {
 .canvas-expand-color {
   color: #ffffff;
 }
+.canvas-expand-color:hover {
+  color: #000000;
+}
 .canvas-expanded-color {
   color: #ef5183;
+}
+.canvas-expanded-color:hover {
+  color: #145caf;
 }
 .habit-progress-container {
   /* background-color: #85c9f9; */
@@ -633,13 +643,14 @@ input[type="date"]:valid + span::after {
 }
 .habit-container-title {
   text-align: center;
-  width: 40%;
+  width: 35%;
   margin: 1% 10%;
   letter-spacing: 5px;
   font-weight: 600;
   /* border: 4px double #110c13; */
-  background-color: #f79e67;
+  background-color: #f767a8;
   border-radius: var(--border-radius);
+  color: white;
 }
 .habit-canvas-container {
   background-color: #9fe3ef;
@@ -764,16 +775,16 @@ input[type="date"]:valid + span::after {
 }
 
 #introduction {
-  background: linear-gradient(140deg, #eca78c, #8ec5fc);
+  background: linear-gradient(140deg, #000000, #8ec5fc);
 }
 
 #achievements-highlights {
-  background: linear-gradient(10deg, #ff9a9e, #faf2c0);
+  background: linear-gradient(14deg, #00a6ff, #000000);
 }
 
 #introduction h2,
 #achievements-highlights h2 {
-  color: #000000;
+  color: #ff747f;
 }
 
 .highlight {
