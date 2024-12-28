@@ -69,6 +69,8 @@
 
     <div class="progress-section-container"></div>
 
+    <hr style="border: 5px solid rgb(159, 213, 252); margin-top: 20px" />
+
     <!-- Section 1: Introduction -->
     <section id="introduction">
       <h2>Know Your Habits More !!</h2>
@@ -77,6 +79,7 @@
         and analyze progress. Explore dynamic insights, personalized
         achievements, and trends to improve your habit-building journey.
       </p>
+      <br />
       <p>
         With features like streak tracking, weekly trends, and completion rate
         analysis, you can understand how your habits are progressing and plan
@@ -121,9 +124,15 @@
         </li>
       </ul>
     </section>
+
     <!-- Select insights to view -->
     <div id="progress-insights-select">
+      
+      <div id="insights-select-header">
       <p style="font-weight: 700">Insights of All Habits</p>
+      <span id="insights-icon"><i class="fa-regular fa-eye-slash"></i></span>
+      </div>
+
       <hr />
       <br />
       <div class="custom-select">
@@ -145,6 +154,10 @@
     </div>
 
     <!-- Display the selected insights -->
+    <p id="instruction" class="show">
+      Your Habit's Progress Insights Will Appear Here ...
+    </p>
+    
     <div id="show-insights">
       <div id="progress-insights-weekly">
         <h2 style="text-align: center">Weekly Insights</h2>
@@ -158,7 +171,7 @@
         <h2 style="text-align: center">Top Habits Insights</h2>
         <!-- Details of top habits will appear here. -->
       </div>
-      <div id="progress-insights-summary-habits">
+      <div id="progress-insights-summary-habits" class="hide">
         <h2 style="text-align: center">All Habits Insights</h2>
         <!-- Summary of all habits will appear here. -->
       </div>

@@ -425,7 +425,7 @@ input[type="date"]:valid + span::after {
   /* background-color: #f30909; */
 }
 .habit-expand {
-  width: 3%;
+  width: 5%;
   height: 100% !important;
   background-color: #090909;
   font-size: x-large;
@@ -433,6 +433,9 @@ input[type="date"]:valid + span::after {
   border-radius: var(--border-radius);
   padding: 2px;
   cursor: pointer;
+}
+.habit-expand i{
+  padding: 10px;
 }
 
 .habit-expand-color {
@@ -678,7 +681,20 @@ input[type="date"]:valid + span::after {
 #progress-insights-select p {
   font-size: xx-large;
 }
-
+#insights-select-header{
+  display: flex;
+}
+#insights-select-header p {
+  width: 100%;
+  margin: 2% 5% 2% 15%;
+}
+#insights-select-header span {
+  background-color: #f5f5f5;
+  width: 10%;
+  height: 10%;
+  border-radius: 5px;
+  margin: 30px 40px;
+}
 .insights-container {
   background-color: #a4ede2;
   border-radius: var(--border-radius);
