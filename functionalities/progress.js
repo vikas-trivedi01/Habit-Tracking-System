@@ -156,6 +156,103 @@ document.querySelector('#top-habits').addEventListener('click', () => {
     // }
 })
 
+
+
+document.querySelector('#summary-habits').addEventListener('click', () => {
+
+    const insightsContainer = document.querySelector('#progress-insights-summary-habits');
+    const insightsContainerWeekly = document.querySelector('#progress-insights-weekly');
+    const insightsContainerAverage = document.querySelector('#progress-insights-average');
+    const insightsContainerTopHabits = document.querySelector('#progress-insights-top-habits');
+
+
+    if (insightsContainerWeekly.classList.contains("current-insight")) {
+        insightsContainerWeekly.classList.add("hide");
+        insightsContainerWeekly.classList.remove("current-insight");
+    }
+    if (insightsContainerAverage.classList.contains("current-insight")) {
+        insightsContainerAverage.classList.add("hide");
+        insightsContainerAverage.classList.remove("current-insight");
+    }
+    if (insightsContainerTopHabits.classList.contains("current-insight")) {
+        insightsContainerTopHabits.classList.add("hide");
+        insightsContainerTopHabits.classList.remove("current-insight");
+    }
+    if (!insightsContainer.classList.contains("current-insight")) {
+        insightsContainer.classList.add("current-insight");
+        insightsContainer.classList.remove("hide");
+    }
+
+    const { finalSummary } = analyzeHabitProgress();
+
+    finalSummary.forEach(habit => {
+
+        const insights = document.createElement('div');
+        insights.classList.add("insights-container");
+
+        const habitTitle = document.createElement('h3');
+
+        const hrElem = document.createElement('hr');
+        hrElem.style.border = "3px solid #75ebb0";
+
+        const habitNumber = document.createElement('h4');
+        const habitAverageProgress = document.createElement('p');
+        const topHabit = document.createElement('p');
+
+        const habitTotalWeeks = document.createElement('p');
+        const habitTotalDays = document.createElement('p');
+
+        const habitBestWeekPercentage = document.createElement('p');
+        const habitBestWeekNumber = document.createElement('p');
+
+        const habitStreak = document.createElement('p');
+
+        habitTitle.innerHTML = `Habit Name : ${habit.habitName}`;
+        habitNumber.innerHTML = `Habit No : ${habit.habitNumber}`;
+        habitAverageProgress.innerHTML = `
+            <br>
+            Average Progress Percentage Out Of All Weeks : 
+            ${!isNaN(habit.averageProgress)
+                ? habit.averageProgress + '%'
+                : "<br>Not completed any day of this habit"
+            }
+          `;
+        topHabit.innerHTML = `
+          <br>
+          Habits Having Average Progress Percentage Greater Than <i>80%</i> :
+          ${habit.isTopHabit
+                ? "This Habit Has Average Progress Percentage Greater Than <i>80%</i>"
+                : "This Habit Doesn't Have Average Progress Percentage Greater Than <i>80%</i>"
+            }
+          `;
+        habitTotalWeeks.innerHTML = `<br>Total Weeks : ${habit.total.totalWeeks}`;
+        habitTotalDays.innerHTML = `<br>Total Completed Days : ${habit.total.totalCompletedDays}`;
+
+        habitBestWeekPercentage.innerHTML = `<br>Week With Highest Completion Percentage : ${habit.best.bestWeekPercentage}`;
+        habitBestWeekNumber.innerHTML = `<br>Week No : ${habit.best.bestWeekNum}`;
+
+        habitStreak.innerHTML = `<br>Maximum Days Completed Out Of All Weeks : ${habit.streak}`;
+
+        insights.appendChild(habitTitle);
+        insights.appendChild(hrElem);
+        insights.appendChild(habitNumber);
+
+        insights.appendChild(habitAverageProgress);
+
+        insights.appendChild(habitTotalWeeks);
+        insights.appendChild(habitTotalDays);
+
+        insights.appendChild(habitBestWeekPercentage);
+        insights.appendChild(habitBestWeekNumber);
+
+        insights.appendChild(habitStreak);
+
+
+        insightsContainer.appendChild(insights);
+
+    })
+})
+
 function createChartIcon(habitChart) {
     const chartIcon = document.createElement("button");
 
@@ -262,8 +359,6 @@ function analyzeHabitProgress() {
     let topHabits = [];//store top habits with high average progress
     const finalSummary = [];//store the final summary of habits
 
-
-    //calculate average progress for each habit
     Object.values(progressData).forEach((weekData, habitIndex) => {
         const totalPercentage = weekData.reduce((sum, week) => sum + week.percentage, 0);
         const averagePercentage = (totalPercentage / weekData.length).toFixed(2);
@@ -281,18 +376,30 @@ function analyzeHabitProgress() {
         }
     });
 
-    habitAverageProgress.forEach((habit) => {
-        finalSummary.push(
-            {
-                habitNumber: habit.habitNumber,
-                habitName: habit.habitName,
-                averageProgress: habit.averageProgress,
-                isTopHabit: topHabits.some(topHabit => topHabit.habitNumber === habit.habitNumber),
-            }
-        );
+    habitAverageProgress.forEach((habit, habitIndex) => {
+        const { totalWeeks, totalCompletedDays } = calculateHabitProgress(habitIndex);
+        const { maximumStreak, bestWeekPercentage, bestWeekNum } = calculateProgressInsights(habitIndex);
+
+        finalSummary.push({
+            habitNumber: habit.habitNumber,
+            habitName: habit.habitName,
+            averageProgress: habit.averageProgress,
+            isTopHabit: topHabits.some(topHabit => topHabit.habitNumber === habit.habitNumber),
+            total: {
+                totalWeeks,
+                totalCompletedDays
+            },
+            best: {
+                bestWeekPercentage,
+                bestWeekNum
+            },
+            streak: maximumStreak
+
+        });
     });
 
-    return { habitAverageProgress, topHabits };
+
+    return { habitAverageProgress, topHabits, finalSummary };
 }
 
 
