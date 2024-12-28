@@ -201,7 +201,7 @@ function displayHabits() {
             });
         }
 
-        habit_showdetails.innerHTML = '<i class="fa-solid fa-circle-arrow-down"></i>';
+        habit_showdetails.innerHTML = '<i class="fa-solid fa-arrow-down-wide-short"></i>';
         habit_showdetails.className = "habit-expand";
         habit_showdetails.setAttribute("expanded", "false");
         habit_showdetails.title = "View More Details";
@@ -214,7 +214,7 @@ function displayHabits() {
 
             habit_showdetails.classList.remove(!isExpanded ? "habit-expand-color" : "habit-expanded-color");
             habit_showdetails.title = !isExpanded ? "Hide Details" : "View More Details";
-            habit_showdetails.innerHTML = isExpanded ? '<i class="fa-solid fa-circle-arrow-down"></i>' : '<i class="fa-solid fa-circle-arrow-up"></i>';
+            habit_showdetails.innerHTML = isExpanded ? '<i class="fa-solid fa-arrow-down-wide-short"></i>' : '<i class="fa-solid fa-arrow-up-wide-short"></i>';
 
             habit_extra_details.classList.remove(isExpanded ? "show" : "hide");
             habit_extra_details.classList.add(isExpanded ? "hide" : "show");

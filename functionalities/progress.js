@@ -81,6 +81,19 @@ habits.forEach((habit, habitIndex) => {
 
 });
 
+const insightsIcon = document.querySelector('#insights-icon');
+insightsIcon.addEventListener('click', () => {
+    const insightsContainer = document.querySelector('#show-insights');
+    const isVisible = insightsContainer.getAttribute("isVisible") == "false";
+    if (!isVisible) {
+        insightsContainer.classList.add("hide");
+        insightsContainer.setAttribute("isVisible", false);
+    }
+    else {
+        alert('Insights Are Already Hidden');
+    }
+})
+
 const insightsSelectorWeekly = document.querySelector('#insights-selector-weekly');
 
 insightsSelectorWeekly.addEventListener('change', (e) => {
@@ -96,12 +109,21 @@ insightsSelectorAverage.addEventListener('change', (e) => {
 
 document.querySelector('#top-habits').addEventListener('click', () => {
 
+    const insightsSection = document.querySelector('#show-insights');
     const insightsContainer = document.querySelector('#progress-insights-top-habits');
     const insightsContainerWeekly = document.querySelector('#progress-insights-weekly');
     const insightsContainerAverage = document.querySelector('#progress-insights-average');
     const insightsContainerSummaryHabits = document.querySelector('#progress-insights-summary-habits');
+    const instruction = document.querySelector('#instruction');
 
-
+    if (insightsSection.classList.contains("hide")) {
+        insightsSection.classList.remove("hide");
+        insightsSection.setAttribute("isVisible", true);
+    }
+    if (instruction.classList.contains("show")) {
+        instruction.classList.remove("show");
+        instruction.classList.add("hide");
+    }
     if (insightsContainerWeekly.classList.contains("current-insight")) {
         insightsContainerWeekly.classList.add("hide");
         insightsContainerWeekly.classList.remove("current-insight");
@@ -159,13 +181,21 @@ document.querySelector('#top-habits').addEventListener('click', () => {
 
 
 document.querySelector('#summary-habits').addEventListener('click', () => {
-
+    const insightsSection = document.querySelector('#show-insights');
     const insightsContainer = document.querySelector('#progress-insights-summary-habits');
     const insightsContainerWeekly = document.querySelector('#progress-insights-weekly');
     const insightsContainerAverage = document.querySelector('#progress-insights-average');
     const insightsContainerTopHabits = document.querySelector('#progress-insights-top-habits');
+    const instruction = document.querySelector('#instruction');
 
-
+    if (insightsSection.classList.contains("hide")) {
+        insightsSection.classList.remove("hide");
+        insightsSection.setAttribute("isVisible", true);
+    }
+    if (instruction.classList.contains("show")) {
+        instruction.classList.remove("show");
+        instruction.classList.add("hide");
+    }
     if (insightsContainerWeekly.classList.contains("current-insight")) {
         insightsContainerWeekly.classList.add("hide");
         insightsContainerWeekly.classList.remove("current-insight");
@@ -404,12 +434,21 @@ function analyzeHabitProgress() {
 
 
 function displayWeeklyInsights(habitIndex) {
+    const insightsSection = document.querySelector('#show-insights');
     const insightsContainer = document.querySelector('#progress-insights-weekly');
     const insightsContainerAverage = document.querySelector('#progress-insights-average');
     const insightsContainerTopHabits = document.querySelector('#progress-insights-top-habits');
     const insightsContainerSummaryHabits = document.querySelector('#progress-insights-summary-habits');
+    const instruction = document.querySelector('#instruction');
 
-
+    if (insightsSection.classList.contains("hide")) {
+        insightsSection.classList.remove("hide");
+        insightsSection.setAttribute("isVisible", true);
+    }
+    if (instruction.classList.contains("show")) {
+        instruction.classList.remove("show");
+        instruction.classList.add("hide");
+    }
     if (insightsContainerAverage.classList.contains("current-insight")) {
         insightsContainerAverage.classList.add("hide");
         insightsContainerAverage.classList.remove("current-insight");
@@ -464,13 +503,21 @@ function displayWeeklyInsights(habitIndex) {
 }
 
 function displayAverageInsights(habitIndex) {
+    const insightsSection = document.querySelector('#show-insights');
     const insightsContainer = document.querySelector('#progress-insights-average');
     const insightsContainerWeekly = document.querySelector('#progress-insights-weekly');
     const insightsContainerTopHabits = document.querySelector('#progress-insights-top-habits');
     const insightsContainerSummaryHabits = document.querySelector('#progress-insights-summary-habits');
+    const instruction = document.querySelector('#instruction');
 
-
-
+    if (insightsSection.classList.contains("hide")) {
+        insightsSection.classList.remove("hide");
+        insightsSection.setAttribute("isVisible", true);
+    }
+    if (instruction.classList.contains("show")) {
+        instruction.classList.remove("show");
+        instruction.classList.add("hide");
+    }
     if (insightsContainerWeekly.classList.contains("current-insight")) {
         insightsContainerWeekly.classList.add("hide");
         insightsContainerWeekly.classList.remove("current-insight");
