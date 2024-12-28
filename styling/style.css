@@ -681,32 +681,48 @@ input[type="date"]:valid + span::after {
   padding: 20px;
 }
 
-#progress-insights-select {
+#progress-insights-select,
+#habits-comparison-select {
   background-color: rgb(133, 245, 239);
   margin: 20px;
   text-align: center;
   font-size: x-large;
-  height: 60%;
   padding: 20px;
 }
-#progress-insights-select p {
+
+#progress-insights-select {
+height: 60%;
+}
+
+#habits-comparison-select {
+  height: 45%;
+
+}
+
+
+#progress-insights-select p,
+#habit-comparison-select p {
   font-size: xx-large;
 }
-#insights-select-header {
+#insights-select-header,
+#comparison-select-header {
   display: flex;
 }
-#insights-select-header p {
+#insights-select-header p,
+#comparison-select-header p {
   width: 100%;
   margin: 2% 5% 2% 15%;
 }
-#insights-select-header span {
+#insights-select-header span,
+#comparison-select-header span {
   background-color: #f5f5f5;
   width: 10%;
   height: 10%;
   border-radius: 5px;
   margin: 30px 40px;
 }
-#insights-select-header span:hover {
+#insights-select-header span:hover,
+#comparison-select-header span:hover {
   background-color: #ff7e7e;
   border-radius: 10px;
   color: #9fe3ef;
@@ -808,4 +824,8 @@ input[type="date"]:valid + span::after {
   letter-spacing: 4px;
   border-radius: 5px;
   margin: 5% 15%;
+}
+
+#habits-comparison-section {
+  background-color: #00a6ff;
 }
