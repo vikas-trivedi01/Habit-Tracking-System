@@ -61,27 +61,24 @@ habits.forEach((habit, habitIndex) => {
 
     createChart(habitProgress, habitIndex);
 
-    const insightsSelectorWeekly = document.querySelector('#insights-selector-weekly');
-    const insightsSelectorAverage = document.querySelector('#insights-selector-average');
-
-    const weeklyOption = document.createElement('option');
-    weeklyOption.id = `${habitIndex}`;
-    weeklyOption.value = `${habitIndex}`;
-    weeklyOption.innerText = `${habit.habitName}`;
-
-
-    const averageOption = document.createElement('option');
-    averageOption.id = `${habitIndex}`;
-    averageOption.value = `${habitIndex}`;
-    averageOption.innerText = `${habit.habitName}`;
-
-    insightsSelectorWeekly.appendChild(weeklyOption);
-    insightsSelectorAverage.appendChild(averageOption);
-
-
+    createHabitOptions('insights-selector-weekly', habitIndex);
+    createHabitOptions('insights-selector-average', habitIndex);
 });
 
+function createHabitOptions(parentSelectContainerId, habitIndex) {
+    const parentSelectContainer = document.querySelector(`#${parentSelectContainerId}`);
+    const habitName = habits[habitIndex].habitName;
+    const habitOption = document.createElement('option');
+    habitOption.id = `${habitIndex}`;
+    habitOption.value = `${habitIndex}`;
+    habitOption.innerText = `${habitName}`;
+
+    parentSelectContainer.appendChild(habitOption);
+}
+
+
 const insightsIcon = document.querySelector('#insights-icon');
+
 insightsIcon.addEventListener('click', () => {
     const insightsContainer = document.querySelector('#show-insights');
     const isVisible = insightsContainer.getAttribute("isVisible") == "false";
@@ -100,6 +97,7 @@ insightsSelectorWeekly.addEventListener('change', (e) => {
     const selectedHabitIndex = e.target.value;
     displayWeeklyInsights(selectedHabitIndex);
 });
+
 const insightsSelectorAverage = document.querySelector('#insights-selector-average');
 
 insightsSelectorAverage.addEventListener('change', (e) => {
@@ -470,43 +468,52 @@ function displayWeeklyInsights(habitIndex) {
         insightsContainer.classList.remove("hide");
     }
 
+
     const insights = document.createElement('div');
     insights.classList.add("insights-container");
+    insights.id = `${insightsContainer.id}-${habitIndex}`;
 
-    const { maximumStreak, bestWeekPercentage, bestWeekNum } = calculateProgressInsights(habitIndex);
+    const shownInsights = document.querySelectorAll(`#${insightsContainer.id} .insights-container`)
+    const alreadyExistsInsight = Array.from(shownInsights).some(element => element.id == insights.id);
 
-    // if (!maximumStreak && !bestWeekPercentage && !bestWeekNum) {
+    if (!alreadyExistsInsight) {
 
-    //     const notFound = document.createElement('h3');
-    //     notFound.innerText = "No Data Found !";
+        const { maximumStreak, bestWeekPercentage, bestWeekNum } = calculateProgressInsights(habitIndex);
 
-    //     insights.appendChild(notFound);
-    //     insightsContainer.appendChild(insights);
-    // }
-    // else {
+        // if (!maximumStreak && !bestWeekPercentage && !bestWeekNum) {
 
-    const habitTitle = document.createElement('h3');
-    habitTitle.style.marginBottom = "10px";
+        //     const notFound = document.createElement('h3');
+        //     notFound.innerText = "No Data Found !";
 
-    const hrElem = document.createElement('hr');
-    hrElem.style.border = "3px solid rgb(206, 202, 205)";
+        //     insights.appendChild(notFound);
+        //     insightsContainer.appendChild(insights);
+        // }
+        // else {
 
-    const maximumStreakElem = document.createElement('p');
-    maximumStreakElem.style.marginTop = "10px";
+        const habitTitle = document.createElement('h3');
+        habitTitle.style.marginBottom = "10px";
 
-    const bestWeekElem = document.createElement('p');
+        const hrElem = document.createElement('hr');
+        hrElem.style.border = "3px solid rgb(206, 202, 205)";
 
-    habitTitle.innerText = `Habit Name : ${habits[habitIndex].habitName}`;
-    maximumStreakElem.innerText = `Maximum Streak Among All Weeks : ${maximumStreak}`;
-    bestWeekElem.innerHTML = `Best Week No : ${bestWeekNum} <br> Best Week Percentage :${bestWeekPercentage}%`;
+        const maximumStreakElem = document.createElement('p');
+        maximumStreakElem.style.marginTop = "10px";
 
-    insights.appendChild(habitTitle);
-    insights.appendChild(hrElem);
-    insights.appendChild(maximumStreakElem);
-    insights.appendChild(bestWeekElem);
-    insightsContainer.appendChild(insights);
-    // }
+        const bestWeekElem = document.createElement('p');
 
+        habitTitle.innerText = `Habit Name : ${habits[habitIndex].habitName}`;
+        maximumStreakElem.innerText = `Maximum Streak Among All Weeks : ${maximumStreak}`;
+        bestWeekElem.innerHTML = `Best Week No : ${bestWeekNum} <br> Best Week Percentage :${bestWeekPercentage}%`;
+
+        insights.appendChild(habitTitle);
+        insights.appendChild(hrElem);
+        insights.appendChild(maximumStreakElem);
+        insights.appendChild(bestWeekElem);
+        insightsContainer.appendChild(insights);
+    }
+    else {
+        alert('Insight Already Available On Dashboard!');
+    }
 }
 
 function displayAverageInsights(habitIndex) {
@@ -549,30 +556,40 @@ function displayAverageInsights(habitIndex) {
 
     const insights = document.createElement('div');
     insights.classList.add("insights-container");
+    insights.id = `${insightsContainer.id}-${habitIndex}`;
 
-    const habitTitle = document.createElement('h3');
-    habitTitle.style.marginBottom = "10px";
+    const shownInsights = document.querySelectorAll(`#${insightsContainer.id} .insights-container`)
+    const alreadyExistsInsight = Array.from(shownInsights).some(element => element.id == insights.id);
 
-    const hrElem = document.createElement('hr');
-    hrElem.style.border = "3px solid #75b0eb";
+    if (!alreadyExistsInsight) {
 
-    const habitNumber = document.createElement('p');
-    const averageProgress = document.createElement('p');
+        const habitTitle = document.createElement('h3');
+        habitTitle.style.marginBottom = "10px";
 
-    habitTitle.innerText = `Habit Name : ${habitAverageProgress.habitName}`;
-    habitNumber.innerHTML = `<br>Habit No : ${habitAverageProgress.habitNumber}`;
-    averageProgress.innerHTML = `
-    <br>
-    Average Progress Percentage Out Of All Weeks : 
-    ${!isNaN(habitAverageProgress.averageProgress)
-            ? habitAverageProgress.averageProgress + '%'
-            : "<br>Not completed any day of this habit"}
-  `;
+        const hrElem = document.createElement('hr');
+        hrElem.style.border = "3px solid #75b0eb";
 
-    insights.appendChild(habitTitle);
-    insights.appendChild(hrElem);
-    insights.appendChild(habitNumber);
-    insights.appendChild(averageProgress);
+        const habitNumber = document.createElement('p');
+        const averageProgress = document.createElement('p');
 
-    insightsContainer.appendChild(insights);
+        habitTitle.innerText = `Habit Name : ${habitAverageProgress.habitName}`;
+        habitNumber.innerHTML = `<br>Habit No : ${habitAverageProgress.habitNumber}`;
+        averageProgress.innerHTML = `
+        <br>
+        Average Progress Percentage Out Of All Weeks : 
+        ${!isNaN(habitAverageProgress.averageProgress)
+                    ? habitAverageProgress.averageProgress + '%'
+                    : "<br>Not completed any day of this habit"}
+        `;
+
+        insights.appendChild(habitTitle);
+        insights.appendChild(hrElem);
+        insights.appendChild(habitNumber);
+        insights.appendChild(averageProgress);
+
+        insightsContainer.appendChild(insights);
+    }
+    else {
+        alert('Insight Already Available On Dashboard!');
+    }
 }
