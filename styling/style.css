@@ -829,3 +829,29 @@ height: 60%;
 #habits-comparison-section {
   background-color: #00a6ff;
 }
+
+#show-comparison {
+  display: flex;
+  justify-content:space-between ;
+  background-color: #00a6ff;
+  padding: 20px;
+  margin: 15% 3%;
+}
+
+#compare-btn{
+  background-color: #000000;
+  margin: 5% 25%;
+  width: 25%;
+  padding: 10px;
+  border: none;
+  color: #00ff15;
+  font-size: x-large;
+  transition: var(--smooth-trans);
+}
+#compare-btn:hover{
+  background-color: #ffffff;
+  color: #000000;
+  border-radius: var(--border-radius);
+  transition: var(--smooth-trans);
+  transform: scale(1.1);
+}

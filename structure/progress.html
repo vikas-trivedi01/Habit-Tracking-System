@@ -73,7 +73,7 @@
     <div class="progress-section-container"></div>
 
     <hr style="border: 5px solid rgb(159, 213, 252); margin-top: 20px" />
-
+    
     <!-- Section 1: Introduction -->
     <section id="introduction">
       <h2>Know Your Habits More !!</h2>
@@ -158,12 +158,12 @@
         </button>
       </div>
     </div>
-
+    
     <!-- Display the selected insights -->
     <p id="instruction" class="show">
       Your Habit's Progress Insights Will Appear Here ...
     </p>
-
+    
     <div id="show-insights">
       <div id="progress-insights-weekly">
         <h2 style="text-align: center">Weekly Insights</h2>
@@ -186,6 +186,7 @@
       </div>
     </div>
     
+    <hr style="border: 5px solid rgb(13, 134, 221); margin-top: 20px" />
     <div id="habits-comparison-select">
       <div id="comparison-select-header">
         <p style="font-weight: 700">Comparison of All Habits</p>
@@ -206,6 +207,20 @@
           <option value="banner">Select Second Habit To Compare</option>
           <!-- Dynamic habit options will be added here via JS -->
         </select>
+      </div>
+      <pre><button id="compare-btn">Compare      <i class="fa-solid fa-not-equal"></i></button></pre>
+
+    </div>
+
+    <div id="show-comparison">
+      <div id="first-comparison">
+        <h2>First Habit</h2>
+        <!-- Details of weekly progress will appear here based on selected habit. -->
+      </div>
+      
+      <div id="second-comparison">
+        <h2>Second Habit</h2>
+        <!-- Details of average progress will appear here based on selected habit. -->
       </div>
 
     </div>
