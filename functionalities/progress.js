@@ -61,13 +61,13 @@ habits.forEach((habit, habitIndex) => {
 
     createChart(habitProgress, habitIndex);
 
-    createHabitOptions('insights-selector-weekly', habitIndex);
-    createHabitOptions('insights-selector-average', habitIndex);
+    createHabitOptions('insights-selector-weekly', habitIndex, habit.habitName);
+    createHabitOptions('insights-selector-average', habitIndex, habit.habitName);
 });
 
-function createHabitOptions(parentSelectContainerId, habitIndex) {
+function createHabitOptions(parentSelectContainerId, habitIndex, habitName) {
     const parentSelectContainer = document.querySelector(`#${parentSelectContainerId}`);
-    const habitName = habits[habitIndex].habitName;
+
     const habitOption = document.createElement('option');
     habitOption.id = `${habitIndex}`;
     habitOption.value = `${habitIndex}`;
