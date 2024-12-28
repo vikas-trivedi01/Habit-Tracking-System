@@ -69,6 +69,59 @@
 
     <div class="progress-section-container"></div>
 
+    <!-- Section 1: Introduction -->
+    <section id="introduction">
+      <h2>Know Your Habits More !!</h2>
+      <p>
+        This Habit Tracker helps you stay consistent, celebrate your milestones,
+        and analyze progress. Explore dynamic insights, personalized
+        achievements, and trends to improve your habit-building journey.
+      </p>
+      <p>
+        With features like streak tracking, weekly trends, and completion rate
+        analysis, you can understand how your habits are progressing and plan
+        better.
+      </p>
+    </section>
+
+    <!-- Section 2: Achievements & Highlights -->
+    <section id="achievements-highlights">
+      <h2>Achievements & Highlights</h2>
+      <p>
+        Celebrate your wins! Below are your recent milestones and achievements,
+        updated dynamically as you progress.
+      </p>
+      <ul>
+        <li>
+          <span class="highlight">Streak Records:</span> Longest streak achieved
+          for each habit.
+        </li>
+        <li>
+          <span class="highlight">Best Week:</span> The week with the highest
+          completion rate.
+        </li>
+        <li>
+          <span class="highlight">Habit Star:</span> Habits with consistent
+          completion rates above 80%.
+        </li>
+      </ul>
+      <h3>Example Highlights:</h3>
+      <ul>
+        <li>
+          <span class="highlight">Longest Streak:</span> 14 days for
+          "Meditation".
+        </li>
+        <li>
+          <span class="highlight">Best Week:</span> Week 3 of December with 6
+          completed days for "Reading".
+        </li>
+        <li>
+          <span class="highlight">Habit Star:</span> "Exercise" with a
+          completion rate of 85%.
+        </li>
+      </ul>
+    </section>
+    <!-- Select insights to view -->
     <div id="progress-insights-select">
       <p style="font-weight: 700">Insights of All Habits</p>
       <hr />
@@ -76,27 +129,38 @@
       <div class="custom-select">
         <select id="insights-selector-weekly">
           <option value="banner">Maximum Streaks Among All Weeks</option>
+          <!-- Dynamic habit options will be added here via JS -->
         </select>
         <select id="insights-selector-average">
           <option value="banner">Average Progress Of Habits</option>
+          <!-- Dynamic habit options will be added here via JS -->
         </select>
       </div>
       <div id="all-insights">
         <button id="top-habits" class="insights-buttons">Top Habits</button>
         <button id="summary-habits" class="insights-buttons">
-          Summary Of All Habits
+          Summary Of Habits
         </button>
       </div>
     </div>
+
+    <!-- Display the selected insights -->
     <div id="show-insights">
       <div id="progress-insights-weekly">
         <h2 style="text-align: center">Weekly Insights</h2>
+        <!-- Details of weekly progress will appear here based on selected habit. -->
       </div>
       <div id="progress-insights-average">
         <h2 style="text-align: center">Average Insights</h2>
+        <!-- Details of average progress will appear here based on selected habit. -->
       </div>
       <div id="progress-insights-top-habits">
         <h2 style="text-align: center">Top Habits Insights</h2>
+        <!-- Details of top habits will appear here. -->
+      </div>
+      <div id="progress-insights-summary-habits">
+        <h2 style="text-align: center">All Habits Insights</h2>
+        <!-- Summary of all habits will appear here. -->
       </div>
     </div>
 
