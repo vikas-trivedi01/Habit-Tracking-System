@@ -434,7 +434,7 @@ input[type="date"]:valid + span::after {
   padding: 2px;
   cursor: pointer;
 }
-.habit-expand i{
+.habit-expand i {
   padding: 10px;
 }
 
@@ -681,7 +681,7 @@ input[type="date"]:valid + span::after {
 #progress-insights-select p {
   font-size: xx-large;
 }
-#insights-select-header{
+#insights-select-header {
   display: flex;
 }
 #insights-select-header p {
@@ -695,32 +695,48 @@ input[type="date"]:valid + span::after {
   border-radius: 5px;
   margin: 30px 40px;
 }
+#insights-select-header span:hover {
+  background-color: #ff7e7e;
+  border-radius: 10px;
+  color: #9fe3ef;
+  transition: var(--smooth-trans);
+}
 .insights-container {
   background-color: #a4ede2;
   border-radius: var(--border-radius);
   margin: 30px 20px 10px 30px;
   padding: 15px 50px;
 }
-
+.insights-container-top {
+  background-color: #a4ede2;
+  border-radius: var(--border-radius);
+  margin: 30px 10px 10px 10px;
+  padding: 15px 25px;
+  width: 40%;
+}
 #progress-insights-weekly,
 #progress-insights-average,
-#progress-insights-top-habits {
+#progress-insights-top-habits,
+#progress-insights-summary-habits {
   display: none;
   border-radius: 3px;
   padding: 15px;
   text-align: center;
   margin-bottom: 25px;
+  margin-top: 50px;
 }
 
 #progress-insights-weekly {
   background-color: #f3b5b5;
-  margin-top: 50px;
 }
 #progress-insights-average {
   background-color: #75b0eb;
 }
 #progress-insights-top-habits {
   background-color: #75ebb0;
+}
+#progress-insights-summary-habits {
+  background-color: #48558e;
 }
 
 .current-insight {
@@ -733,17 +749,18 @@ input[type="date"]:valid + span::after {
   width: 50%;
   height: max-content;
   background-color: rgb(41, 36, 24);
-  color: #c300ff;
+  color: #00ffff;
   margin: 2% 25%;
   padding: 10px;
   border-radius: var(--border-radius);
 }
 
-#introduction, #achievements-highlights {
+#introduction,
+#achievements-highlights {
   margin: 2% 10%;
   padding: 30px;
   border-radius: var(--border-radius);
-  color:#ffffff;
+  color: #ffffff;
 }
 
 #introduction {
@@ -754,18 +771,20 @@ input[type="date"]:valid + span::after {
   background: linear-gradient(10deg, #ff9a9e, #faf2c0);
 }
 
-#introduction h2 , #achievements-highlights h2{
+#introduction h2,
+#achievements-highlights h2 {
   color: #000000;
 }
 
-.highlight{
+.highlight {
   background-color: #000000;
   border-radius: 7px;
   padding: 13px;
   margin-right: 20px;
 }
 
-#introduction ul li, #achievements-highlights ul li {
+#introduction ul li,
+#achievements-highlights ul li {
   margin: 40px 0px;
 }
 
@@ -777,5 +796,5 @@ input[type="date"]:valid + span::after {
   font-weight: 900;
   letter-spacing: 4px;
   border-radius: 5px;
-  margin: 5% 15% ;
+  margin: 5% 15%;
 }

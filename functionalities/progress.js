@@ -108,7 +108,6 @@ insightsSelectorAverage.addEventListener('change', (e) => {
 });
 
 document.querySelector('#top-habits').addEventListener('click', () => {
-
     const insightsSection = document.querySelector('#show-insights');
     const insightsContainer = document.querySelector('#progress-insights-top-habits');
     const insightsContainerWeekly = document.querySelector('#progress-insights-weekly');
@@ -156,17 +155,19 @@ document.querySelector('#top-habits').addEventListener('click', () => {
     topHabits.forEach(habit => {
 
         const insights = document.createElement('div');
-        insights.classList.add("insights-container");
+        insights.classList.add("insights-container-top");
 
         const habitTitle = document.createElement('h3');
+        habitTitle.style.marginBottom = "10px";
 
         const hrElem = document.createElement('hr');
         hrElem.style.border = "3px solid #75ebb0";
 
-        const habitNumber = document.createElement('h5');
+        const habitNumber = document.createElement('h4');
+        habitNumber.style.marginTop = "20px";
 
         habitTitle.innerHTML = `Habit Name <br>${habit.habitName}`;
-        habitNumber.innerHTML = `Habit No <br> ${habit.habitNumber}`;
+        habitNumber.innerText = `Habit No : ${habit.habitNumber}`;
 
         insights.appendChild(habitTitle);
         insights.appendChild(hrElem);
@@ -221,11 +222,14 @@ document.querySelector('#summary-habits').addEventListener('click', () => {
         insights.classList.add("insights-container");
 
         const habitTitle = document.createElement('h3');
+        habitTitle.style.marginBottom = "10px";
 
         const hrElem = document.createElement('hr');
         hrElem.style.border = "3px solid #75ebb0";
 
         const habitNumber = document.createElement('h4');
+        habitNumber.style.marginTop = "20px";
+
         const habitAverageProgress = document.createElement('p');
         const topHabit = document.createElement('p');
 
@@ -482,11 +486,14 @@ function displayWeeklyInsights(habitIndex) {
     // else {
 
     const habitTitle = document.createElement('h3');
+    habitTitle.style.marginBottom = "10px";
 
     const hrElem = document.createElement('hr');
     hrElem.style.border = "3px solid rgb(206, 202, 205)";
 
     const maximumStreakElem = document.createElement('p');
+    maximumStreakElem.style.marginTop = "10px";
+
     const bestWeekElem = document.createElement('p');
 
     habitTitle.innerText = `Habit Name : ${habits[habitIndex].habitName}`;
@@ -544,6 +551,7 @@ function displayAverageInsights(habitIndex) {
     insights.classList.add("insights-container");
 
     const habitTitle = document.createElement('h3');
+    habitTitle.style.marginBottom = "10px";
 
     const hrElem = document.createElement('hr');
     hrElem.style.border = "3px solid #75b0eb";
