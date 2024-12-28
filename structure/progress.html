@@ -21,10 +21,13 @@
           <a href="index.html" class="nav-link"> Home </a>
         </li>
         <li class="nav-item">
-          <a href="habits.html" class="nav-link"> Habits </a>
+          <a href="habits.html" class="nav-link"> Your Habits </a>
         </li>
         <li class="nav-item">
           <a href="progress.html" class="nav-link"> Your Progress </a>
+        </li>
+        <li class="nav-item">
+          <a href="about.html" class="nav-link"> About Us </a>
         </li>
       </ul>
     </nav>
@@ -41,7 +44,7 @@
 
       <p style="padding: 25px; text-align: justify">
         Visualize your progress for each habit! These charts give you a clear
-        view of how consistently you’ve been working on your habits week by
+        view of how consistently you've been working on your habits week by
         week. See how many days you've completed each habit, analyze your
         streaks, and identify areas where you can improve.
       </p>
@@ -127,14 +130,16 @@
 
     <!-- Select insights to view -->
     <div id="progress-insights-select">
-      
       <div id="insights-select-header">
-      <p style="font-weight: 700">Insights of All Habits</p>
-      <span id="insights-icon"><i class="fa-regular fa-eye-slash"></i></span>
+        <p style="font-weight: 700">Insights of All Habits</p>
+        <span id="insights-icon" title="Hide Insights">
+          <i class="fa-regular fa-eye-slash"></i>
+        </span>
       </div>
 
       <hr />
       <br />
+
       <div class="custom-select">
         <select id="insights-selector-weekly">
           <option value="banner">Maximum Streaks Among All Weeks</option>
@@ -145,6 +150,7 @@
           <!-- Dynamic habit options will be added here via JS -->
         </select>
       </div>
+
       <div id="all-insights">
         <button id="top-habits" class="insights-buttons">Top Habits</button>
         <button id="summary-habits" class="insights-buttons">
@@ -157,21 +163,24 @@
     <p id="instruction" class="show">
       Your Habit's Progress Insights Will Appear Here ...
     </p>
-    
+
     <div id="show-insights">
       <div id="progress-insights-weekly">
         <h2 style="text-align: center">Weekly Insights</h2>
         <!-- Details of weekly progress will appear here based on selected habit. -->
       </div>
+
       <div id="progress-insights-average">
         <h2 style="text-align: center">Average Insights</h2>
         <!-- Details of average progress will appear here based on selected habit. -->
       </div>
+
       <div id="progress-insights-top-habits">
         <h2 style="text-align: center">Top Habits Insights</h2>
         <!-- Details of top habits will appear here. -->
       </div>
-      <div id="progress-insights-summary-habits" class="hide">
+
+      <div id="progress-insights-summary-habits">
         <h2 style="text-align: center">All Habits Insights</h2>
         <!-- Summary of all habits will appear here. -->
       </div>
