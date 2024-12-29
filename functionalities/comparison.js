@@ -3,23 +3,29 @@ habits.forEach((habit, habitIndex) => {
     createHabitOptions('comparison-selector-second-habit', habitIndex, habit.habitName);
 });
 
-const selectedHabits = {
+// show filter for different comparison type
+const filterIcon = document.querySelector(".cmp-icon");
+const filterSection = document.getElementById("filter-section");
+
+let hideTimeout;
+
+filterIcon.addEventListener("mouseenter", () => {
+    clearTimeout(hideTimeout);
+    filterSection.classList.add("visible");
+});
+
+filterIcon.addEventListener("mouseleave", () => {
+    hideTimeout = setTimeout(() => {
+        filterSection.classList.remove("visible");
+    }, 2000);
+});
+
+const comparisonPreferences = {
     firstHabit: null,
     secondHabit: null,
+    filterCriteria: null
 };
 
-const comparisonSelectorFirst = document.querySelector('#comparison-selector-first-habit');
-
-comparisonSelectorFirst.addEventListener('change', (e) => {
-    const selectedHabitIndex = e.target.value;
-
-    if (habits[selectedHabitIndex]) {
-        selectedHabits.firstHabit = {
-            habitName: habits[selectedHabitIndex].habitName,
-            selectedHabitIndex,
-        };
-    }
-});
 
 const comparisonSelectorSecond = document.querySelector('#comparison-selector-second-habit');
 
@@ -27,32 +33,45 @@ comparisonSelectorSecond.addEventListener('change', (e) => {
     const selectedHabitIndex = e.target.value;
 
     if (habits[selectedHabitIndex]) {
-        selectedHabits.secondHabit = {
+        comparisonPreferences.secondHabit = {
             habitName: habits[selectedHabitIndex].habitName,
             selectedHabitIndex,
         };
     }
 });
 
-document.querySelector('#compare-btn').addEventListener('click', () => {
+const filterCriteria = document.querySelector('#filter-section');
 
-    if (selectedHabits.firstHabit && !selectedHabits.secondHabit) {
-        alert('Select Second Habit To Compare');
-    }
-    if (!selectedHabits.firstHabit && selectedHabits.secondHabit) {
-        alert('Select First Habit To Compare');
-    }
-    if (!selectedHabits.firstHabit && !selectedHabits.secondHabit) {
-        alert('Select Habits To Compare');
-    }
-    if (selectedHabits.firstHabit.habitName === selectedHabits.secondHabit.habitName) {
-        alert('Select Different Habits To Compare');
-    }
-
-    displayComparison(selectedHabits.firstHabit.selectedHabitIndex, selectedHabits.secondHabit.selectedHabitIndex);
+filterCriteria.addEventListener('change', (e) => {
+    const selectedCriteria = e.target.value;
+    comparisonPreferences.filterCriteria = selectedCriteria;
 });
 
-function displayComparison(firstHabitIndex, secondHabitIndex) {
+document.querySelector('#compare-btn').addEventListener('click', () => {
+
+    if (comparisonPreferences.firstHabit && !comparisonPreferences.secondHabit) {
+        alert('Select Second Habit To Compare');
+    }
+    else if (!comparisonPreferences.firstHabit && comparisonPreferences.secondHabit) {
+        alert('Select First Habit To Compare');
+    }
+    else if (!comparisonPreferences.firstHabit && !comparisonPreferences.secondHabit) {
+        alert('Select Habits To Compare');
+    }
+    else if (comparisonPreferences.firstHabit.habitName === comparisonPreferences.secondHabit.habitName) {
+        alert('Select Different Habits To Compare');
+    }
+    else {
+        if (!comparisonPreferences.filterCriteria) {
+            alert('Select Filter Criteria To Compare');
+        }
+        else {
+            displayComparison(comparisonPreferences.firstHabit.selectedHabitIndex, comparisonPreferences.secondHabit.selectedHabitIndex, comparisonPreferences.filterCriteria);
+        }
+    }
+});
+
+function displayComparison(firstHabitIndex, secondHabitIndex, filterCriteria) {
 
     const instruction = document.querySelector('#comparison-instruction');
     const comparisonSection = document.querySelector('#show-comparison');
@@ -63,18 +82,24 @@ function displayComparison(firstHabitIndex, secondHabitIndex) {
     }
     if (comparisonSection.classList.contains("hide")) {
         comparisonSection.classList.remove("hide");
-        comparisonSection.classList.add("show", "show-comparison-flex");
+        comparisonSection.classList.add("show");
     }
-
-    const selectedFirstHabitData = calculateProgressInsights(firstHabitIndex);
-    const selectedSecondHabitData = calculateProgressInsights(secondHabitIndex);
 
     const firstHabitName = habits[firstHabitIndex].habitName;
     const secondHabitName = habits[secondHabitIndex].habitName;
 
-    const comparisonContainer = document.createElement('table');
+    const comparisonTitle = document.createElement('h4');
+    comparisonTitle.innerText = `Comparison Between ${firstHabitName} And ${secondHabitName}`;
 
-    comparisonContainer.innerHTML = `
+    const comparisonContainer = document.createElement('table');
+    comparisonContainer.classList.add('comparison-container');
+
+    if (filterCriteria === "filter-weekly") {
+        const selectedFirstHabitData = calculateProgressInsights(firstHabitIndex);
+        const selectedSecondHabitData = calculateProgressInsights(secondHabitIndex);
+
+        comparisonContainer.innerHTML = `
+    <hr />
     <tr>
     <th>Habit Name</th>
     <th>Maximum Completed Days</th>
@@ -98,5 +123,7 @@ function displayComparison(firstHabitIndex, secondHabitIndex) {
 
     `;
 
-    comparisonSection.appendChild(comparisonContainer);
+        comparisonSection.appendChild(comparisonTitle);
+        comparisonSection.appendChild(comparisonContainer);
+    }
 }
