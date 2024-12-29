@@ -1,0 +1,43 @@
+  .about-us-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /* Hero Section */
+  .hero {
+    background: #70f6ce;
+    padding: 20px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    text-align: center;
+    border-radius: 4px;
+  }
+  
+  .hero h2 {
+    color: #4caf50;
+    margin-bottom: 10px;
+  }
+  
+  /* Mission Section */
+  .mission {
+    margin-bottom: 20px;
+  }
+  
+  /* Features Section */
+  .features ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .features li {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .features i {
+    color: #4caf50;
+  }
+  
