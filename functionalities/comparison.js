@@ -98,9 +98,28 @@ function displayComparison(firstHabitIndex, secondHabitIndex, filterCriteria) {
     hrElem.style.border = "4px double hotpink";
     hrElem.style.margin = "16px 0px";
 
+    const comparisonHeader = document.createElement('div');
+    comparisonHeader.classList.add("comparison-header");
+
     const comparisonTitle = document.createElement('h4');
     comparisonTitle.innerText = `Comparison Between ${firstHabitName} And ${secondHabitName}`;
-    comparisonSection.appendChild(comparisonTitle);
+
+    const comparisonIconSection = document.createElement('div');
+    const comparisonIcon = document.createElement('i');
+    comparisonIcon.classList.add("fa-solid", "fa-hashtag");
+
+    const comparisonIconText = document.createElement('span');
+    comparisonIconText.innerText = `${filterCriteria}`;
+
+    comparisonIconSection.classList.add("comparison-icon-section");
+
+    comparisonIconSection.appendChild(comparisonIcon);
+    comparisonIconSection.appendChild(comparisonIconText);
+
+    comparisonHeader.appendChild(comparisonTitle);
+    comparisonHeader.appendChild(comparisonIconSection);
+
+    comparisonSection.appendChild(comparisonHeader);
 
     const comparisonContainer = document.createElement('table');
     comparisonContainer.classList.add('comparison-container');
@@ -133,7 +152,7 @@ function displayComparison(firstHabitIndex, secondHabitIndex, filterCriteria) {
     </tr>
 
     `;
-
+        comparisonSection.appendChild(comparisonContainer);
     }
 
     else if (filterCriteria === "average-comparison") {
@@ -167,10 +186,54 @@ function displayComparison(firstHabitIndex, secondHabitIndex, filterCriteria) {
         );
 
         comparisonContainer.innerHTML = headerRow + row1 + row2;
+        comparisonSection.appendChild(comparisonContainer);
+    }
+    else {
+        const comparisonContainerSummary = document.createElement('table');
+        comparisonContainerSummary.classList.add('comparison-container-summary');
 
+        const { finalSummary } = analyzeHabitProgress();
+
+        const firstHabitSummary = finalSummary[firstHabitIndex];
+        const secondHabitSummary = finalSummary[secondHabitIndex];
+
+        comparisonContainerSummary.innerHTML = `
+    
+        <tr>
+        <th>Habit Name</th>
+        <th>Average Percentages</th>
+        <th>Total Completed Days</th>
+        <th>Best Week Percentages</th>
+        <th>Best Week Number</th>
+        <th>Highest Completed Days</th>
+        </tr>    
+    
+        <tr>
+        <td>${firstHabitSummary.habitName}</td>
+        <td>${!isNaN(firstHabitSummary.averageProgress)
+                ? firstHabitSummary.averageProgress + '%'
+                : "Not completed any day For Habit"}</td>
+        <td>${firstHabitSummary.total.totalCompletedDays}</td>
+        <td>${firstHabitSummary.best.bestWeekPercentage}</td>
+        <td>${firstHabitSummary.best.bestWeekNum}</td>
+        <td>${firstHabitSummary.streak}</td>
+        </tr>
+    
+        <tr>
+        <td>${secondHabitSummary.habitName}</td>
+        <td>${!isNaN(secondHabitSummary.averageProgress)
+                ? secondHabitSummary.averageProgress + '%'
+                : "Not completed any day For Habit"}</td>
+        <td>${secondHabitSummary.total.totalCompletedDays}</td>
+        <td>${secondHabitSummary.best.bestWeekPercentage}</td>
+        <td>${secondHabitSummary.best.bestWeekNum}</td>
+        <td>${secondHabitSummary.streak}</td>
+        </tr>
+    
+        `;
+        comparisonSection.appendChild(comparisonContainerSummary)
     }
 
-    comparisonSection.appendChild(comparisonContainer);
     comparisonSection.appendChild(hrElem);
 }
 
