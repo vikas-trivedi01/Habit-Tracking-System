@@ -27,6 +27,18 @@ const comparisonPreferences = {
 };
 
 
+const comparisonSelectorFirst = document.querySelector('#comparison-selector-first-habit');
+
+comparisonSelectorFirst.addEventListener('change', (e) => {
+    const selectedHabitIndex = e.target.value;
+
+    if (habits[selectedHabitIndex]) {
+        comparisonPreferences.firstHabit = {
+            habitName: habits[selectedHabitIndex].habitName,
+            selectedHabitIndex,
+        };
+    }
+});
 const comparisonSelectorSecond = document.querySelector('#comparison-selector-second-habit');
 
 comparisonSelectorSecond.addEventListener('change', (e) => {
@@ -76,20 +88,15 @@ function displayComparison(firstHabitIndex, secondHabitIndex, filterCriteria) {
     const instruction = document.querySelector('#comparison-instruction');
     const comparisonSection = document.querySelector('#show-comparison');
 
-    if (instruction.classList.contains("show")) {
-        instruction.classList.remove("show");
-        instruction.classList.add("hide");
-    }
-    if (comparisonSection.classList.contains("hide")) {
-        comparisonSection.classList.remove("hide");
-        comparisonSection.classList.add("show");
-    }
+    instruction.classList.replace("show", "hide");
+    comparisonSection.classList.replace("hide", "show");
 
     const firstHabitName = habits[firstHabitIndex].habitName;
     const secondHabitName = habits[secondHabitIndex].habitName;
 
     const comparisonTitle = document.createElement('h4');
     comparisonTitle.innerText = `Comparison Between ${firstHabitName} And ${secondHabitName}`;
+    comparisonSection.appendChild(comparisonTitle);
 
     const comparisonContainer = document.createElement('table');
     comparisonContainer.classList.add('comparison-container');
@@ -99,7 +106,7 @@ function displayComparison(firstHabitIndex, secondHabitIndex, filterCriteria) {
         const selectedSecondHabitData = calculateProgressInsights(secondHabitIndex);
 
         comparisonContainer.innerHTML = `
-    <hr />
+    
     <tr>
     <th>Habit Name</th>
     <th>Maximum Completed Days</th>
@@ -123,7 +130,52 @@ function displayComparison(firstHabitIndex, secondHabitIndex, filterCriteria) {
 
     `;
 
-        comparisonSection.appendChild(comparisonTitle);
-        comparisonSection.appendChild(comparisonContainer);
     }
+
+    else if (filterCriteria === "filter-average") {
+        const { habitAverageProgress: allHabitsAverageProgress } = analyzeHabitProgress();
+
+        const selectedFirstHabitAverageData = allHabitsAverageProgress[firstHabitIndex];
+        const selectedSecondHabitAverageData = allHabitsAverageProgress[secondHabitIndex];
+
+        const firstHabitProgress = getHabitProgress(firstHabitIndex);
+        const secondHabitProgress = getHabitProgress(secondHabitIndex);
+
+        const maxWeeks = Math.max(firstHabitProgress.length, secondHabitProgress.length);
+
+        let headerRow = `<tr><th>Habit Name</th><th>Habit Number</th>`;
+
+        for (let i = 1; i <= maxWeeks; i++) {
+            headerRow += `<th>Week ${i}</th>`;
+        }
+        headerRow += `<th>Average Progress</th></tr>`;
+
+        const row1 = createComparisonTableRow(
+            firstHabitProgress,
+            selectedFirstHabitAverageData
+        );
+
+        const row2 = createComparisonTableRow(
+            secondHabitProgress,
+            selectedSecondHabitAverageData
+        );
+
+        comparisonContainer.innerHTML = headerRow + row1 + row2;
+
+    }
+
+    comparisonSection.appendChild(comparisonContainer);
+}
+
+function createComparisonTableRow(progressData, averageProgress) {
+    const weeks = progressData.map(week => `<td>${week.percentage || '-'}</td>`).join('');
+
+    return `
+       <tr>
+                <td>${averageProgress.habitName}</td>
+                <td>${averageProgress.habitNumber}</td>
+                     ${weeks}
+                <td>${averageProgress.averageProgress}</td>
+            </tr>
+    `;
 }
