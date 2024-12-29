@@ -691,14 +691,12 @@ input[type="date"]:valid + span::after {
 }
 
 #progress-insights-select {
-height: 60%;
+  height: 60%;
 }
 
 #habits-comparison-select {
   height: 45%;
-
 }
-
 
 #progress-insights-select p,
 #habit-comparison-select p {
@@ -815,7 +813,8 @@ height: 60%;
   margin: 40px 0px;
 }
 
-#instruction {
+#instruction,
+#comparison-instruction {
   background-color: #000000;
   color: #0af0c2;
   text-align: center;
@@ -823,7 +822,14 @@ height: 60%;
   font-weight: 900;
   letter-spacing: 4px;
   border-radius: 5px;
+}
+
+#instruction {
   margin: 5% 15%;
+}
+
+#comparison-instruction {
+  margin: 14% 15% 10% 15%;
 }
 
 #habits-comparison-section {
@@ -831,14 +837,53 @@ height: 60%;
 }
 
 #show-comparison {
-  display: flex;
-  justify-content:space-between ;
-  background-color: #00a6ff;
+  background: lightblue;
   padding: 20px;
-  margin: 15% 3%;
+  margin: 13% 10%;
+  border-radius: 7px;
+  text-align: center;
+}
+/* filter options styling */
+#filter-section {
+  display: none;
+  position: absolute;
+  margin: -50px -300px;
+  opacity: 0;
 }
 
-#compare-btn{
+#filter-section select option {
+  text-align: center;
+  background-color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
+}
+
+#filter-section select {
+  font: 400 18px sans-serif;
+  color: rgb(0, 0, 0);
+  border: 1px solid white;
+  padding: 20px 0px;
+  border-radius: 8px;
+  background-color: rgb(255, 255, 255);
+  cursor: pointer;
+  width: 120%;
+}
+
+#filter-section select:hover {
+  color: rgb(15, 14, 11);
+  background-color: #ffffff;
+}
+
+#filter-section.visible {
+  display: block;
+  opacity: 1;
+}
+/* filter options styling ends*/
+
+.cmp-icon {
+  cursor: pointer;
+}
+
+#compare-btn {
   background-color: #000000;
   margin: 5% 25%;
   width: 25%;
@@ -848,10 +893,40 @@ height: 60%;
   font-size: x-large;
   transition: var(--smooth-trans);
 }
-#compare-btn:hover{
+#compare-btn:hover {
   background-color: #ffffff;
   color: #000000;
   border-radius: var(--border-radius);
   transition: var(--smooth-trans);
   transform: scale(1.1);
+}
+
+.comparison-container {
+  background-color: #f4f4f4;
+  border-collapse: collapse;
+  position: relative;
+  top: 20%;
+  left: 10%;
+  transform: translate(-2%, -2%);
+}
+.comparison-container th {
+  background-color: #0056b3;
+  color: #ffffff;
+}
+.comparison-container,
+td,
+th {
+  border: 1px solid #ccc;
+  text-align: center;
+}
+.comparison-container td,
+th {
+  padding: 10px;
+}
+.comparison-container tr:nth-child(odd) {
+  background-color: #b1dcfa;
+}
+.comparison-container tr:hover {
+  background-color: #002855;
+  color: #ffffff;
 }
