@@ -73,7 +73,7 @@
     <div class="progress-section-container"></div>
 
     <hr style="border: 5px solid rgb(159, 213, 252); margin-top: 20px" />
-    
+
     <!-- Section 1: Introduction -->
     <section id="introduction">
       <h2>Know Your Habits More !!</h2>
@@ -130,7 +130,7 @@
 
     <!-- Select insights to view -->
     <div id="progress-insights-select">
-      <div id="insights-select-header"> 
+      <div id="insights-select-header">
         <p style="font-weight: 700">Insights of All Habits</p>
         <span id="insights-icon" title="Hide Insights">
           <i class="fa-regular fa-eye-slash"></i>
@@ -150,7 +150,7 @@
           <!-- Dynamic habit options will be added here via JS -->
         </select>
       </div>
-      
+
       <div id="all-insights">
         <button id="top-habits" class="insights-buttons">Top Habits</button>
         <button id="summary-habits" class="insights-buttons">
@@ -158,18 +158,18 @@
         </button>
       </div>
     </div>
-    
+
     <!-- Display the selected insights -->
     <p id="instruction" class="show">
       Your Habit's Progress Insights Will Appear Here ...
     </p>
-    
+
     <div id="show-insights">
       <div id="progress-insights-weekly">
         <h2 style="text-align: center">Weekly Insights</h2>
         <!-- Details of weekly progress will appear here based on selected habit. -->
       </div>
-      
+
       <div id="progress-insights-average">
         <h2 style="text-align: center">Average Insights</h2>
         <!-- Details of average progress will appear here based on selected habit. -->
@@ -185,19 +185,29 @@
         <!-- Summary of all habits will appear here. -->
       </div>
     </div>
-    
+
     <hr style="border: 5px solid rgb(13, 134, 221); margin-top: 20px" />
     <div id="habits-comparison-select">
       <div id="comparison-select-header">
         <p style="font-weight: 700">Comparison of All Habits</p>
-        <span id="comparison-icon">
-          <i class="fa-regular fa-eye-slash"></i>
-        </span>
+        <span id="comparison-icon-container">
+          <i
+            class="fa-solid fa-filter-circle-xmark cmp-icon"
+            title="Filter Comparison Criteria"
+          ></i>
+          <div id="filter-section">
+            <select id="filter-selector">
+              <option value="filter-weekly">Filter On Weekly Basis</option>
+              <option value="filter-average">Filter On Average Basis</option>
+              <option value="filter-summary">Filter On Summary</option>
+            </select>
+          </div></span
+        >
       </div>
 
       <hr />
       <br />
-      
+
       <div class="custom-select">
         <select id="comparison-selector-first-habit">
           <option value="banner">Select First Habit To Compare</option>
@@ -209,22 +219,18 @@
         </select>
       </div>
       <pre><button id="compare-btn">Compare Habits      <i class="fa-solid fa-not-equal"></i></button></pre>
-
     </div>
 
     <p id="comparison-instruction" class="show">
       Comparisons Between Habits Will Appear Here ...
     </p>
     <div id="show-comparison" class="hide">
-         <!--<div id="first-comparison">
+      <!--<div id="first-comparison">
       </div>
       
       <div id="second-comparison">
       </div>  -->
-
     </div>
-
-    <!-- <i class="fa-solid fa-filter-circle-xmark"></i> -->
 
     <!-- footer  -->
     <footer id="footer">
