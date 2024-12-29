@@ -17,7 +17,7 @@ filterIcon.addEventListener("mouseenter", () => {
 filterIcon.addEventListener("mouseleave", () => {
     hideTimeout = setTimeout(() => {
         filterSection.classList.remove("visible");
-    }, 2000);
+    }, 4000);
 });
 
 const comparisonPreferences = {
@@ -94,6 +94,10 @@ function displayComparison(firstHabitIndex, secondHabitIndex, filterCriteria) {
     const firstHabitName = habits[firstHabitIndex].habitName;
     const secondHabitName = habits[secondHabitIndex].habitName;
 
+    const hrElem = document.createElement('hr');
+    hrElem.style.border = "4px double hotpink";
+    hrElem.style.margin = "16px 0px";
+
     const comparisonTitle = document.createElement('h4');
     comparisonTitle.innerText = `Comparison Between ${firstHabitName} And ${secondHabitName}`;
     comparisonSection.appendChild(comparisonTitle);
@@ -101,7 +105,7 @@ function displayComparison(firstHabitIndex, secondHabitIndex, filterCriteria) {
     const comparisonContainer = document.createElement('table');
     comparisonContainer.classList.add('comparison-container');
 
-    if (filterCriteria === "filter-weekly") {
+    if (filterCriteria === "weekly-comparison") {
         const selectedFirstHabitData = calculateProgressInsights(firstHabitIndex);
         const selectedSecondHabitData = calculateProgressInsights(secondHabitIndex);
 
@@ -132,7 +136,7 @@ function displayComparison(firstHabitIndex, secondHabitIndex, filterCriteria) {
 
     }
 
-    else if (filterCriteria === "filter-average") {
+    else if (filterCriteria === "average-comparison") {
         const { habitAverageProgress: allHabitsAverageProgress } = analyzeHabitProgress();
 
         const selectedFirstHabitAverageData = allHabitsAverageProgress[firstHabitIndex];
@@ -152,12 +156,14 @@ function displayComparison(firstHabitIndex, secondHabitIndex, filterCriteria) {
 
         const row1 = createComparisonTableRow(
             firstHabitProgress,
-            selectedFirstHabitAverageData
+            selectedFirstHabitAverageData,
+            maxWeeks
         );
 
         const row2 = createComparisonTableRow(
             secondHabitProgress,
-            selectedSecondHabitAverageData
+            selectedSecondHabitAverageData,
+            maxWeeks
         );
 
         comparisonContainer.innerHTML = headerRow + row1 + row2;
@@ -165,17 +171,24 @@ function displayComparison(firstHabitIndex, secondHabitIndex, filterCriteria) {
     }
 
     comparisonSection.appendChild(comparisonContainer);
+    comparisonSection.appendChild(hrElem);
 }
 
-function createComparisonTableRow(progressData, averageProgress) {
-    const weeks = progressData.map(week => `<td>${week.percentage || '-'}</td>`).join('');
+function createComparisonTableRow(progressData, averageProgress, maxWeeks) {
+    const weeksData = Array(maxWeeks).fill("No Data");
+
+    progressData.forEach((week, index) => {
+        weeksData[index] = week.percentage || "No Data";
+    });
+
+    const weeksPercentages = weeksData.map(weekPercentage => `<td>${weekPercentage}</td>`).join(''); // to combine resultant tds array in a single string use join()
 
     return `
        <tr>
-                <td>${averageProgress.habitName}</td>
-                <td>${averageProgress.habitNumber}</td>
-                     ${weeks}
-                <td>${averageProgress.averageProgress}</td>
-            </tr>
+            <td>${averageProgress.habitName}</td>
+            <td>${averageProgress.habitNumber}</td>
+            ${weeksPercentages}
+            <td>${averageProgress.averageProgress || "No Data"}</td>
+       </tr>
     `;
 }
