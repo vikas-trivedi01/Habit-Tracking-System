@@ -20,7 +20,8 @@ body {
 }
 
 body {
-  background-color: #b6fcf1;
+  /* background-color: #b6fcf1; */
+  background-color: #334e4a;
   line-height: 1.6;
   color: #2e0505;
   padding: 20px;
@@ -712,19 +713,30 @@ input[type="date"]:valid + span::after {
   margin: 2% 5% 2% 15%;
 }
 #insights-select-header span,
-#comparison-select-header span {
-  background-color: #f5f5f5;
+#comparison-select-header #cmp-icon-span {
   width: 10%;
   height: 10%;
   border-radius: 5px;
   margin: 30px 40px;
 }
+
+#cmp-icon-span {
+  background-color: #130d0d;
+  color: #00a6ff;
+  padding: 10px;
+}
 #insights-select-header span:hover,
-#comparison-select-header span:hover {
-  background-color: #ff7e7e;
+#comparison-select-header #cmp-icon-span:hover {
   border-radius: 10px;
-  color: #9fe3ef;
   transition: var(--smooth-trans);
+}
+#insights-select-header span:hover {
+  background-color: #ff7e7e;
+  color: #9fe3ef;
+}
+#cmp-icon-span:hover {
+  background-color: #7eb8ff;
+  color: #000000;
 }
 .insights-container {
   background-color: #a4ede2;
@@ -842,6 +854,7 @@ input[type="date"]:valid + span::after {
   margin: 13% 10%;
   border-radius: 7px;
   text-align: center;
+  /* height: 79%; */
 }
 /* filter options styling */
 #filter-section {
@@ -907,6 +920,7 @@ input[type="date"]:valid + span::after {
   position: relative;
   top: 20%;
   left: 10%;
+  bottom: 80%;
   transform: translate(-2%, -2%);
 }
 .comparison-container th {

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html><!--done-->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -187,22 +187,25 @@
     </div>
 
     <hr style="border: 5px solid rgb(13, 134, 221); margin-top: 20px" />
+
     <div id="habits-comparison-select">
       <div id="comparison-select-header">
         <p style="font-weight: 700">Comparison of All Habits</p>
         <span id="comparison-icon-container">
-          <i
-            class="fa-solid fa-filter-circle-xmark cmp-icon"
-            title="Filter Comparison Criteria"
-          ></i>
+            <span id="cmp-icon-span"><i
+              class="fa-solid fa-filter-circle-xmark cmp-icon"
+              title="Filter Comparison Criteria"
+            ></i></span>
           <div id="filter-section">
             <select id="filter-selector">
-              <option value="filter-weekly">Filter On Weekly Basis</option>
-              <option value="filter-average">Filter On Average Basis</option>
-              <option value="filter-summary">Filter On Summary</option>
+              <option value="weekly-comparison">Compare On Weekly Basis</option>
+              <option value="average-comparison">
+                Compare On Average Basis
+              </option>
+              <option value="summary-comparison">Compare On Summary</option>
             </select>
-          </div></span
-        >
+          </div>
+          </span>
       </div>
 
       <hr />
@@ -224,13 +227,7 @@
     <p id="comparison-instruction" class="show">
       Comparisons Between Habits Will Appear Here ...
     </p>
-    <div id="show-comparison" class="hide">
-      <!--<div id="first-comparison">
-      </div>
-      
-      <div id="second-comparison">
-      </div>  -->
-    </div>
+    <div id="show-comparison" class="hide"></div>
 
     <!-- footer  -->
     <footer id="footer">
