@@ -101,12 +101,14 @@ function displayComparison(firstHabitIndex, secondHabitIndex, filterCriteria) {
     const comparisonHeader = document.createElement('div');
     comparisonHeader.classList.add("comparison-header");
 
-    const comparisonTitle = document.createElement('h4');
+    const comparisonTitle = document.createElement('h3');
     comparisonTitle.innerText = `Comparison Between ${firstHabitName} And ${secondHabitName}`;
 
     const comparisonIconSection = document.createElement('div');
+
     const comparisonIcon = document.createElement('i');
     comparisonIcon.classList.add("fa-solid", "fa-hashtag");
+    comparisonIcon.style.fontSize = "larger";
 
     const comparisonIconText = document.createElement('span');
     comparisonIconText.innerText = `${filterCriteria}`;

@@ -712,8 +712,7 @@ input[type="date"]:valid + span::after {
   width: 100%;
   margin: 2% 5% 2% 15%;
 }
-#insights-select-header span,
-#comparison-select-header #cmp-icon-span {
+#insights-select-header span {
   width: 10%;
   height: 10%;
   border-radius: 5px;
@@ -722,6 +721,10 @@ input[type="date"]:valid + span::after {
 
 #cmp-icon-span {
   background-color: #130d0d;
+  width: 10%;
+  height: 10%;
+  border-radius: 5px;
+  margin-left: 9px;
   color: #00a6ff;
   padding: 10px;
 }
@@ -919,28 +922,81 @@ input[type="date"]:valid + span::after {
   border-collapse: collapse;
   position: relative;
   top: 20%;
-  left: 10%;
+  left: 5%;
   bottom: 80%;
   transform: translate(-2%, -2%);
+  margin: 4% 5%;
 }
-.comparison-container th {
+.comparison-container-summary {
+  background-color: #f4f4f4;
+  border-collapse: collapse;
+  position: relative;
+  top: 20%;
+  left: 2%;
+  bottom: 80%;
+  transform: translate(-2%, -2%);
+  margin: 4% 2%;
+}
+.comparison-container th,
+.comparison-container-summary th {
   background-color: #0056b3;
   color: #ffffff;
 }
 .comparison-container,
+.comparison-container-summary,
 td,
 th {
   border: 1px solid #ccc;
   text-align: center;
 }
 .comparison-container td,
+th,
+.comparison-container-summary td,
 th {
   padding: 10px;
 }
 .comparison-container tr:nth-child(odd) {
-  background-color: #b1dcfa;
+  background-color: #9cb2eb;
 }
 .comparison-container tr:hover {
   background-color: #002855;
   color: #ffffff;
+}
+.comparison-container-summary tr:nth-child(odd) {
+  background-color: #b1dcfa;
+}
+.comparison-container-summary tr:hover {
+  background-color: #002855;
+  color: #ffffff;
+}
+
+.comparison-header {
+  display: flex;
+  align-items: center;
+}
+.comparison-header h3 {
+  width: 70%;
+  font-weight: 900;
+}
+
+.fa-hashtag {
+  /* background-color:#ff747f ; */
+  color: #ff0059;
+  padding: 10px;
+  width: 10%;
+  height: 10%;
+  border-radius: 5px;
+  margin: 0px 10px;
+}
+.fa-hashtag:hover {
+  border-radius: 10px;
+  transition: var(--smooth-trans);
+}
+
+.comparison-icon-section {
+  background-color: #000000;
+  color: #ddd;
+  padding: 14px;
+  margin-top: 0px;
+  border-radius: var(--border-radius);
 }
