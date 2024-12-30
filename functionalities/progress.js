@@ -119,26 +119,30 @@ document.querySelector('#top-habits').addEventListener('click', () => {
     }
 
     if (instruction.classList.contains("show")) {
+        instruction.classList.remove("show");
+        instruction.classList.add("hide");
         instruction.classList.replace("show", "hide");
     }
-
     if (insightsContainerWeekly.classList.contains("current-insight")) {
+        insightsContainerWeekly.classList.add("hide");
+        insightsContainerWeekly.classList.remove("current-insight");
         insightsContainerWeekly.classList.replace("current-insight", "hide");
     }
-
     if (insightsContainerAverage.classList.contains("current-insight")) {
+        insightsContainerAverage.classList.add("hide");
+        insightsContainerAverage.classList.remove("current-insight");
         insightsContainerAverage.classList.replace("current-insight", "hide");
     }
-
     if (insightsContainerSummaryHabits.classList.contains("current-insight")) {
+        insightsContainerSummaryHabits.classList.add("hide");
+        insightsContainerSummaryHabits.classList.remove("current-insight");
         insightsContainerSummaryHabits.classList.replace("current-insight", "hide");
     }
-
     if (!insightsContainer.classList.contains("current-insight")) {
+        insightsContainer.classList.add("current-insight");
+        insightsContainer.classList.remove("hide");
         insightsContainer.classList.replace("hide", "current-insight");
     }
-
-
 
     const { topHabits } = analyzeHabitProgress();
 
@@ -194,22 +198,28 @@ document.querySelector('#summary-habits').addEventListener('click', () => {
     }
 
     if (instruction.classList.contains("show")) {
+        instruction.classList.remove("show");
+        instruction.classList.add("hide");
         instruction.classList.replace("show", "hide");
     }
-
     if (insightsContainerWeekly.classList.contains("current-insight")) {
+        insightsContainerWeekly.classList.add("hide");
+        insightsContainerWeekly.classList.remove("current-insight");
         insightsContainerWeekly.classList.replace("current-insight", "hide");
     }
-
     if (insightsContainerAverage.classList.contains("current-insight")) {
+        insightsContainerAverage.classList.add("hide");
+        insightsContainerAverage.classList.remove("current-insight");
         insightsContainerAverage.classList.replace("current-insight", "hide");
     }
-
     if (insightsContainerTopHabits.classList.contains("current-insight")) {
+        insightsContainerTopHabits.classList.add("hide");
+        insightsContainerTopHabits.classList.remove("current-insight");
         insightsContainerTopHabits.classList.replace("current-insight", "hide");
     }
-
     if (!insightsContainer.classList.contains("current-insight")) {
+        insightsContainer.classList.add("current-insight");
+        insightsContainer.classList.remove("hide");
         insightsContainer.classList.replace("hide", "current-insight");
     }
 
@@ -451,22 +461,28 @@ function displayWeeklyInsights(habitIndex) {
     }
 
     if (instruction.classList.contains("show")) {
+        instruction.classList.remove("show");
+        instruction.classList.add("hide");
         instruction.classList.replace("show", "hide");
     }
-
     if (insightsContainerAverage.classList.contains("current-insight")) {
+        insightsContainerAverage.classList.add("hide");
+        insightsContainerAverage.classList.remove("current-insight");
         insightsContainerAverage.classList.replace("current-insight", "hide");
     }
-
     if (insightsContainerTopHabits.classList.contains("current-insight")) {
+        insightsContainerTopHabits.classList.add("hide");
+        insightsContainerTopHabits.classList.remove("current-insight");
         insightsContainerTopHabits.classList.replace("current-insight", "hide");
     }
-
     if (insightsContainerSummaryHabits.classList.contains("current-insight")) {
+        insightsContainerSummaryHabits.classList.add("hide");
+        insightsContainerSummaryHabits.classList.remove("current-insight");
         insightsContainerSummaryHabits.classList.replace("current-insight", "hide");
     }
-
     if (!insightsContainer.classList.contains("current-insight")) {
+        insightsContainer.classList.add("current-insight");
+        insightsContainer.classList.remove("hide");
         insightsContainer.classList.replace("hide", "current-insight");
     }
 
@@ -531,24 +547,31 @@ function displayAverageInsights(habitIndex) {
     }
 
     if (instruction.classList.contains("show")) {
+        instruction.classList.remove("show");
+        instruction.classList.add("hide");
         instruction.classList.replace("show", "hide");
     }
-
     if (insightsContainerWeekly.classList.contains("current-insight")) {
+        insightsContainerWeekly.classList.add("hide");
+        insightsContainerWeekly.classList.remove("current-insight");
         insightsContainerWeekly.classList.replace("current-insight", "hide");
     }
-
     if (insightsContainerTopHabits.classList.contains("current-insight")) {
+        insightsContainerTopHabits.classList.add("hide");
+        insightsContainerTopHabits.classList.remove("current-insight");
         insightsContainerTopHabits.classList.replace("current-insight", "hide");
     }
-
     if (insightsContainerSummaryHabits.classList.contains("current-insight")) {
+        insightsContainerSummaryHabits.classList.add("hide");
+        insightsContainerSummaryHabits.classList.remove("current-insight");
         insightsContainerSummaryHabits.classList.replace("current-insight", "hide");
     }
-
     if (!insightsContainer.classList.contains("current-insight")) {
+        insightsContainer.classList.add("current-insight");
+        insightsContainer.classList.remove("hide");
         insightsContainer.classList.replace("hide", "current-insight");
     }
+
 
 
     const { habitAverageProgress: allHabitsAverageProgress } = analyzeHabitProgress();

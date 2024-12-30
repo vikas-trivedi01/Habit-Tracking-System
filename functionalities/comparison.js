@@ -111,7 +111,7 @@ function displayComparison(firstHabitIndex, secondHabitIndex, filterCriteria) {
     comparisonIcon.style.fontSize = "larger";
 
     const comparisonIconText = document.createElement('span');
-    comparisonIconText.innerText = `${filterCriteria}`;
+    comparisonIconText.innerHTML = `&nbsp;&nbsp;${filterCriteria}`;
 
     comparisonIconSection.classList.add("comparison-icon-section");
 
