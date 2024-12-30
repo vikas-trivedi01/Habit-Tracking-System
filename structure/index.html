@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Habit Tracking System</title>
+
     <link rel="stylesheet" href="../styling/style.css" />
+    <link rel="stylesheet" href="../styling/landing.css" />
+    <link rel="stylesheet" href="../styling/checkbox.css" />
 
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
@@ -27,18 +30,31 @@
         <li class="nav-item">
           <a href="about.html" class="nav-link"> About Us </a>
         </li>
+        <li class="nav-item">
+          <a id="explore" class="menu-icon nav-link">
+            <i class="fas fa-bars"></i>
+          </a>
+        </li>
       </ul>
     </nav>
 
-    <marquee
-      bgcolor="honeydew"
-      width="70%"
-      height="25"
-      direction="right"
-      id="slogan"
-    >
-      "Track Your Habits, Transform Your Life"
-    </marquee>
+    <div class="landing-sections hide" id="explore-menus">
+      <a href="#features">Features</a>
+      <a href="#benefits">Benefits</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#faq">FAQs</a>
+      <a href="#quotes-selection">Tell Us More</a>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero">
+      <h1>Stay Consistent, Build Habits, Achieve Goals</h1>
+      <p>
+        Your personal habit tracker with streak systems, Chart.js integration ,
+        insights of habits and much more..
+      </p>
+      <a href="habits.html" class="cta-button">Start Tracking</a>
+    </div>
 
     <div id="intro">
       <p>Welcome to Habit Tracker!</p>
@@ -51,8 +67,95 @@
       </p>
     </div>
 
+    <!-- Features Section -->
+    <div class="section features" id="features">
+      <h2>Key Features</h2>
+      <div class="feature-item">
+        <h3>Interactive Charts</h3>
+        <p>Track progress visually with Chart.js integration.</p>
+      </div>
+      <div class="feature-item">
+        <h3>Streak System</h3>
+        <p>Motivate yourself by maintaining streaks for each habit.</p>
+      </div>
+      <div class="feature-item">
+        <h3>Comparisons</h3>
+        <p>Compare habits progress to get more specific informations.</p>
+      </div>
+      <div class="feature-item">
+        <h3>Insights</h3>
+        <p>Take a close look of your habits progress.</p>
+      </div>
+    </div>
+
+    <!-- Solution Section -->
+    <div class="section solution" id="solution">
+      <h2>What Problem Do We Solve?</h2>
+      <p>
+        Helping users stick to their routines with personalized tracking and
+        motivation tools.
+      </p>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="section stats">
+      <h2>Our Impact</h2>
+      <p>90% of users report better consistency in their habits.</p>
+      <p>10,000+ habits tracked worldwide.</p>
+      <p>5-star ratings from 95% of our users.</p>
+    </div>
+
+    <!-- Benefits Section -->
+    <div class="section benefits" id="benefits">
+      <h2>Benefits</h2>
+      <div class="benefit-item">
+        <h3>Visual Insights</h3>
+        <p>Analyze your progress and adjust your routines.</p>
+      </div>
+      <div class="benefit-item">
+        <h3>Goal-Oriented Tracking</h3>
+        <p>Stay on top of your goals with structured tracking.</p>
+      </div>
+      <div class="benefit-item">
+        <h3>Flexibility</h3>
+        <p>Customizable for daily, weekly, or monthly habits.</p>
+      </div>
+    </div>
+
+    <!-- How It Works Section -->
+    <div class="section how-it-works" id="how-it-works">
+      <h2>How It Works</h2>
+      <p>1. Add your habits to the tracker.</p>
+      <p>2. Track your progress daily using visual charts.</p>
+      <p>3. Get reminders to stay consistent and hit your goals.</p>
+    </div>
+
+    <!-- Testimonials Section -->
+    <div class="section testimonials">
+      <h2>What Users Are Saying</h2>
+      <div class="testimonial-item">
+        <p>"This habit tracker helped me stay consistent for 60+ days!"</p>
+      </div>
+      <div class="testimonial-item">
+        <p>"I love the streak feature—it keeps me motivated daily."</p>
+      </div>
+      <div class="testimonial-item">
+        <p>"The charts make it so easy to see my progress at a glance."</p>
+      </div>
+    </div>
+
+    <!-- FAQs Section -->
+    <div class="section faq" id="faq">
+      <h2>Frequently Asked Questions</h2>
+      <p><strong>Q: Is this habit tracker free?</strong></p>
+      <p>A: Yes, the basic version is completely free!</p>
+      <p><strong>Q: Can I track multiple habits?</strong></p>
+      <p>A: Absolutely, you can track as many habits as you'd like.</p>
+    </div>
+
+    <!-- Qoutes Section -->
     <!-- quotes section based on user choice -->
-    <div id="quotes-selection">
+    <div id="quotes-selection" class="section">
       <p>What's your mood today?</p>
       <br />
       <hr />
@@ -78,7 +181,7 @@
 
     <!-- show quotes  -->
     <div id="quotes-section">
-      <p id="quotes-title">Quotes for you to make you unbeatable !</p>
+      <p id="quotes-title">Quotes to make you unbeatable !</p>
       <br />
       <hr />
       <br />
@@ -124,5 +227,6 @@
     </footer>
 
     <script src="../functionalities/quotes.js"></script>
+    <script src="../functionalities/showMenu.js"></script>
   </body>
 </html>
