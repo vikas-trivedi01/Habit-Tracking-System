@@ -1,5 +1,5 @@
 
-// const requestUrl = 'https://api.allorigins.win/raw?url=https://zenquotes.io/api/random';
+const requestUrl = 'https://api.allorigins.win/raw?url=https://zenquotes.io/api/random';
 const quotesContainer = document.getElementById("random-quote");
 
 (async () => {
