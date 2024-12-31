@@ -33,7 +33,6 @@ The Habit Tracking System was built to solve the problem of habit management, ma
 - Comprehensive insights into habits, including charts and comparison sections.
 - Intuitive icons and dynamic weekly containers for a personalized experience.
 - The ability to compare habits and analyze their performance in-depth.
-- Future scalability to incorporate reminders and streak tracking features.
 
 ## Features
 
@@ -77,4 +76,10 @@ Compare habits using filtering options to gain deeper insights.
 ### Challenges Faced
 - **Data Management**: Efficiently managing user data for multiple habits.
 - **Dynamic Elements**: Creating interactive and visually appealing components.
-- **Integration**: Handling asynchronous operations and Fetch API.
+- **Integration**: Handling charts of different habits.
+
+## Technologies Used
+- **HTML** : Used to build structures for habits.
+- **CSS** : Style whole website intuitively and to provide seamless user experience.
+- **JAVASCRIPT** : Implement major functionalities of habit tracking system.
+- **CHART.JS** : Produce in depth charts for habits.
