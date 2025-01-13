@@ -332,3 +332,66 @@ input[type="date"]:valid + span::after {
   flex-wrap: wrap;
   margin: 10px;
 }
+
+#timer-section {
+  background-color: #cce5ff;
+  margin: 50px;
+  padding: 20px;
+}
+
+#timer-container-header {
+  text-align: center;
+  margin: 30px 280px;
+  width: 50%;
+  letter-spacing: 10px;
+}
+
+#timer-container {
+  background-color: #cce5ff;
+  border: 1px solid #01060a;
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+  margin: 20px;
+}
+
+#timer-input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #01060a;
+  border-radius: 4px;
+  width: 60%;
+  padding: 12px;
+  background-color: #ffffff;
+}
+
+#timer-input-container input,
+#timer-input-container button {
+  width: 80%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+#timer-input-container button {
+  background-color: #007bff;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+#timer-input-container button:hover {
+  background-color: #215f9e;
+}
+
+#timer-display {
+  background-color: #afeaf8;
+  border: 1px solid #01060a;
+  border-radius: 4px;
+  width: 30%;
+  height: 30%;
+  padding: 15px;
+  margin-left: 5%;
+}

@@ -278,17 +278,34 @@ function displayHabits() {
     });
 
     // Timer Functionality
+    const timerSection = document.createElement('div');
+    timerSection.id = "timer-section";
+
     const timerContainer = document.createElement('div');
+    timerContainer.id = "timer-container";
     timerContainer.innerHTML =
-        ` <input type='number' id='timer-limit' placeholder='Set Timer Limit'/> 
-    <button id='start-timer'>Start Timer</button>`;
+        `
+    <div id='timer-input-container'>
+         <input type='number' id='timer-limit' placeholder='Set Timer Limit (in minutes)'/> 
+         <button id='start-timer'>Start Timer</button>
+         </div>`;
+
+    const timerContainerHeader = document.createElement('h2');
+    timerContainerHeader.innerText = "Habit Timer !!";
+    timerContainerHeader.id = "timer-container-header";
 
     const parent = document.getElementById('habit-list').parentNode;
-    parent.insertBefore(timerContainer, document.getElementById('habit-list').nextSibling);
+    // parent.insertBefore(timerContainer, document.getElementById('habit-list').nextSibling);
+    // parent.insertBefore(timerContainerHeader, document.getElementById('timer-container'));
+    parent.insertBefore(timerSection, document.getElementById('habit-list').nextSibling);
+
+    timerSection.appendChild(timerContainerHeader);
+    timerSection.appendChild(timerContainer);
 
     document.getElementById('start-timer').addEventListener('click', () => {
 
-    const timerElem = document.createElement('p');
+        const timerElem = document.createElement('div');
+        timerElem.id = "timer-display";
 
         class Timer {
             constructor(limit) {
@@ -301,7 +318,7 @@ function displayHabits() {
             startTimer() {
                 setInterval(() => {
                     if (this.totalSeconds < this.limit * 60) {
-                        
+
                         if (this.totalSeconds != 0 ? this.totalSeconds % 60 == 0 : '') {
                             this.minutes++;
                             this.totalSeconds++;
@@ -313,24 +330,33 @@ function displayHabits() {
                             this.seconds++;
                             timerElem.innerText = this.minutes != 0 ? `Minutes : ${this.minutes} and Seconds : ${this.seconds} ` : `Seconds : ${this.seconds} `;
                         }
-
-                        timerContainer.appendChild(timerElem);
                     }
                     else {
-                        timerElem.innerText = 'Time Up!';
-                        timerContainer.appendChild(timerElem);
+                        timerElem.innerHTML = '<h2>Time Up!</h2>';
                     }
+                    timerContainer.appendChild(timerElem);
+
                 }, 1000);
             }
         }
-        const limit = parseInt(document.getElementById('timer-limit').value);
 
-        const newTimer = new Timer(limit);
-        newTimer.startTimer();
-    })
+        if (document.getElementById('timer-limit').value) {
+            const limit = document.getElementById('timer-limit').value;
+
+            const newTimer = new Timer(limit);
+            newTimer.startTimer();
+            document.getElementById('timer-limit').value = "";
+        }
+        else {
+            const instruction = document.createElement('p');
+            instruction.innerText = "Please input time limit first!";
+            timerContainer.appendChild(instruction);
+        }
+    });
 
     saveHabitsDebounced();
 }
+
 let weeklyProgress = [];
 function calculateWeeklyProgress(habitIndex) {
     const weeks = document.querySelectorAll(`.week-checkboxes-${habitIndex}`);
