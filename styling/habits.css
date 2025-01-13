@@ -208,12 +208,12 @@ input[type="date"]:valid + span::after {
   font-size: x-large;
   margin-right: 1%;
   border-radius: var(--border-radius);
-  padding: 2px;
+  padding: 1px;
   cursor: pointer;
 }
 
 .habit-expand i {
-  padding: 10px;
+  padding: 5px;
 }
 
 .habit-expand-color {

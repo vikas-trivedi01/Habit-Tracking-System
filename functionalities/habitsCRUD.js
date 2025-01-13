@@ -166,7 +166,7 @@ function displayHabits() {
 
             habit_compliting_container.appendChild(progressContainer);
 
-        
+
             if (!Array.isArray(habit.days) || habit.days.length === 0) {
                 habit.days = Array.from({ length: habit.habitGoalDays }, (_, index) =>
                     habit.completedDays.includes(index)
@@ -201,7 +201,7 @@ function displayHabits() {
             });
         }
 
-        habit_showdetails.innerHTML = '<i class="fa-solid fa-arrow-down-wide-short"></i>';
+        habit_showdetails.innerHTML = '<i class="fa-solid fa-angles-down"></i>';
         habit_showdetails.className = "habit-expand";
         habit_showdetails.setAttribute("expanded", "false");
         habit_showdetails.title = "View More Details";
@@ -214,7 +214,7 @@ function displayHabits() {
 
             habit_showdetails.classList.remove(!isExpanded ? "habit-expand-color" : "habit-expanded-color");
             habit_showdetails.title = !isExpanded ? "Hide Details" : "View More Details";
-            habit_showdetails.innerHTML = isExpanded ? '<i class="fa-solid fa-arrow-down-wide-short"></i>' : '<i class="fa-solid fa-arrow-up-wide-short"></i>';
+            habit_showdetails.innerHTML = isExpanded ? '<i class="fa-solid fa-angles-down"></i>' : '<i class="fa-solid fa-angles-up"></i>';
 
             habit_extra_details.classList.remove(isExpanded ? "show" : "hide");
             habit_extra_details.classList.add(isExpanded ? "hide" : "show");
@@ -276,6 +276,58 @@ function displayHabits() {
         loadProgress(habitIndex)
 
     });
+
+    // Timer Functionality
+    const timerContainer = document.createElement('div');
+    timerContainer.innerHTML =
+        ` <input type='number' id='timer-limit' placeholder='Set Timer Limit'/> 
+    <button id='start-timer'>Start Timer</button>`;
+
+    const parent = document.getElementById('habit-list').parentNode;
+    parent.insertBefore(timerContainer, document.getElementById('habit-list').nextSibling);
+
+    document.getElementById('start-timer').addEventListener('click', () => {
+
+    const timerElem = document.createElement('p');
+
+        class Timer {
+            constructor(limit) {
+                this.limit = limit;
+                this.totalSeconds = 0;
+                this.minutes = 0;
+                this.seconds = 0;
+            }
+
+            startTimer() {
+                setInterval(() => {
+                    if (this.totalSeconds < this.limit * 60) {
+                        
+                        if (this.totalSeconds != 0 ? this.totalSeconds % 60 == 0 : '') {
+                            this.minutes++;
+                            this.totalSeconds++;
+                            this.seconds = 0;
+                            timerElem.innerText = `Minutes : ${this.minutes} and Seconds : ${this.seconds}`;
+                        }
+                        else {
+                            this.totalSeconds++;
+                            this.seconds++;
+                            timerElem.innerText = this.minutes != 0 ? `Minutes : ${this.minutes} and Seconds : ${this.seconds} ` : `Seconds : ${this.seconds} `;
+                        }
+
+                        timerContainer.appendChild(timerElem);
+                    }
+                    else {
+                        timerElem.innerText = 'Time Up!';
+                        timerContainer.appendChild(timerElem);
+                    }
+                }, 1000);
+            }
+        }
+        const limit = parseInt(document.getElementById('timer-limit').value);
+
+        const newTimer = new Timer(limit);
+        newTimer.startTimer();
+    })
 
     saveHabitsDebounced();
 }
