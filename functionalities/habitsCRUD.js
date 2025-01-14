@@ -67,6 +67,43 @@ function completeHabit(habitIndex) {
     saveHabitsDebounced();
 }
 
+function initReport() {
+
+    document.getElementById('reportBtn').addEventListener('click', () => {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        let tableStructure = [['Habit No.','Habit Name', 'Habit Description', 'Goal Days', 'Habit Completed', 'Total Completed Days']]
+        habits.forEach((habit,index) => {
+
+            tableStructure.push(
+                [
+                    index + 1,
+                    habit.habitName,
+                    habit.habitDescription,
+                    habit.habitGoalDays + " days",
+                    habit.isCompleted ? "yes" : "no",
+                    habit.completedDaysCount + " days completed"
+                ]
+            );
+
+        });
+
+        doc.setFont('times');
+        doc.setFontSize(16);
+        doc.text('Habit Tracking Summary Report', 70, 20);
+
+        doc.setLineWidth(2);
+        doc.autoTable({
+            body: tableStructure,
+            startY: 30,
+            theme: 'grid',
+        });
+
+        doc.save("habit-report.pdf");
+    });
+}
+
 function displayHabits() {
     const habitList = document.getElementById("habit-list");
     const habitCompletingList = document.getElementById("habit-completing-list");
@@ -353,29 +390,6 @@ function displayHabits() {
             timerContainer.appendChild(instruction);
         }
     });
-
-    document.getElementById('cl').addEventListener('click', () => {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-
-        doc.setFont('times');
-        doc.setFontSize(16);
-        doc.text('Habits', 20, 20);
-
-        let yPosition = 30;
-
-        habits.forEach(habit => {
-            // let g = 
-            doc.setFontSize(13);
-            doc.text(habit.habitName, 20, yPosition);
-            // doc.text(habit. 30, yPosition);
-            doc.text(habit.habitDescription, 80, yPosition);
-            yPosition += 10;
-        });
-
-        doc.save("habit-details.pdf");
-    });
-
     saveHabitsDebounced();
 }
 
@@ -640,6 +654,7 @@ function loadHabits() {
         const storedHabits = localStorage.getItem("habits");//fetch habits from localstorage
         habits = storedHabits ? JSON.parse(storedHabits) : [];
         displayHabits();
+        initReport();
 
     } catch (error) {
         alert(error.message);
