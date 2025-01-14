@@ -354,6 +354,28 @@ function displayHabits() {
         }
     });
 
+    document.getElementById('cl').addEventListener('click', () => {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        doc.setFont('times');
+        doc.setFontSize(16);
+        doc.text('Habits', 20, 20);
+
+        let yPosition = 30;
+
+        habits.forEach(habit => {
+            // let g = 
+            doc.setFontSize(13);
+            doc.text(habit.habitName, 20, yPosition);
+            // doc.text(habit. 30, yPosition);
+            doc.text(habit.habitDescription, 80, yPosition);
+            yPosition += 10;
+        });
+
+        doc.save("habit-details.pdf");
+    });
+
     saveHabitsDebounced();
 }
 
@@ -388,6 +410,7 @@ function calculateWeeklyProgress(habitIndex) {
         });
 
     }
+
 }
 
 function calculateProgressPercentages() {
