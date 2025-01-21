@@ -24,7 +24,7 @@ The Habit Tracking System was built to solve the problem of habit management, ma
 - **DOM Manipulation**: Efficiently updating and interacting with webpage elements.
 - **Arrays and Objects**: Managing data structures effectively.
 - **Local Storage**: Utilizing browser storage to provide a robust and seamless experience.
-- **Fetch API and Promises**: Handling API requests and managing asynchronous data.
+- **Dynamic Data**: Handling dynamic data, charts and pdfs.
 - **IIFE (Immediately Invoked Function Expression)**: Executing functions immediately to initialize data or bind events.
 
 ### What Makes This Project Stand Out?
@@ -71,15 +71,27 @@ Compare habits using filtering options to gain deeper insights.
 
 ---
 
+### Habit Summary Report
+Download habits report to gain deeper insights about improvements on habits.
+
+![Download Report](images/featuresImages/download-report.png)
+
+---
+
+![Report](images/featuresImages/habit-report.png)
+
+---
+
 ## Challenges
 
 ### Challenges Faced
 - **Data Management**: Efficiently managing user data for multiple habits.
 - **Dynamic Elements**: Creating interactive and visually appealing components.
-- **Integration**: Handling charts of different habits.
+- **Integration**: Handling charts of different habits, creating pdfs.
 
 ## Technologies Used
 - **HTML** : Used to build structures for habits.
 - **CSS** : Style whole website intuitively and to provide seamless user experience.
 - **JAVASCRIPT** : Implement major functionalities of habit tracking system.
 - **CHART.JS** : Produce in depth charts for habits.
+- **jsPDF** : Produce summary report for habits.
