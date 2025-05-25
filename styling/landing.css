@@ -3,7 +3,9 @@
   background: #000000;
   color: #fff;
   padding: 15px;
+  margin-bottom: 20px;
   border-radius: var(--border-radius);
+  margin-left: 26px;
 }
 
 .landing-sections a {
@@ -90,6 +92,7 @@
   color: white;
   font-weight: bold;
   text-align: center;
+  margin-left: 24px;
 }
 
 @keyframes rotate-colors {

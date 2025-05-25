@@ -33,9 +33,6 @@ ul {
 }
 
 #nav-ul {
-  border: 3px solid #465aee;
-  width: 70%;
-  margin-left: 16%;
   display: flex;
   align-content: center;
   justify-content: space-between;
@@ -181,7 +178,7 @@ ul {
 }
 
 #foot-para {
-  padding: 12px;
+  padding: 10px 40px;
   background-color: rgb(0, 0, 0);
   word-spacing: 12px;
 }
