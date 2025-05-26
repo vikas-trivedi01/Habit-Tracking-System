@@ -146,15 +146,6 @@ document.querySelector('#top-habits').addEventListener('click', () => {
 
     const { topHabits } = analyzeHabitProgress();
 
-    // if (!topHabits) {
-    //     const notFound = document.createElement('h3');
-    //     notFound.innerText = "No Data Found !";
-
-    //     insights.appendChild(notFound);
-    //     insightsContainer.appendChild(insights);
-    // }
-    // else {
-
     topHabits.forEach(habit => {
 
         const insights = document.createElement('div');
@@ -179,7 +170,6 @@ document.querySelector('#top-habits').addEventListener('click', () => {
         insightsContainer.appendChild(insights);
 
     })
-    // }
 })
 
 
@@ -571,7 +561,6 @@ function displayAverageInsights(habitIndex) {
         insightsContainer.classList.remove("hide");
         insightsContainer.classList.replace("hide", "current-insight");
     }
-
 
 
     const { habitAverageProgress: allHabitsAverageProgress } = analyzeHabitProgress();

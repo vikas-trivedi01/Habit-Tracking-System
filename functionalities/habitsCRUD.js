@@ -15,7 +15,8 @@ document.getElementById("start-date").addEventListener("change", () => {
 
     // Assign the formatted date to the input field
     endingDateField.value = formattedDate;
-})
+});
+
 //on submission of form call the addHabit to add the habit
 document.getElementById("habit-form").addEventListener("submit", addHabit);
 
@@ -210,32 +211,7 @@ function displayHabits() {
                 );
             }
 
-            checkbox.addEventListener('click', (e) => {
-                const isChecked = e.target.checked;
-                const checkboxDay = parseInt(e.target.getAttribute("data-day"), 10);
-
-                habits[habitIndex].days[checkboxDay] = isChecked;
-
-                if (isChecked) {
-                    habit.completedDaysCount++;
-                    habit.completedDays.push(checkboxDay)
-                }
-                else {
-                    habit.completedDaysCount--;
-                    habit.completedDays = habit.completedDays.filter(day => day !== checkboxDay)
-                }
-                habit.isCompleted = habit.completedDaysCount == parseInt(habit.habitGoalDays, 10);
-
-                updateStreakHighlight(habitIndex);
-                updateHabitDetails(habitIndex);
-                calculateWeeklyProgress(habitIndex);
-                calculateProgressPercentages();
-                updateProgressUI(habitIndex);
-
-                updateCompletedList(habitIndex);
-
-                saveHabits(); //save habits instantly without debouncing in-order to reflect checkbox's effect habit's data on UI
-            });
+            handleCheckboxClick(checkbox, habit, habitIndex);
         }
 
         habit_showdetails.innerHTML = '<i class="fa-solid fa-angles-down"></i>';
@@ -585,6 +561,35 @@ function loadHabits() {
         habits = [];
     }
 
+}
+
+function handleCheckboxClick(checkbox, habit, habitIndex) {
+    checkbox.addEventListener('click', (e) => {
+        const isChecked = e.target.checked;
+        const checkboxDay = parseInt(e.target.getAttribute("data-day"), 10);
+
+        habits[habitIndex].days[checkboxDay] = isChecked;
+
+        if (isChecked) {
+            habit.completedDaysCount++;
+            habit.completedDays.push(checkboxDay)
+        }
+        else {
+            habit.completedDaysCount--;
+            habit.completedDays = habit.completedDays.filter(day => day !== checkboxDay)
+        }
+        habit.isCompleted = habit.completedDaysCount == parseInt(habit.habitGoalDays, 10);
+
+        updateStreakHighlight(habitIndex);
+        updateHabitDetails(habitIndex);
+        calculateWeeklyProgress(habitIndex);
+        calculateProgressPercentages();
+        updateProgressUI(habitIndex);
+
+        updateCompletedList(habitIndex);
+
+        saveHabits(); //save habits instantly without debouncing in-order to reflect checkbox's effect habit's data on UI
+    });
 }
 
 window.onload = loadHabits;
